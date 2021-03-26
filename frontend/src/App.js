@@ -3,24 +3,20 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignUpPage from "./components/SignUpPage";
+import Navigation from "./components/Navigation";
 import * as sessionActions from "./store/session";
 
 function App() {
 	const dispatch = useDispatch();
 	const [isLoaded, setIsLoaded] = useState(false);
 	useEffect(() => {
-		dispatch(sessionActions.restoreUser()).then((response) => setIsLoaded(true));
+		dispatch(sessionActions.restoreUser()).then((response) => (response.ok ? setIsLoaded(true) : null));
 	}, [dispatch]);
 
 	return (
-		isLoaded && (
-			<>
-				<link
-					rel="stylesheet"
-					href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-					integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-					crossOrigin="anonymous"
-				/>
+		<>
+			<Navigation isLoaded={isLoaded} />
+			{isLoaded && (
 				<Switch>
 					<Route path="/login">
 						<LoginFormPage />
@@ -29,8 +25,8 @@ function App() {
 						<SignUpPage />
 					</Route>
 				</Switch>
-			</>
-		)
+			)}
+		</>
 	);
 }
 
