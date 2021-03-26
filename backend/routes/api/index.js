@@ -36,6 +36,7 @@ router.use("/users", usersRouter);
 // 	return res.json(req.user);
 // });
 
+// testing route
 // router.post("/test", function (req, res) {
 // 	res.json({ requestBody: req.body });
 // });
