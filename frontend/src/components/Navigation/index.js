@@ -24,14 +24,10 @@ function Navigation({ isLoaded }) {
 	return (
 		<Navbar bg="primary" variant="dark">
 			<Nav className="mr-auto">
-				<ul>
-					<li>
-						<Nav.Link exact="true" href="/">
-							Home
-						</Nav.Link>
-						{isLoaded && sessionLinks}
-					</li>
-				</ul>
+				<Nav.Link exact="true" href="/">
+					Home
+				</Nav.Link>
+				{isLoaded && sessionLinks}
 			</Nav>
 		</Navbar>
 	);
