@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
-import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 function ProfileButton({ user }) {
 	const dispatch = useDispatch();
@@ -31,9 +31,9 @@ function ProfileButton({ user }) {
 
 	return (
 		<>
-			<button onClick={openMenu}>
+			<Button className="btn btn-dark" onClick={openMenu}>
 				<i className="fas fa-user-circle" />
-			</button>
+			</Button>
 			{showMenu && (
 				<ul className="profile-dropdown">
 					<li>{user.username}</li>

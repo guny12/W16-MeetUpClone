@@ -1,4 +1,5 @@
 /* TODO Add site wide styles */
 @import url("./components//Navigation/Navigation.css");
-@import url("./components/LoginFormPage/LoginForm.css");
+@import url("./components/LoginFormModal/LoginForm.css");
 @import url("./components/SignUpPage/SignUpForm.css");
+@import url("./context/Modal.css");

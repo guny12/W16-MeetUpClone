@@ -3,6 +3,7 @@ import React from "react";
 import "./Navigation.css";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
+import LoginFormModal from "../LoginFormModal";
 import "./Navigation.css";
 import { Nav, Navbar } from "react-bootstrap";
 
@@ -15,7 +16,7 @@ function Navigation({ isLoaded }) {
 	} else {
 		sessionLinks = (
 			<>
-				<Nav.Link href="/login">Log In</Nav.Link>
+				<LoginFormModal />
 				<Nav.Link href="/signup">Sign Up</Nav.Link>
 			</>
 		);

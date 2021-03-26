@@ -5,14 +5,11 @@ import { Redirect } from "react-router-dom";
 import "./LoginForm.css";
 import { Button, Form } from "react-bootstrap";
 
-const LoginFormPage = () => {
+const LoginForm = () => {
 	const dispatch = useDispatch();
-	const sessionUser = useSelector((state) => state.session.user);
 	const [errors, setErrors] = useState([]);
 	const [credential, setCredential] = useState("");
 	const [password, setPassword] = useState("");
-
-	if (sessionUser) return <Redirect to="/" />;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -58,4 +55,4 @@ const LoginFormPage = () => {
 		</Form>
 	);
 };
-export default LoginFormPage;
+export default LoginForm;
