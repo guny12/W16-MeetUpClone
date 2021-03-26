@@ -21,7 +21,7 @@ const LoginForm = () => {
 	};
 
 	return (
-		<Form onSubmit={handleSubmit}>
+		<Form onSubmit={handleSubmit} className="loginform__Form">
 			<ul>
 				{errors.map((error, idx) => (
 					<li key={idx}>{error}</li>
