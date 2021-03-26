@@ -30,15 +30,31 @@ const LoginFormPage = () => {
 					<li key={idx}>{error}</li>
 				))}
 			</ul>
-			<label>
-				Username or Email
-				<input type="text" value={credential} onChange={(e) => setCredential(e.target.value)} required />
-			</label>
-			<label>
-				Password
-				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-			</label>
-			<Button type="submit">Log In</Button>
+			<Form.Group controlId="formBasicEmail">
+				<Form.Label>Username or Email</Form.Label>
+				<Form.Control
+					type="text"
+					autoComplete="username"
+					value={credential}
+					onChange={(e) => setCredential(e.target.value)}
+					required
+					placeholder="Enter Username or Email"
+				/>
+			</Form.Group>
+			<Form.Group controlId="formGroupPassword">
+				<Form.Label>Password</Form.Label>
+				<Form.Control
+					type="password"
+					autoComplete="current-password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					required
+					placeholder="Enter Password"
+				/>
+			</Form.Group>
+			<Button variant="primary" type="submit">
+				Log In
+			</Button>
 		</Form>
 	);
 };
