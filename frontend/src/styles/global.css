@@ -1,0 +1,56 @@
+/* CSS rules to specify families
+
+font-family: 'Black Ops One', cursive;
+font-family: 'Bungee Shade', cursive;
+font-family: 'Cabin Sketch', cursive;
+font-family: 'Chewy', cursive;
+font-family: 'Frijole', cursive;
+font-family: 'Nanum Brush Script', cursive;
+font-family: 'Ribeye Marrow', cursive;
+font-family: 'Rock Salt', cursive; */
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+/* h1,
+h2,
+a,
+p,
+input,
+a,
+div,
+h3,
+h4,
+h5,
+textarea,
+select,
+option */
+.navbar :is(a, button) {
+	font-family: "Frijole", cursive;
+	background-color: transparent;
+}
+
+.bg-primary {
+	background-image: linear-gradient(to right, #434343 0%, black 100%);
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	background-image: url("condiments-to-prepare-italian-pasta.jpg");
+	background-position: center;
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+* {
+	font-family: "Chewy", cursive;
+}
+
+.btn-primary {
+	font-family: "Rock Salt", cursive;
+	/* background-image: linear-gradient(to right, #434343 0%, black 100%); */
+	border: 5px white;
+}
