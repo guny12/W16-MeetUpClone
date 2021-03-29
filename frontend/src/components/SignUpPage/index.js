@@ -10,6 +10,8 @@ const SignUpFormPage = () => {
 	const sessionUser = useSelector((state) => state.session.user);
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
@@ -20,7 +22,7 @@ const SignUpFormPage = () => {
 		e.preventDefault();
 		if (password === confirmPassword) {
 			setErrors([]);
-			return dispatch(sessionActions.signUp({ email, username, password })).catch(async (res) => {
+			return dispatch(sessionActions.signUp({ email, username, password, firstName, lastName })).catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(data.errors);
 			});
@@ -55,6 +57,26 @@ const SignUpFormPage = () => {
 					placeholder="Enter Username"
 				/>
 			</Form.Group>
+			<Form.Group controlId="formBasicFirstName">
+				<Form.Label>First Name</Form.Label>
+				<Form.Control
+					type="text"
+					value={firstName}
+					onChange={(e) => setFirstName(e.target.value)}
+					required
+					placeholder="Enter First Name"
+				/>
+			</Form.Group>
+			<Form.Group controlId="formBasicLastName">
+				<Form.Label>Last Name</Form.Label>
+				<Form.Control
+					type="text"
+					value={lastName}
+					onChange={(e) => setLastName(e.target.value)}
+					required
+					placeholder="Enter Last Name"
+				/>
+			</Form.Group>
 			<Form.Group controlId="formBasicPassword">
 				<Form.Label>Password</Form.Label>
 				<Form.Control
@@ -64,7 +86,6 @@ const SignUpFormPage = () => {
 					required
 					placeholder="Enter your password"
 				/>
-
 				<Form.Label>Confirm Password </Form.Label>
 				<Form.Control
 					type="password"
