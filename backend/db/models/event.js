@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
 	Event.associate = function (models) {
 		Event.belongsTo(models.User, { foreignKey: "hostId" });
 		Event.belongsTo(models.Group, { foreignKey: "groupId" });
+		Event.hasMany(models.EventComment, { foreignkey: "eventId" });
 	};
 	return Event;
 };

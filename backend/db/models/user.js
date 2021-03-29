@@ -107,8 +107,25 @@ module.exports = (sequelize, DataTypes) => {
 	};
 
 	User.associate = function (models) {
+		const userMapping = {
+			through: "UserJoin",
+			foreignKey: "userId",
+			otherKey: "followerId",
+			as: "followers",
+		};
+
+		const followerMapping = {
+			through: "UserJoin",
+			foreignKey: "followerId",
+			otherKey: "userId",
+			as: "user",
+		};
+
+		User.belongsToMany(models.User, userMapping);
+		User.belongsToMany(models.User, followerMapping);
 		User.hasMany(models.Group, { foreignKey: "adminId" });
 		User.hasMany(models.Event, { foreignKey: "hostId" });
+		User.hasMany(models.EventComment, { foreignKey: "userId" });
 	};
 	return User;
 };
