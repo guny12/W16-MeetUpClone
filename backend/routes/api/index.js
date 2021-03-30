@@ -2,10 +2,13 @@ const router = require("express").Router();
 
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
+const groupRouter = require("./group.js");
 
 router.use("/session", sessionRouter);
-
+router.use("/group", groupRouter);
 router.use("/users", usersRouter);
+
+module.exports = router;
 
 // const { restoreUser } = require("../../utils/auth.js");
 // const asyncHandler = require("express-async-handler");
@@ -40,5 +43,3 @@ router.use("/users", usersRouter);
 // router.post("/test", function (req, res) {
 // 	res.json({ requestBody: req.body });
 // });
-
-module.exports = router;

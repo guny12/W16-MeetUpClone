@@ -8,47 +8,47 @@ module.exports = {
 				{
 					userId: 1,
 					eventId: 1,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 1,
 					eventId: 2,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 1,
 					eventId: 3,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 2,
 					eventId: 1,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 2,
 					eventId: 2,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 2,
 					eventId: 3,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 3,
 					eventId: 1,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 3,
 					eventId: 2,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 				{
 					userId: 3,
 					eventId: 3,
-					content: faker.lorem.paragraph(),
+					content: faker.lorem.sentence(),
 				},
 			],
 			{}
