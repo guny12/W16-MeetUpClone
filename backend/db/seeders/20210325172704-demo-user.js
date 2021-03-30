@@ -28,6 +28,13 @@ module.exports = {
 					lastName: "User2",
 					hashedPassword: bcrypt.hashSync(faker.internet.password()),
 				},
+				{
+					email: "test@test.com",
+					username: "test",
+					firstName: "test",
+					lastName: "test",
+					hashedPassword: bcrypt.hashSync("test123"),
+				},
 			],
 			{}
 		);
@@ -38,7 +45,7 @@ module.exports = {
 		return queryInterface.bulkDelete(
 			"Users",
 			{
-				username: { [Op.in]: ["Demo-lition", "FakeUser1", "FakeUser2"] },
+				username: { [Op.in]: ["Demo-lition", "FakeUser1", "FakeUser2", "test"] },
 			},
 			{}
 		);
