@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import "./SignUpForm.css";
 import { Button, Form } from "react-bootstrap";
 
-const SignUpFormPage = () => {
+const SignUpForm = () => {
 	const dispatch = useDispatch();
 	const sessionUser = useSelector((state) => state.session.user);
 	const [email, setEmail] = useState("");
@@ -100,4 +100,4 @@ const SignUpFormPage = () => {
 	);
 };
 
-export default SignUpFormPage;
+export default SignUpForm;
