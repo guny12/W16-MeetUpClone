@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	GroupComment.associate = function (models) {
 		GroupComment.belongsTo(models.User, { foreignKey: "userId" });
-		GroupComment.belongsTo(models.Event, { foreignKey: "eventId" });
+		GroupComment.belongsTo(models.Group, { foreignKey: "groupId" });
 	};
 	return GroupComment;
 };

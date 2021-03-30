@@ -121,11 +121,26 @@ module.exports = (sequelize, DataTypes) => {
 			as: "user",
 		};
 
+		const groupMapping = {
+			through: "UserGroupJoin",
+			foreignKey: "userId",
+			otherKey: "groupId",
+		};
+
+		const columnMapping = {
+			through: "EventAttendee",
+			foreignKey: "attendeeId",
+			otherKey: "eventId",
+		};
+
 		User.belongsToMany(models.User, userMapping);
 		User.belongsToMany(models.User, followerMapping);
 		User.hasMany(models.Group, { foreignKey: "adminId" });
 		User.hasMany(models.Event, { foreignKey: "hostId" });
 		User.hasMany(models.EventComment, { foreignKey: "userId" });
+		User.hasMany(models.GroupComment, { foreignKey: "userId" });
+		User.belongsToMany(models.Group, groupMapping);
+		User.belongsToMany(models.Event, columnMapping);
 	};
 	return User;
 };

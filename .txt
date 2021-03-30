@@ -1,1 +1,0 @@
- npx sequelize model:generate --name EventComment --attributes "userId:integer, eventId:integer, content:string"

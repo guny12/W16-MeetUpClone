@@ -12,8 +12,16 @@ module.exports = (sequelize, DataTypes) => {
 		{}
 	);
 	Group.associate = function (models) {
+		const groupMapping = {
+			through: "UserGroupJoin",
+			foreignKey: "groupId",
+			otherKey: "userId",
+		};
+
 		Group.belongsTo(models.User, { foreignKey: "adminId" });
 		Group.hasMany(models.Event, { foreignKey: "groupId" });
+		Group.hasMany(models.GroupComment, { foreignKey: "groupId" });
+		Group.belongsToMany(models.User, groupMapping);
 	};
 	return Group;
 };
