@@ -4,17 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./Home.css";
 import { Button } from "react-bootstrap";
+import GroupTiles from "../GroupTilesComponent";
 
 const Home = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const groups = useSelector((state) => state.groups);
-	// console.log(groups, "GROUPS HERE===========");
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
-
-	// if (Object.values(groups.privateGroups).length > 0) privateGroups = groups.privateGroups;
-	// console.log(privateGroups, "PRIVATE GROUPS *******************");
-
+	const groups = useSelector((state) => state.groups);
+	// console.log(groups, "GROUPS HERE++++++++++ HOME+++++++++");
 	let privateGroups = null;
 	if (Object.values(groups.privateGroups).length > 0) {
 		privateGroups = (
@@ -32,8 +29,6 @@ const Home = () => {
 				</div>
 			</>
 		);
-	} else {
-		privateGroups = null;
 	}
 
 	return (
@@ -47,7 +42,7 @@ const Home = () => {
 				</Button>
 			</div>
 			<div className="home__shelf-body">
-				<h1> INSERT CARD COMPONENTS HERE</h1>
+				<GroupTiles groups={groups} />
 			</div>
 			{privateGroups}
 		</div>
