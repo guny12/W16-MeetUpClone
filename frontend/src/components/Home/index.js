@@ -25,8 +25,8 @@ const Home = () => {
 						see all
 					</Button>
 				</div>
-				<div className="home__shelf-body">
-					<GroupTiles groups={groups} isPrivate={"yes"} />
+				<div>
+					<DeckCarousel groups={groups} isPrivate={"yes"} />
 				</div>
 			</>
 		);

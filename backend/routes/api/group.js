@@ -19,15 +19,18 @@ GroupRouter.get(
 			order: [["id", "ASC"]],
 		});
 
+		let groupIds = [];
 		for (group of publicGroups) {
 			group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
+			groupIds.push(group.dataValues.id);
 		}
 
 		let privateGroups = [];
 		if (userId) {
 			privateGroups = await Group.findAll({
 				include: [{ model: User, where: { id: userId }, attributes: [] }],
-				limit: 8,
+				where: { id: { [Op.notIn]: groupIds } },
+				limit: 12,
 				order: [["id", "ASC"]],
 			});
 			for (group of privateGroups) {
