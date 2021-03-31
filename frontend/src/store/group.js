@@ -19,28 +19,39 @@ const updateGroup = (group) => ({
 
 const removeGroup = (group) => ({
 	type: REMOVE_GROUP,
-  payload: group
+	payload: group,
 });
 
 // thunk action creators
-export const getGroups = ({group, userId}) => async (dispatch) => {
-	const response = await csrfFetch("/api/group")
-	const data = await response.json();
-	dispatch(setGroups(data.));
-	return response;
+export const getGroups = ({ group, userId }) => async (dispatch) => {
+	const response = await csrfFetch("/api/group");
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(setGroups(data));
+	}
 };
 
-const initialState = {};
+const initialState = {
+	PublicGroups: {},
+	PrivateGroups: {},
+};
 
 const sessionReducer = (groupState = initialState, action) => {
-	let newState;
 	switch (action.type) {
 		case SET_GROUP:
+			let { publicGroups, privateGroups } = payload.groups;
+			let newPublicGroups = publicGroups.reduce((newgroups, group) => ({ ...newgroups, [group.id]: group }), {});
+			let newPrivateGroups = privateGroups.reduce((newgroups, group) => ({ ...newgroups, [group.id]: group }), {});
+			return {
+				...groupState,
+				publicGroups: newPublicGroups,
+				privateGroups: newPrivateGroups,
+			};
+
+		case UPDATE_GROUP:
 			return newState;
-    case UPDATE_GROUP:
-        return newState;
 		case REMOVE_GROUP:
-      return newState;
+			return newState;
 		default:
 			return groupState;
 	}

@@ -11,7 +11,7 @@ GroupRouter.get(
 	requireAuth,
 	asyncHandler(async (req, res) => {
 		// send the userId in req, to pull out the groups that they are a part of.
-		const { userId } = req.body;
+		const userId = req.user.id;
 		const publicGroups = await Group.findAll({
 			where: {
 				isPublic: true,
