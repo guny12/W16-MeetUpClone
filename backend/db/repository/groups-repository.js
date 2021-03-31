@@ -1,1 +1,1 @@
-const { Group } = require("../models/group");
+const { Group, Event, GroupComment, User } = require("../../db/models");

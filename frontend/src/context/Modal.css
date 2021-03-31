@@ -15,8 +15,7 @@
 	right: 0;
 	left: 0;
 	bottom: 0;
-	background: rgb(2, 0, 36);
-	background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+	background: rgba(2, 0, 36, 0.75);
 }
 
 #modal-content {
@@ -25,6 +24,7 @@
 	size: Large;
 	border: 1px solid black;
 	border-radius: 5px;
-	height: 38%;
-	width: 60%;
+	height: auto;
+	width: auto;
+	padding: 10px;
 }
