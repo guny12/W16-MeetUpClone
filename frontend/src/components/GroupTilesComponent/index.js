@@ -5,17 +5,20 @@ import { NavLink } from "react-router-dom";
 import "./GroupTilesComponent.css";
 import { Card, CardDeck } from "react-bootstrap";
 
-const GroupTiles = ({ groups }) => {
-	let { publicGroups } = groups;
+const GroupTiles = ({ groups, isPrivate }) => {
+	let { publicGroups, privateGroups } = groups;
+	let targetGroups = isPrivate ? privateGroups : publicGroups;
 
-	let cards = Object.values(publicGroups).map((group) => {
+	let cards = Object.values(targetGroups).map((group) => {
 		return (
 			<Card key={`card-${group.id}`}>
 				<a href={`/${group.id}`}>
 					<Card.Img variant="top" src={`${group.imgURL}`} />
 					<Card.Body>
 						<Card.Title>{group.name}</Card.Title>
-						<Card.Text>{group.description}</Card.Text>
+						<Card.Text>
+							<span>{group.description}</span>
+						</Card.Text>
 					</Card.Body>
 					<Card.Footer>
 						<small className="text-muted">{`${group.count} Members`}</small>
@@ -27,7 +30,6 @@ const GroupTiles = ({ groups }) => {
 
 	return (
 		<CardDeck>
-			{cards}
 			{cards}
 			{cards}
 		</CardDeck>

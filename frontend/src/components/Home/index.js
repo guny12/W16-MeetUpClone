@@ -3,7 +3,7 @@ import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./Home.css";
-import { Button } from "react-bootstrap";
+import { Button, Carousel } from "react-bootstrap";
 import GroupTiles from "../GroupTilesComponent";
 
 const Home = () => {
@@ -25,7 +25,7 @@ const Home = () => {
 					</Button>
 				</div>
 				<div className="home__shelf-body">
-					<h1> INSERT CARD COMPONENTS HERE</h1>
+					<GroupTiles groups={groups} isPrivate={"yes"} />
 				</div>
 			</>
 		);
