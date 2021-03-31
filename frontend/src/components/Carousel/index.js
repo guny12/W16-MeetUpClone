@@ -17,7 +17,7 @@ function DeckCarousel({ groups, isPrivate }) {
 		adaptiveHeight: true,
 	};
 
-	console.log(Object.values(targetGroups)[0], "OBJVALS TARGET GROUP----------");
+	console.log(Object.values(targetGroups).length, "OBJVALS TARGET GROUP----------");
 	if (Object.values(targetGroups).length > 1) var group = Object.values(targetGroups)[0];
 
 	// const
@@ -28,22 +28,6 @@ function DeckCarousel({ groups, isPrivate }) {
 	return (
 		<div>
 			<Slider {...settings}>
-				{/* <div>
-					<Card key={`card-${group?.id}`}>
-						<a href={`/${group?.id}`}>
-							<Card.Img variant="top" src={`${group?.imgURL}`} />
-							<Card.Body>
-								<Card.Title>{group?.name}</Card.Title>
-								<Card.Text>
-									<span>{group?.description}</span>
-								</Card.Text>
-							</Card.Body>
-							<Card.Footer>
-								<small className="text-muted">{`${group?.count} Members`}</small>
-							</Card.Footer>
-						</a>
-					</Card>
-				</div> */}
 				<div>
 					<Card key={`card-${group?.id}`}>
 						<a href={`/${group?.id}`}>

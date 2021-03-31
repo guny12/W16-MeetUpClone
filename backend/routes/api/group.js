@@ -15,7 +15,7 @@ GroupRouter.get(
 
 		const publicGroups = await Group.findAll({
 			where: { isPublic: true },
-			limit: 7,
+			limit: 12,
 			order: [["id", "ASC"]],
 		});
 
@@ -27,7 +27,7 @@ GroupRouter.get(
 		if (userId) {
 			privateGroups = await Group.findAll({
 				include: [{ model: User, where: { id: userId }, attributes: [] }],
-				limit: 3,
+				limit: 8,
 				order: [["id", "ASC"]],
 			});
 			for (group of privateGroups) {

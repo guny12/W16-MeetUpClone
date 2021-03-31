@@ -5,8 +5,14 @@
 
 .card-title {
 	margin: auto;
-	white-space: normal;
-	overflow-wrap: normal;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card-img-top {
+	overflow: hidden;
+	height: 200px;
 }
 
 .card-text {
