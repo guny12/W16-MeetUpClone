@@ -1,7 +1,7 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { check, validationResult } = require("express-validator");
-const { Group, Event, GroupComment, User } = require("../../db/models");
+const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
 const { restoreUser } = require("../../utils/auth");
 const { Op } = require("sequelize");
 const GroupRouter = express.Router();
@@ -20,6 +20,10 @@ GroupRouter.get(
 			order: [["id", "ASC"]],
 		});
 
+		for (group of publicGroups) {
+			group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
+		}
+
 		let privateGroups = [];
 		if (userId) {
 			privateGroups = await Group.findAll({
@@ -27,6 +31,10 @@ GroupRouter.get(
 				limit: 3,
 				order: [["id", "ASC"]],
 			});
+			for (group of privateGroups) {
+				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
+			}
+			console.log(privateGroups, "PRIVATE GROUPS------------");
 		}
 
 		return res.json({ publicGroups, privateGroups });
