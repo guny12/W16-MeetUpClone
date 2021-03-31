@@ -18,6 +18,46 @@ module.exports = {
 					groupId: 3,
 				},
 				{
+					userId: 1,
+					groupId: 4,
+				},
+				{
+					userId: 1,
+					groupId: 5,
+				},
+				{
+					userId: 1,
+					groupId: 6,
+				},
+				{
+					userId: 1,
+					groupId: 7,
+				},
+				{
+					userId: 1,
+					groupId: 8,
+				},
+				{
+					userId: 1,
+					groupId: 9,
+				},
+				{
+					userId: 1,
+					groupId: 10,
+				},
+				{
+					userId: 1,
+					groupId: 11,
+				},
+				{
+					userId: 1,
+					groupId: 12,
+				},
+				{
+					userId: 1,
+					groupId: 13,
+				},
+				{
 					userId: 2,
 					groupId: 1,
 				},

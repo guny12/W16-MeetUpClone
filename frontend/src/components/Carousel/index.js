@@ -8,20 +8,25 @@ function DeckCarousel({ groups, isPrivate }) {
 	let { publicGroups, privateGroups } = groups;
 	let targetGroups = isPrivate ? privateGroups : publicGroups;
 
-	var settings = {
+	const settings = {
 		dots: true,
 		infinite: true,
 		speed: 500,
-		slidesToScroll: 4,
-		slidesToShow: 4,
+		slidesToScroll: 3,
+		slidesToShow: 6,
 		adaptiveHeight: true,
 	};
 
 	console.log(Object.values(targetGroups)[0], "OBJVALS TARGET GROUP----------");
 	if (Object.values(targetGroups).length > 1) var group = Object.values(targetGroups)[0];
+
+	// const
+	// if (Object.values(targetGroups).length > 1){
+
+	// }
+
 	return (
 		<div>
-			<h2>Uneven sets (infinite)</h2>
 			<Slider {...settings}>
 				{/* <div>
 					<Card key={`card-${group?.id}`}>
@@ -70,6 +75,12 @@ function DeckCarousel({ groups, isPrivate }) {
 							</Card.Footer>
 						</a>
 					</Card>
+				</div>
+				<div>
+					<h3>3</h3>
+				</div>
+				<div>
+					<h3>4</h3>
 				</div>
 				<div>
 					<h3>3</h3>
