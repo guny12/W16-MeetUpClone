@@ -12,32 +12,44 @@ const setGroups = (groups) => ({
 	payload: groups,
 });
 
-const updateGroup = (group) => ({
-	type: UPDATE_GROUP,
-	payload: group,
-});
+// const updateGroup = (group) => ({
+// 	type: UPDATE_GROUP,
+// 	payload: group,
+// });
 
-const removeGroup = (group) => ({
-	type: REMOVE_GROUP,
-	payload: group,
-});
+// const removeGroup = (group) => ({
+// 	type: REMOVE_GROUP,
+// 	payload: group,
+// });
 
 // thunk action creators
 export const getGroups = () => async (dispatch) => {
-	const response = await csrfFetch("/api/group");
+	const response = await fetch("/api/group");
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(setGroups(data));
 	}
 };
 
+export const createGroup = (groupData) => async (dispatch) => {
+	const response = await csrfFetch("/api/group", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(groupData),
+	});
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(setGroups(data));
+	}
+};
+
+// reducer
 const initialState = {
 	publicGroups: {},
 	privateGroups: {},
 };
 
 const groupReducer = (groupState = initialState, action) => {
-	console.log(action.payload, "ACTION PAYLOAD---------------");
 	switch (action.type) {
 		case SET_GROUP:
 			let { publicGroups, privateGroups } = action.payload;

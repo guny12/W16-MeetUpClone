@@ -8,19 +8,18 @@ const GroupRouter = express.Router();
 
 GroupRouter.get(
 	"/",
-	requireAuth,
+	// requireAuth,
 	asyncHandler(async (req, res) => {
 		// send the userId in req, to pull out the groups that they are a part of.
-		const userId = req.user.id;
+		if (req.user) var userId = req.user.id;
+
 		const publicGroups = await Group.findAll({
-			where: {
-				isPublic: true,
-			},
+			where: { isPublic: true },
 			limit: 7,
 			order: [["id", "ASC"]],
 		});
 
-		let privateGroups;
+		let privateGroups = [];
 		if (userId) {
 			privateGroups = await Group.findAll({
 				include: [{ model: User, where: { id: userId }, attributes: [] }],

@@ -49,8 +49,8 @@ body {
 	font-family: "Chewy", cursive;
 }
 
-.btn-primary {
+.btn-dark {
 	font-family: "Rock Salt", cursive;
 	/* background-image: linear-gradient(to right, #434343 0%, black 100%); */
-	border: 5px white;
+	border-color: transparent;
 }
