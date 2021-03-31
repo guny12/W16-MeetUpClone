@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import * as sessionActions from "./store/session";
 import Groups from "../src/components/Groups";
@@ -18,11 +18,14 @@ function App() {
 			<Navigation isLoaded={isLoaded} />
 			{isLoaded && (
 				<Switch>
-					<Route path="/group">
+					<Route path="/groups" exact>
 						<Groups />
 					</Route>
-					<Route path="/home">
+					<Route path="/home" exact>
 						<Home />
+					</Route>
+					<Route path="/">
+						<Redirect to="/home" />
 					</Route>
 				</Switch>
 			)}

@@ -5,7 +5,7 @@ const usersRouter = require("./users.js");
 const groupRouter = require("./group.js");
 
 router.use("/session", sessionRouter);
-router.use("/group", groupRouter);
+router.use("/groups", groupRouter);
 router.use("/users", usersRouter);
 
 module.exports = router;

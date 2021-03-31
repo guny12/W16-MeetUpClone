@@ -46,12 +46,12 @@ body {
 	background-repeat: no-repeat;
 }
 
-* {
+/* * {
 	font-family: "Frijole", cursive;
-}
+} */
 
 .btn-dark {
-	font-family: "Rock Salt", cursive;
+	/* font-family: "Frijole", cursive; */
 	/* background-image: linear-gradient(to right, #434343 0%, black 100%); */
 	border-color: transparent;
 }

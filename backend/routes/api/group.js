@@ -2,15 +2,16 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { check, validationResult } = require("express-validator");
 const { Group, Event, GroupComment, User } = require("../../db/models");
-const { requireAuth } = require("../../utils/auth");
+const { restoreUser } = require("../../utils/auth");
 const { Op } = require("sequelize");
 const GroupRouter = express.Router();
 
 GroupRouter.get(
 	"/",
-	// requireAuth,
+	restoreUser,
 	asyncHandler(async (req, res) => {
 		// send the userId in req, to pull out the groups that they are a part of.
+		console.log(req.user, "REQ USER =======================");
 		if (req.user) var userId = req.user.id;
 
 		const publicGroups = await Group.findAll({

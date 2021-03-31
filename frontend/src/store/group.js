@@ -24,7 +24,7 @@ const setGroups = (groups) => ({
 
 // thunk action creators
 export const getGroups = () => async (dispatch) => {
-	const response = await fetch("/api/group");
+	const response = await csrfFetch("/api/groups");
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(setGroups(data));
@@ -32,7 +32,7 @@ export const getGroups = () => async (dispatch) => {
 };
 
 export const createGroup = (groupData) => async (dispatch) => {
-	const response = await csrfFetch("/api/group", {
+	const response = await csrfFetch("/api/groups", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(groupData),

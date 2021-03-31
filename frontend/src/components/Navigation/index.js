@@ -29,7 +29,7 @@ function Navigation({ isLoaded }) {
 				<Nav.Link exact="true" href="/home">
 					Home
 				</Nav.Link>
-				<Nav.Link exact="true" href="/group">
+				<Nav.Link exact="true" href="/groups">
 					Groups
 				</Nav.Link>
 				{isLoaded && sessionLinks}
