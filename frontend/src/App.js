@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import * as sessionActions from "./store/session";
 import Groups from "../src/components/Groups";
+import Home from "../src/components/Home";
 
 function App() {
 	const dispatch = useDispatch();
@@ -19,6 +20,9 @@ function App() {
 				<Switch>
 					<Route path="/group">
 						<Groups />
+					</Route>
+					<Route path="/home">
+						<Home />
 					</Route>
 				</Switch>
 			)}
