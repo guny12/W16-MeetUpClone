@@ -29,6 +29,9 @@ function Navigation({ isLoaded }) {
 				<Nav.Link exact="true" href="/">
 					Home
 				</Nav.Link>
+				<Nav.Link exact="true" href="/group">
+					Groups
+				</Nav.Link>
 				{isLoaded && sessionLinks}
 			</Nav>
 		</Navbar>

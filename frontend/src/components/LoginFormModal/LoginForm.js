@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import "./LoginForm.css";
 import { Button, Form } from "react-bootstrap";
 
 const LoginForm = () => {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [errors, setErrors] = useState([]);
 	const [credential, setCredential] = useState("");
@@ -13,10 +15,12 @@ const LoginForm = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
-		return dispatch(sessionActions.login({ credential, password })).catch(async (res) => {
-			const data = await res.json();
-			if (data && data.errors) setErrors(data.errors);
-		});
+		return dispatch(sessionActions.login({ credential, password }))
+			.then((response) => (response.ok ? history.push("/home") : response))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(data.errors);
+			});
 	};
 
 	return (
