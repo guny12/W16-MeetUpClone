@@ -11,7 +11,6 @@ GroupRouter.get(
 	restoreUser,
 	asyncHandler(async (req, res) => {
 		// send the userId in req, to pull out the groups that they are a part of.
-		// console.log(req.user, "REQ USER =======================");
 		if (req.user) var userId = req.user.id;
 
 		const publicGroups = await Group.findAll({
@@ -34,7 +33,6 @@ GroupRouter.get(
 			for (group of privateGroups) {
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
 			}
-			console.log(privateGroups, "PRIVATE GROUPS------------");
 		}
 
 		return res.json({ publicGroups, privateGroups });

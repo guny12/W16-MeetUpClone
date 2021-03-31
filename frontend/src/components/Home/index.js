@@ -5,13 +5,14 @@ import { useHistory } from "react-router-dom";
 import "./Home.css";
 import { Button, Carousel } from "react-bootstrap";
 import GroupTiles from "../GroupTilesComponent";
+import DeckCarousel from "../Carousel";
 
 const Home = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 	const groups = useSelector((state) => state.groups);
-	// console.log(groups, "GROUPS HERE++++++++++ HOME+++++++++");
+
 	let privateGroups = null;
 	if (Object.values(groups.privateGroups).length > 0) {
 		privateGroups = (
@@ -41,8 +42,8 @@ const Home = () => {
 					see all
 				</Button>
 			</div>
-			<div className="home__shelf-body">
-				<GroupTiles groups={groups} />
+			<div>
+				<DeckCarousel groups={groups} />
 			</div>
 			{privateGroups}
 		</div>

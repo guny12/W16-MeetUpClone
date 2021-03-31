@@ -11,29 +11,26 @@ const GroupTiles = ({ groups, isPrivate }) => {
 
 	let cards = Object.values(targetGroups).map((group) => {
 		return (
-			<Card key={`card-${group.id}`}>
-				<a href={`/${group.id}`}>
-					<Card.Img variant="top" src={`${group.imgURL}`} />
-					<Card.Body>
-						<Card.Title>{group.name}</Card.Title>
-						<Card.Text>
-							<span>{group.description}</span>
-						</Card.Text>
-					</Card.Body>
-					<Card.Footer>
-						<small className="text-muted">{`${group.count} Members`}</small>
-					</Card.Footer>
-				</a>
-			</Card>
+			<div>
+				<Card key={`card-${group.id}`}>
+					<a href={`/${group.id}`}>
+						<Card.Img variant="top" src={`${group.imgURL}`} />
+						<Card.Body>
+							<Card.Title>{group.name}</Card.Title>
+							<Card.Text>
+								<span>{group.description}</span>
+							</Card.Text>
+						</Card.Body>
+						<Card.Footer>
+							<small className="text-muted">{`${group.count} Members`}</small>
+						</Card.Footer>
+					</a>
+				</Card>
+			</div>
 		);
 	});
 
-	return (
-		<CardDeck>
-			{cards}
-			{cards}
-		</CardDeck>
-	);
+	return cards;
 };
 
 export default GroupTiles;
