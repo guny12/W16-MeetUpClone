@@ -23,7 +23,7 @@ GroupRouter.get(
 		let privateGroups;
 		if (userId) {
 			privateGroups = await Group.findAll({
-				include: [{ model: User, where: { id: userId } }],
+				include: [{ model: User, where: { id: userId }, attributes: [] }],
 				limit: 3,
 				order: [["id", "ASC"]],
 			});
