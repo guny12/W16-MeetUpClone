@@ -27,10 +27,10 @@ h5,
 textarea,
 select,
 option */
-.navbar :is(a, button) {
+/* .navbar :is(a, button) {
 	font-family: "Frijole", cursive;
 	background-color: transparent;
-}
+} */
 
 .bg-primary {
 	background-image: linear-gradient(to right, #434343 0%, black 100%);
@@ -39,14 +39,15 @@ option */
 body {
 	height: 100%;
 	width: 100%;
-	background-image: url("../images/condiments-to-prepare-italian-pasta.jpg");
+	/* background-image: url("../images/condiments-to-prepare-italian-pasta.jpg"); */
+	background-color: lightslategrey;
 	background-position: center;
 	background-size: 100%;
 	background-repeat: no-repeat;
 }
 
 * {
-	font-family: "Chewy", cursive;
+	font-family: "Frijole", cursive;
 }
 
 .btn-dark {

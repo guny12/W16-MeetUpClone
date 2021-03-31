@@ -26,7 +26,7 @@ function Navigation({ isLoaded }) {
 	return (
 		<Navbar bg="primary" variant="dark">
 			<Nav className="mr-auto">
-				<Nav.Link exact="true" href="/">
+				<Nav.Link exact="true" href="/home">
 					Home
 				</Nav.Link>
 				<Nav.Link exact="true" href="/group">

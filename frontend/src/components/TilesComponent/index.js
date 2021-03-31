@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import "./Home.css";
-import { Button } from "react-bootstrap";
+// import { Redirect } from "react-router-dom";
+import "./TilesComponent.css";
+// import { Button, Form } from "react-bootstrap";
 
-const Home = () => {
-	const history = useHistory();
+const Tiles = () => {
 	const dispatch = useDispatch();
 	const groups = useSelector((state) => state.groups);
 
@@ -15,20 +14,10 @@ const Home = () => {
 	console.log(groups, "GROUPS HERE===========");
 	return (
 		<div className="home__container">
-			<div className="home__shelf-header">
-				<div>
-					<h1>Public Groups</h1>
-				</div>
-				<Button variant="light" onClick={() => history.push("/groups")}>
-					see all
-				</Button>
-			</div>
-			<div className="home__shelf-body">
-				<h1> TESTING</h1>
-			</div>
+			<h1>Public Groups</h1>
 			<h1>Private Groups</h1>
 		</div>
 	);
 };
 
-export default Home;
+export default Tiles;
