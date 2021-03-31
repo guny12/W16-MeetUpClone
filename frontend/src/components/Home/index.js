@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./Home.css";
 import { Button, Carousel } from "react-bootstrap";
-import GroupTiles from "../GroupTilesComponent";
 import DeckCarousel from "../Carousel";
+import Groups from "../Groups";
 
 const Home = () => {
 	const history = useHistory();
@@ -32,22 +32,7 @@ const Home = () => {
 		);
 	}
 
-	return (
-		<div className="home__container">
-			<div className="home__shelf-header">
-				<div>
-					<h1>Public Groups</h1>
-				</div>
-				<Button variant="dark" onClick={() => history.push("/groups")}>
-					see all
-				</Button>
-			</div>
-			<div>
-				<DeckCarousel groups={groups} />
-			</div>
-			{privateGroups}
-		</div>
-	);
+	return <Groups></Groups>;
 };
 
 export default Home;
