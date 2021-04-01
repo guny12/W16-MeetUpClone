@@ -13,7 +13,12 @@ const Home = () => {
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 	const groups = useSelector((state) => state.groups);
 
-	return <Groups></Groups>;
+	return (
+		<div>
+			<h1>Welcome back! Your Upcoming Events Here</h1>
+			<Groups></Groups>{" "}
+		</div>
+	);
 };
 
 export default Home;
