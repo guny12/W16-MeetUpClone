@@ -21,6 +21,9 @@ const CreateGroupForm = () => {
 			.then((response) => (response.ok ? history.push("/:groupId") : response))
 			.catch(async (res) => {
 				const data = await res.json();
+				if (data.errors.includes("name must be unique"))
+					data.errors[data.errors.indexOf("name must be unique")] =
+						"Good choice! But someone already used that name. Please pick another one.";
 				if (data && data.errors) setErrors(data.errors);
 			});
 	};
