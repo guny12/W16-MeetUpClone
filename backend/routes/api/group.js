@@ -33,6 +33,12 @@ GroupRouter.get(
 
 			for (group of publicGroups) {
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
+				console.log(group.dataValues.adminId, "GROUP DATAVALUES--------------------");
+				let owner = await User.findOne({
+					where: { id: group.dataValues.adminId },
+					attributes: ["firstName"],
+				});
+				group.dataValues["adminName"] = owner.firstName;
 				groupIds.push(group.dataValues.id);
 			}
 
