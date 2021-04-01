@@ -75,12 +75,13 @@ const initialState = {
 	privateGroups: {},
 	newPublicGroups: {},
 	newPrivateGroups: {},
+	joinedGroupIds: [],
 };
 
 const groupReducer = (groupState = initialState, action) => {
 	switch (action.type) {
 		case SET_GROUP:
-			let { publicGroups, privateGroups, newPublicGroups, newPrivateGroups } = action.payload;
+			let { publicGroups, privateGroups, newPublicGroups, newPrivateGroups, joinedGroupIds } = action.payload;
 			let PublicGroups = publicGroups.reduce((newgroups, group) => {
 				return { ...newgroups, [group.id]: group };
 			}, {});
@@ -99,6 +100,7 @@ const groupReducer = (groupState = initialState, action) => {
 				privateGroups: PrivateGroups,
 				newPublicGroups: NewPublicGroups,
 				newPrivateGroups: NewPrivateGroups,
+				joinedGroupIds: joinedGroupIds,
 			};
 		// case UPDATE_GROUP:
 		// 	return groupState;

@@ -18,9 +18,7 @@ const GroupPage = ({ isLoaded }) => {
 	const user = useSelector((state) => state.session.user);
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 
-	// if groupId isn't one of the keys in that group, !! will return false.
-	// if it is inside that group, !! will return true.
-	// console.log(!!publicGroups[`${groupId}`], "GROUP HERE------------------");
+	console.log(groups, "GROUPS----------------------------");
 	function joinGroup(group) {
 		return dispatch(groupActions.joinGroup({ group }))
 			.then((response) => {
@@ -33,6 +31,9 @@ const GroupPage = ({ isLoaded }) => {
 			});
 	}
 
+	// if groupId isn't one of the keys in that group, !! will return false.
+	// if it is inside that group, !! will return true.
+	// console.log(!!publicGroups[`${groupId}`], "GROUP HERE------------------");
 	let group;
 	switch (true) {
 		case !!newPrivateGroups[`${groupId}`]:
@@ -58,7 +59,6 @@ const GroupPage = ({ isLoaded }) => {
 		} else {
 			JoinOrEditButton = (
 				<Button variant="dark" onClick={() => joinGroup(group)}>
-					{" "}
 					JOIN GROUP
 				</Button>
 			);

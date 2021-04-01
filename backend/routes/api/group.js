@@ -16,20 +16,32 @@ GroupRouter.get(
 
 		let privateGroups = [],
 			publicGroups = [],
-			groupIds = [];
+			joinedGroupIds = [];
 
 		// if there's a user logged in, this will get all the currently joined groups
 		// clean up the querying and updating used GroupIds and AdminName into a single func later
 		if (userId) {
+			// publicGroups = await Group.findAll({
+			// 	include: [
+			// 		{
+			// 			model: User,
+			// 			where: { id: userId },
+			// 			attributes: [],
+			// 		},
+			// 	],
+			// 	where: { [Op.or]: [{ isPublic: true }, { adminId: userId }] },
+			// 	order: [["id", "ASC"]],
+			// });
+
 			publicGroups = await Group.findAll({
 				include: [
 					{
 						model: User,
-						[Op.or]: [{ where: { id: userId } }],
+						where: { id: userId },
 						attributes: [],
 					},
 				],
-				where: { [Op.and]: [{ isPublic: true }, { adminId: userId }] },
+				where: { isPublic: true },
 				order: [["id", "ASC"]],
 			});
 
@@ -37,32 +49,32 @@ GroupRouter.get(
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
 				let owner = await User.findOne({ where: { id: group.dataValues.adminId }, attributes: ["firstName"] });
 				group.dataValues["adminName"] = owner.firstName;
-				groupIds.push(group.dataValues.id);
+				joinedGroupIds.push(group.dataValues.id);
 			}
-
+			console.log(joinedGroupIds, "JOINED GROUP IDS===============");
 			privateGroups = await Group.findAll({
 				include: [
 					{
 						model: User,
-						[Op.or]: [{ where: { id: userId } }, { adminId: userId }],
+						where: { id: userId },
 						attributes: [],
 					},
 				],
-				where: { [Op.and]: [{ isPublic: false }, { id: { [Op.notIn]: groupIds } }, { adminId: userId }] },
+				where: { [Op.and]: [{ isPublic: false, id: { [Op.notIn]: joinedGroupIds } }] },
 				order: [["id", "ASC"]],
 			});
 			for (group of privateGroups) {
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
 				let owner = await User.findOne({ where: { id: group.dataValues.adminId }, attributes: ["firstName"] });
 				group.dataValues["adminName"] = owner.firstName;
-				groupIds.push(group.dataValues.id);
+				joinedGroupIds.push(group.dataValues.id);
 			}
 		}
 		// after this, it grabs all the unjoined groups.
 		// this grabs any unjoined groups, for logged in/out users.
 
 		let newPublicGroups = await Group.findAll({
-			where: { isPublic: true, id: { [Op.notIn]: groupIds } },
+			where: { isPublic: true, id: { [Op.notIn]: joinedGroupIds } },
 			order: [["id", "ASC"]],
 		});
 
@@ -70,11 +82,10 @@ GroupRouter.get(
 			group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
 			let owner = await User.findOne({ where: { id: group.dataValues.adminId }, attributes: ["firstName"] });
 			group.dataValues["adminName"] = owner.firstName;
-			groupIds.push(group.dataValues.id);
 		}
 
 		let newPrivateGroups = await Group.findAll({
-			where: { isPublic: false, id: { [Op.notIn]: groupIds } },
+			where: { isPublic: false, id: { [Op.notIn]: joinedGroupIds } },
 			order: [["id", "ASC"]],
 		});
 		for (group of newPrivateGroups) {
@@ -83,7 +94,7 @@ GroupRouter.get(
 			group.dataValues["adminName"] = owner.firstName;
 		}
 
-		return res.json({ publicGroups, privateGroups, newPublicGroups, newPrivateGroups });
+		return res.json({ publicGroups, privateGroups, newPublicGroups, newPrivateGroups, joinedGroupIds });
 	})
 );
 
