@@ -21,18 +21,6 @@ GroupRouter.get(
 		// if there's a user logged in, this will get all the currently joined groups
 		// clean up the querying and updating used GroupIds and AdminName into a single func later
 		if (userId) {
-			// publicGroups = await Group.findAll({
-			// 	include: [
-			// 		{
-			// 			model: User,
-			// 			where: { id: userId },
-			// 			attributes: [],
-			// 		},
-			// 	],
-			// 	where: { [Op.or]: [{ isPublic: true }, { adminId: userId }] },
-			// 	order: [["id", "ASC"]],
-			// });
-
 			publicGroups = await Group.findAll({
 				include: [
 					{
@@ -113,3 +101,14 @@ GroupRouter.post(
 );
 
 module.exports = GroupRouter;
+// publicGroups = await Group.findAll({
+// 	include: [
+// 		{
+// 			model: User,
+// 			where: { id: userId },
+// 			attributes: [],
+// 		},
+// 	],
+// 	where: { [Op.or]: [{ isPublic: true }, { adminId: userId }] },
+// 	order: [["id", "ASC"]],
+// });
