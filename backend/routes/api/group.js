@@ -39,7 +39,7 @@ GroupRouter.get(
 				group.dataValues["adminName"] = owner.firstName;
 				joinedGroupIds.push(group.dataValues.id);
 			}
-			console.log(joinedGroupIds, "JOINED GROUP IDS===============");
+
 			privateGroups = await Group.findAll({
 				include: [
 					{

@@ -22,8 +22,7 @@ const GroupPage = ({ isLoaded }) => {
 	function joinGroup(group) {
 		return dispatch(groupActions.joinGroup({ group }))
 			.then((response) => {
-				console.log(response, "response--------------------");
-				history.push(`/${response.id}`);
+				history.go(0);
 				return response;
 			})
 			.catch(async (res) => {
@@ -56,12 +55,14 @@ const GroupPage = ({ isLoaded }) => {
 	function groupRender(group) {
 		if (group?.adminName === user.firstName) {
 			JoinOrEditButton = <EditGroupFormModal group={group} />;
-		} else {
+		} else if (!groups.joinedGroupIds.includes(group.id)) {
 			JoinOrEditButton = (
 				<Button variant="dark" onClick={() => joinGroup(group)}>
 					JOIN GROUP
 				</Button>
 			);
+		} else {
+			JoinOrEditButton = <p>You are a member of this group!</p>;
 		}
 
 		if (group) {

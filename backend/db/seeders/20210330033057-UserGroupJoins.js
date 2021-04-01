@@ -87,10 +87,6 @@ module.exports = {
 				},
 				{
 					userId: 4,
-					groupId: 1,
-				},
-				{
-					userId: 4,
 					groupId: 2,
 				},
 				{
