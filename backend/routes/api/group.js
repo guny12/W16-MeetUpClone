@@ -24,11 +24,11 @@ GroupRouter.get(
 				include: [
 					{
 						model: User,
-						[Op.or]: [{ where: { id: userId } }, { adminId: userId }],
+						[Op.or]: [{ where: { id: userId } }],
 						attributes: [],
 					},
 				],
-				where: { isPublic: true },
+				where: { [Op.and]: [{ isPublic: true }, { adminId: userId }] },
 				order: [["id", "ASC"]],
 			});
 
@@ -47,7 +47,7 @@ GroupRouter.get(
 						attributes: [],
 					},
 				],
-				where: { isPublic: false, id: { [Op.notIn]: groupIds } },
+				where: { [Op.and]: [{ isPublic: false }, { id: { [Op.notIn]: groupIds } }, { adminId: userId }] },
 				order: [["id", "ASC"]],
 			});
 			for (group of privateGroups) {

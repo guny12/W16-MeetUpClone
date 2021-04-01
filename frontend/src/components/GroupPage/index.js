@@ -40,13 +40,10 @@ const GroupPage = ({ isLoaded }) => {
 
 	let EditButton = null;
 
-	console.log(group, "admin Name--------");
 	function groupRender(group) {
 		if (group?.adminName === user.firstName) {
-			console.log("this happened", "--------------------------------------");
 			EditButton = <Button>Edit</Button>;
 		}
-		console.log(EditButton, "EDIT BUTTTON--------");
 		if (group) {
 			return (
 				<>
@@ -69,7 +66,7 @@ const GroupPage = ({ isLoaded }) => {
 			<Image fluid src={"https://cdn.pixabay.com/photo/2014/04/02/16/29/scream-307414__340.png"}></Image>
 			<h1>
 				<NavLink exact to="/home">
-					Whoops! Can't find the group you tried to go to, Click to go home
+					Whoops! Can't find the group you tried to go to, CLICK HERE to go home
 				</NavLink>
 			</h1>
 		</>
