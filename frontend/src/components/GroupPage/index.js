@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./GroupPage.css";
 import DeckCarousel from "../Carousel";
 import Image from "react-bootstrap/Image";
 import { Button, Card, Jumbotron, Container } from "react-bootstrap";
 
-const GroupPage = () => {
+const GroupPage = ({ isLoaded }) => {
 	const history = useHistory();
 	const { groupId } = useParams();
 	const dispatch = useDispatch();
@@ -38,21 +38,39 @@ const GroupPage = () => {
 			group = null;
 	}
 
-	console.log(group, "group");
+	function groupRender(group) {
+		if (group) {
+			return (
+				<>
+					<Image fluid src={`${group?.imgURL}`}></Image>
+					<h1>
+						{group?.name}
+						<p>{group?.description}</p>
+						<p>{`${group?.count} ${group?.count > 1 || group?.count === 0 ? "Members" : "Member"} so far`}</p>
+						<p>{`${group?.isPublic ? "Public" : "Private"} Group`}</p>
+						<p>{`Organized By ${group?.adminName}`}</p>
+					</h1>
+				</>
+			);
+		}
+	}
+
+	let noGroup = (
+		<>
+			<Image fluid src={"https://cdn.pixabay.com/photo/2014/04/02/16/29/scream-307414__340.png"}></Image>
+			<h1>
+				<NavLink exact to="/home">
+					Whoops! Can't find the group you tried to go to, Click to go home
+				</NavLink>
+			</h1>
+		</>
+	);
+
 	return (
 		<div className="groupPage__container">
 			<div className="groupPage__header">
 				<Jumbotron fluid>
-					<Container>
-						<Image fluid src={`${group?.imgURL}`}></Image>
-						<h1>
-							{group?.name}
-							<p>{group?.description}</p>
-							<p>{`${group?.count} ${group?.count > 1 || group?.count === 0 ? "Members" : "Member"} so far`}</p>
-							<p>{`${group?.isPublic ? "Public" : "Private"} Group`}</p>
-							<p>{`Organized By ${user?.firstName}`}</p>
-						</h1>
-					</Container>
+					<Container>{isLoaded && group ? groupRender(group) : noGroup}</Container>
 				</Jumbotron>
 			</div>
 			<div className="groupPage__header-Nav"></div>

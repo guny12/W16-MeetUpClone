@@ -6,7 +6,7 @@ import "./Groups.css";
 import DeckCarousel from "../Carousel";
 import { Button } from "react-bootstrap";
 
-const Groups = () => {
+const Groups = ({ isLoaded }) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
@@ -30,7 +30,8 @@ const Groups = () => {
 				</div>
 			</>
 		);
-	} else {
+	}
+	if (!Object.values(groups.privateGroups).length && isLoaded) {
 		privateGroups = (
 			<>
 				<div className="home__shelf-header">

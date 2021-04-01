@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "./Carousel.css";
 import Slider from "react-slick";
 import { Card } from "react-bootstrap";
@@ -33,7 +34,7 @@ function DeckCarousel({ groups, whatGroup }) {
 	let cards = Object.values(targetGroups).map((group) => (
 		<div key={`card-${whatGroup}${group.id}`}>
 			<Card>
-				<a href={`/${group.id}`}>
+				<NavLink exact to={`/${group.id}`}>
 					<Card.Img variant="top" src={`${group.imgURL}`} />
 					<Card.Body>
 						<Card.Title>{group.name}</Card.Title>
@@ -46,7 +47,7 @@ function DeckCarousel({ groups, whatGroup }) {
 							group?.count > 1 || group?.count === 0 ? "Members" : "Member"
 						} so far`}</small>
 					</Card.Footer>
-				</a>
+				</NavLink>
 			</Card>
 		</div>
 	));

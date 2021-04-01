@@ -1,6 +1,6 @@
 .groupPage__header {
 	background-color: rgb(22, 22, 22);
-	margin-bottom: 0;
+	margin-top: 50px;
 }
 
 .jumbotron {
@@ -11,7 +11,7 @@
 	width: auto;
 	margin-top: -50px;
 	margin-bottom: -50px;
-	border-radius: 110px;
+	border-radius: 150px;
 }
 
 .container {

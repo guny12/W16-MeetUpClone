@@ -27,11 +27,11 @@ function App() {
 					<Route path="/NewGroups" exact>
 						<FindNewGroups />
 					</Route>
-					<Route path="/home" exact>
+					<Route path="/home" isLoaded={isLoaded} exact>
 						<Home />
 					</Route>
-					<Route path="/:groupId">
-						<GroupPage />
+					<Route path="/:groupId" exact>
+						<GroupPage isLoaded={isLoaded} />
 					</Route>
 					<Route path="/">
 						<Redirect to="/home" />
