@@ -1,12 +1,28 @@
 const router = require("express").Router();
-
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
 const groupRouter = require("./group.js");
 
+const asyncHandler = require("express-async-handler");
+const { check, validationResult } = require("express-validator");
+const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
+const { restoreUser, requireAuth } = require("../../utils/auth");
+const { Op, UUID } = require("sequelize");
+
 router.use("/session", sessionRouter);
 router.use("/groups", groupRouter);
 router.use("/users", usersRouter);
+
+router.patch(
+	"/:groupid",
+	requireAuth,
+	asyncHandler(async (req, res) => {
+		const adminId = req.user.id;
+		const { id, name, description, isPublic, imgURL } = req.body;
+		await Group.update({ name, description, isPublic, imgURL }, { where: { id, adminId } });
+		return res.json({ id });
+	})
+);
 
 module.exports = router;
 

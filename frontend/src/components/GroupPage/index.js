@@ -5,6 +5,7 @@ import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./GroupPage.css";
 import DeckCarousel from "../Carousel";
 import Image from "react-bootstrap/Image";
+import EditGroupFormModal from "../EditGroupModal";
 import { Button, Card, Jumbotron, Container } from "react-bootstrap";
 
 const GroupPage = ({ isLoaded }) => {
@@ -42,7 +43,7 @@ const GroupPage = ({ isLoaded }) => {
 
 	function groupRender(group) {
 		if (group?.adminName === user.firstName) {
-			EditButton = <Button>Edit</Button>;
+			EditButton = <EditGroupFormModal group={group} />;
 		}
 		if (group) {
 			return (

@@ -12,10 +12,10 @@ const setGroups = (groups) => ({
 	payload: groups,
 });
 
-// const updateGroup = (group) => ({
-// 	type: UPDATE_GROUP,
-// 	payload: group,
-// });
+const updateGroup = (group) => ({
+	type: UPDATE_GROUP,
+	payload: group,
+});
 
 // const removeGroup = (group) => ({
 // 	type: REMOVE_GROUP,
@@ -34,6 +34,19 @@ export const getGroups = () => async (dispatch) => {
 export const createGroup = (groupData) => async (dispatch) => {
 	const response = await csrfFetch("/api/groups", {
 		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(groupData),
+	});
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(getGroups());
+		return data;
+	}
+};
+
+export const updateGroupData = (groupData) => async (dispatch) => {
+	const response = await csrfFetch("/api/:groupid", {
+		method: "PATCH",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(groupData),
 	});

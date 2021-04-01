@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as groupActions from "../../store/group";
 import { useDispatch } from "react-redux";
-import "./CreateGroupForm.css";
+import "./EditGroupForm.css";
 import { Button, Form } from "react-bootstrap";
 
-const CreateGroupForm = () => {
+const EditGroupForm = ({ group }) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [errors, setErrors] = useState([]);
-	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
-	const [isPublic, setIsPublic] = useState(true);
-	const [imgURL, setimgURL] = useState("");
+	const [name, setName] = useState(group.name);
+	const [description, setDescription] = useState(group.description);
+	const [isPublic, setIsPublic] = useState(group.isPublic);
+	const [imgURL, setimgURL] = useState(group.imgURL);
 	const close = window.document.querySelector("#modal-background");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
-		return dispatch(groupActions.createGroup({ name, description, isPublic, imgURL }))
+		let id = group.id;
+
+		return dispatch(groupActions.updateGroupData({ id, name, description, isPublic, imgURL }))
 			.then((response) => {
-				history.push(`/${response.newGroup.id}`);
+				console.log(response, "RESPONSE====================");
+				history.push(`/${response.id}`);
 				close.click();
 				return response;
 			})
@@ -34,7 +37,7 @@ const CreateGroupForm = () => {
 	};
 
 	return (
-		<Form onSubmit={handleSubmit} className="CreateGroupForm__Form">
+		<Form onSubmit={handleSubmit} className="EditGroupForm__Form">
 			<ul>
 				{errors.map((error, idx) => (
 					<li key={idx}>{error}</li>
@@ -82,14 +85,13 @@ const CreateGroupForm = () => {
 					checked={!isPublic}
 					onChange={() => {
 						setIsPublic(!isPublic);
-						console.log(isPublic, "IS IT PUBLIC?????");
 					}}
 				/>
 			</Form.Group>
 			<Button variant="dark" type="submit">
-				Create Your Group!
+				Update Your Group!
 			</Button>
 		</Form>
 	);
 };
-export default CreateGroupForm;
+export default EditGroupForm;
