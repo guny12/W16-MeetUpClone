@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./Groups.css";
-import VerticalCarousel from "../VerticalCarousel ";
 import DeckCarousel from "../Carousel";
 import { Button } from "react-bootstrap";
 
@@ -30,7 +29,7 @@ const Groups = () => {
 					</Button>
 				</div>
 				<div>
-					<DeckCarousel groups={groups} isPrivate={"yes"} />
+					<DeckCarousel groups={groups} whatGroup={"privateGroups"} />
 				</div>
 			</>
 		);
@@ -64,7 +63,7 @@ const Groups = () => {
 				</Button>
 			</div>
 			<div>
-				<DeckCarousel groups={groups} />
+				<DeckCarousel groups={groups} whatGroup={"publicGroups"} />
 			</div>
 			{signedIn && privateGroups}
 		</div>

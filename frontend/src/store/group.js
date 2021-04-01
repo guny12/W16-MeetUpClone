@@ -47,22 +47,32 @@ export const createGroup = (groupData) => async (dispatch) => {
 const initialState = {
 	publicGroups: {},
 	privateGroups: {},
+	newPublicGroups: {},
+	newPrivateGroups: {},
 };
 
 const groupReducer = (groupState = initialState, action) => {
 	switch (action.type) {
 		case SET_GROUP:
-			let { publicGroups, privateGroups } = action.payload;
-			let newPublicGroups = publicGroups.reduce((newgroups, group) => {
+			let { publicGroups, privateGroups, newPublicGroups, newPrivateGroups } = action.payload;
+			let PublicGroups = publicGroups.reduce((newgroups, group) => {
 				return { ...newgroups, [group.id]: group };
 			}, {});
-			let newPrivateGroups = privateGroups.reduce((newgroups, group) => {
+			let PrivateGroups = privateGroups.reduce((newgroups, group) => {
+				return { ...newgroups, [group.id]: group };
+			}, {});
+			let NewPublicGroups = newPublicGroups.reduce((newgroups, group) => {
+				return { ...newgroups, [group.id]: group };
+			}, {});
+			let NewPrivateGroups = newPrivateGroups.reduce((newgroups, group) => {
 				return { ...newgroups, [group.id]: group };
 			}, {});
 			return {
 				...groupState,
-				publicGroups: newPublicGroups,
-				privateGroups: newPrivateGroups,
+				publicGroups: PublicGroups,
+				privateGroups: PrivateGroups,
+				newPublicGroups: NewPublicGroups,
+				newPrivateGroups: NewPrivateGroups,
 			};
 		case UPDATE_GROUP:
 			return groupState;

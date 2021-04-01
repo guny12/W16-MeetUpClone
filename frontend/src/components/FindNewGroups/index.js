@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./FindNewGroups.css";
-import VerticalCarousel from "../VerticalCarousel ";
+// import VerticalCarousel from "../VerticalCarousel ";
 import DeckCarousel from "../Carousel";
 import { Button } from "react-bootstrap";
 
@@ -13,29 +13,30 @@ const FindNewGroups = () => {
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 	const groups = useSelector((state) => state.groups);
 	const signedIn = useSelector((state) => state.session.user?.id);
-	let isGroups = history.location.pathname === "/groups" ? true : false;
+	let isNewGroups = history.location.pathname === "/NewGroups" ? true : false;
 
-	let canCreateGroup = false;
-	if (signedIn && isGroups) canCreateGroup = true;
+	let newPrivateGroups = null;
 
-	let privateGroups = null;
-	if (Object.values(groups.privateGroups).length > 0) {
-		privateGroups = (
+	if (Object.values(groups.newPrivateGroups).length > 0) {
+		newPrivateGroups = (
 			<>
 				<div className="home__shelf-header">
-					<div>{signedIn && <h1>Joined Private Groups</h1>}</div>
+					<div>
+						<p style={{ marginTop: "50px" }} />
+						<h1>Check Out These Private Groups</h1>
+					</div>
 					<Button variant="dark" onClick={() => history.push("/groups")}>
 						see all
 						{/* YOU NEED TO CHANGE THE PATH TO ALL PRIVATE GROUPS LIST */}
 					</Button>
 				</div>
 				<div>
-					<DeckCarousel groups={groups} isPrivate={"yes"} />
+					<DeckCarousel groups={groups} whatGroup={"newPrivateGroups"} />
 				</div>
 			</>
 		);
 	} else {
-		privateGroups = (
+		newPrivateGroups = (
 			<>
 				<div className="home__shelf-header">
 					<div style={{ marginTop: "50px" }}>
@@ -55,8 +56,8 @@ const FindNewGroups = () => {
 		<div className="home__container">
 			<div className="home__shelf-header">
 				<div>
-					{!signedIn && <h1> Public Groups</h1>}
-					{signedIn && <h1>Joined Public Groups</h1>}
+					{isNewGroups && <h1> Check Out These Public Groups</h1>}
+					{signedIn && !isNewGroups && <h1>Joined Public Groups</h1>}
 				</div>
 				<Button variant="dark" onClick={() => history.push("/groups")}>
 					see all
@@ -64,9 +65,9 @@ const FindNewGroups = () => {
 				</Button>
 			</div>
 			<div>
-				<DeckCarousel groups={groups} />
+				<DeckCarousel groups={groups} whatGroup={"newPublicGroups"} />
 			</div>
-			{signedIn && privateGroups}
+			{newPrivateGroups}
 		</div>
 	);
 };

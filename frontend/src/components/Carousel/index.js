@@ -1,12 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Carousel.css";
-import GroupTiles from "../GroupTilesComponent";
 import Slider from "react-slick";
-import { Card, CardDeck } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
-function DeckCarousel({ groups, isPrivate }) {
-	let { publicGroups, privateGroups } = groups;
-	let targetGroups = isPrivate ? privateGroups : publicGroups;
+function DeckCarousel({ groups, whatGroup }) {
+	let { publicGroups, privateGroups, newPrivateGroups, newPublicGroups } = groups;
+	let targetGroups;
+
+	switch (whatGroup) {
+		case "privateGroups":
+			targetGroups = privateGroups;
+			break;
+		case "newPrivateGroups":
+			targetGroups = newPrivateGroups;
+			break;
+		case "newPublicGroups":
+			targetGroups = newPublicGroups;
+			break;
+		default:
+			targetGroups = publicGroups;
+	}
 
 	const settings = {
 		dots: true,
@@ -18,8 +31,8 @@ function DeckCarousel({ groups, isPrivate }) {
 	};
 
 	let cards = Object.values(targetGroups).map((group) => (
-		<div>
-			<Card key={`card-${group.id}`}>
+		<div key={`card-${whatGroup}${group.id}`}>
+			<Card>
 				<a href={`/${group.id}`}>
 					<Card.Img variant="top" src={`${group.imgURL}`} />
 					<Card.Body>
