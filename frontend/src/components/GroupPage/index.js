@@ -21,6 +21,18 @@ const GroupPage = ({ isLoaded }) => {
 	// if groupId isn't one of the keys in that group, !! will return false.
 	// if it is inside that group, !! will return true.
 	// console.log(!!publicGroups[`${groupId}`], "GROUP HERE------------------");
+	function joinGroup(group) {
+		return dispatch(groupActions.joinGroup({ group }))
+			.then((response) => {
+				console.log(response, "response--------------------");
+				history.push(`/${response.id}`);
+				return response;
+			})
+			.catch(async (res) => {
+				throw res;
+			});
+	}
+
 	let group;
 	switch (true) {
 		case !!newPrivateGroups[`${groupId}`]:
@@ -40,12 +52,16 @@ const GroupPage = ({ isLoaded }) => {
 	}
 
 	let JoinOrEditButton = null;
-
 	function groupRender(group) {
 		if (group?.adminName === user.firstName) {
 			JoinOrEditButton = <EditGroupFormModal group={group} />;
 		} else {
-			JoinOrEditButton = <Button> JOIN GROUP</Button>;
+			JoinOrEditButton = (
+				<Button variant="dark" onClick={() => joinGroup(group)}>
+					{" "}
+					JOIN GROUP
+				</Button>
+			);
 		}
 
 		if (group) {

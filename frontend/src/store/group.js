@@ -32,7 +32,7 @@ export const getGroups = () => async (dispatch) => {
 };
 
 export const createGroup = (groupData) => async (dispatch) => {
-	const response = await csrfFetch("/api/groups", {
+	const response = await csrfFetch("/api/:groupid", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(groupData),
@@ -40,6 +40,18 @@ export const createGroup = (groupData) => async (dispatch) => {
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(getGroups());
+		return data;
+	}
+};
+
+export const joinGroup = (groupData) => async (dispatch) => {
+	const response = await csrfFetch("/api/groups", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(groupData),
+	});
+	if (response.ok) {
+		const data = await response.json();
 		return data;
 	}
 };

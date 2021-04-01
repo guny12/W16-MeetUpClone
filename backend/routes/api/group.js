@@ -6,6 +6,7 @@ const { restoreUser, requireAuth } = require("../../utils/auth");
 const { Op } = require("sequelize");
 const GroupRouter = express.Router();
 
+// route to get groups
 GroupRouter.get(
 	"/",
 	restoreUser,
@@ -86,20 +87,17 @@ GroupRouter.get(
 	})
 );
 
+// route to set UserGroup Joins
 GroupRouter.post(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
-		const adminId = req.user.id;
+		const userId = req.user.id;
+		const { id } = req.body.group;
+		const alreadyJoined = await UserGroupJoin.count({ where: { userId, groupId: id } });
+		if (!alreadyJoined) await UserGroupJoin.create({ userId, groupId: id });
 
-		const { name, description, isPublic, imgURL } = req.body;
-		const newGroup = await Group.create({ adminId, name, description, isPublic, imgURL });
-		await UserGroupJoin.create({ userId: adminId, groupId: newGroup.id });
-		// console.log(
-		// 	`${req.headers["x-forwarded-proto"]}//${req.headers["x-forwarded-host"]}/${newGroup.id}`,
-		// 	"HEADERS HERE MAN------------"
-		// );
-		return res.json({ newGroup });
+		return res.json({ id });
 	})
 );
 
