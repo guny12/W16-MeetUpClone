@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import LoginFormModal from "../LoginFormModal";
 import SignUpModal from "../SignUpModal";
-import FindNewGroups from "../FindNewGroups";
+import CreateGroupFormModal from "../CreateGroupModal";
 import "./Navigation.css";
 import { Nav, Navbar } from "react-bootstrap";
 
@@ -14,7 +14,11 @@ function Navigation({ isLoaded }) {
 
 	let sessionLinks;
 	if (sessionUser) {
-		sessionLinks = <ProfileButton user={sessionUser} />;
+		sessionLinks = (
+			<>
+				<CreateGroupFormModal /> <div style={{ marginRight: "20px" }}></div> <ProfileButton user={sessionUser} />
+			</>
+		);
 	} else {
 		sessionLinks = (
 			<>

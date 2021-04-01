@@ -10,11 +10,11 @@ function CreateGroupFormModal() {
 	return (
 		<>
 			<Button variant="dark" onClick={() => setShowModal(true)}>
-				Log In
+				Create A Group
 			</Button>
 			{showModal && (
 				<Modal onClose={() => setShowModal(false)}>
-					<Form />
+					<CreateGroupForm />
 				</Modal>
 			)}
 		</>
