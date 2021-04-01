@@ -19,8 +19,15 @@ GroupRouter.get(
 
 		// if there's a user logged in, this will get all the currently joined groups
 		if (userId) {
+			console.log("START -------PUBLIC GROUPS-----------------");
 			publicGroups = await Group.findAll({
-				include: [{ model: User, where: { id: userId }, attributes: [] }],
+				include: [
+					{
+						model: User,
+						[Op.or]: [{ where: { id: userId } }, { adminId: userId }],
+						attributes: [],
+					},
+				],
 				where: { isPublic: true },
 				order: [["id", "ASC"]],
 			});
@@ -29,9 +36,15 @@ GroupRouter.get(
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
 				groupIds.push(group.dataValues.id);
 			}
-
+			console.log(publicGroups, "PUBLIC GROUPS-----------------");
 			privateGroups = await Group.findAll({
-				include: [{ model: User, where: { id: userId }, attributes: [] }],
+				include: [
+					{
+						model: User,
+						[Op.or]: [{ where: { id: userId } }, { adminId: userId }],
+						attributes: [],
+					},
+				],
 				where: { isPublic: false, id: { [Op.notIn]: groupIds } },
 				order: [["id", "ASC"]],
 			});

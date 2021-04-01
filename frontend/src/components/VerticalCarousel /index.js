@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Carousel.css";
-import GroupTiles from "../GroupTilesComponent";
 import Slider from "react-slick";
 import { Card, CardDeck } from "react-bootstrap";
 

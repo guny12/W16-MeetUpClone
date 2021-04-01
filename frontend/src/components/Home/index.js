@@ -6,6 +6,7 @@ import "./Home.css";
 // import { Button, Carousel } from "react-bootstrap";
 // import DeckCarousel from "../Carousel";
 import Groups from "../Groups";
+import FindNewGroups from "../FindNewGroups";
 
 const Home = () => {
 	// const history = useHistory();
@@ -17,7 +18,9 @@ const Home = () => {
 	return (
 		<div>
 			{signedIn && <h1>Welcome back! Your Upcoming and other Nearby Events Here</h1>}
-			<Groups></Groups>
+			{!signedIn && <h1>Put a message here explaining app/login/signup</h1>}
+			{signedIn && <Groups></Groups>}
+			{!signedIn && <FindNewGroups />}
 		</div>
 	);
 };

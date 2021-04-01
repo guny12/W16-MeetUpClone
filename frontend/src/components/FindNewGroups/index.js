@@ -3,7 +3,6 @@ import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./FindNewGroups.css";
-// import VerticalCarousel from "../VerticalCarousel ";
 import DeckCarousel from "../Carousel";
 import { Button } from "react-bootstrap";
 
@@ -15,7 +14,8 @@ const FindNewGroups = () => {
 	const signedIn = useSelector((state) => state.session.user?.id);
 	let isNewGroups = history.location.pathname === "/NewGroups" ? true : false;
 
-	let newPrivateGroups = null;
+	let newPrivateGroups = null,
+		newPublicGroups = null;
 
 	if (Object.values(groups.newPrivateGroups).length > 0) {
 		newPrivateGroups = (
@@ -40,11 +40,46 @@ const FindNewGroups = () => {
 			<>
 				<div className="home__shelf-header">
 					<div style={{ marginTop: "50px" }}>
-						<h1>Joined Private Groups</h1>
+						<h1>Check Out These Private Groups</h1>
 						<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
-							You Haven't Joined Any Private Groups Yet!
+							You've Already Joined Every Private Group!
 							<p style={{ margin: "50px" }} />
-							<p> Go Join Some or Make Your Own!</p>
+							<p> Go Make Your Own!</p>
+						</h1>
+					</div>
+				</div>
+			</>
+		);
+	}
+
+	if (Object.values(groups.newPublicGroups).length > 0) {
+		newPublicGroups = (
+			<>
+				<div className="home__shelf-header">
+					<div>
+						<p style={{ marginTop: "50px" }} />
+						<h1>Check Out These Public Groups</h1>
+					</div>
+					<Button variant="dark" onClick={() => history.push("/groups")}>
+						see all
+						{/* YOU NEED TO CHANGE THE PATH TO ALL PRIVATE GROUPS LIST */}
+					</Button>
+				</div>
+				<div>
+					<DeckCarousel groups={groups} whatGroup={"newPublicGroups"} />
+				</div>
+			</>
+		);
+	} else {
+		newPublicGroups = (
+			<>
+				<div className="home__shelf-header">
+					<div style={{ marginTop: "50px" }}>
+						<h1>Check Out These Public Groups</h1>
+						<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
+							You've Already Joined Every Public Group!
+							<p style={{ margin: "50px" }} />
+							<p> Go Make Your Own!</p>
 						</h1>
 					</div>
 				</div>
@@ -54,19 +89,7 @@ const FindNewGroups = () => {
 
 	return (
 		<div className="home__container">
-			<div className="home__shelf-header">
-				<div>
-					{isNewGroups && <h1> Check Out These Public Groups</h1>}
-					{signedIn && !isNewGroups && <h1>Joined Public Groups</h1>}
-				</div>
-				<Button variant="dark" onClick={() => history.push("/groups")}>
-					see all
-					{/* YOU NEED TO CHANGE THE PATH TO ALL PUBLIC GROUPS LIST */}
-				</Button>
-			</div>
-			<div>
-				<DeckCarousel groups={groups} whatGroup={"newPublicGroups"} />
-			</div>
+			{newPublicGroups}
 			{newPrivateGroups}
 		</div>
 	);
