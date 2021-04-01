@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
@@ -38,7 +38,15 @@ const GroupPage = ({ isLoaded }) => {
 			group = null;
 	}
 
+	let EditButton = null;
+
+	console.log(group, "admin Name--------");
 	function groupRender(group) {
+		if (group?.adminName === user.firstName) {
+			console.log("this happened", "--------------------------------------");
+			EditButton = <Button>Edit</Button>;
+		}
+		console.log(EditButton, "EDIT BUTTTON--------");
 		if (group) {
 			return (
 				<>
@@ -49,6 +57,7 @@ const GroupPage = ({ isLoaded }) => {
 						<p>{`${group?.count} ${group?.count > 1 || group?.count === 0 ? "Members" : "Member"} so far`}</p>
 						<p>{`${group?.isPublic ? "Public" : "Private"} Group`}</p>
 						<p>{`Organized By ${group?.adminName}`}</p>
+						{EditButton}
 					</h1>
 				</>
 			);

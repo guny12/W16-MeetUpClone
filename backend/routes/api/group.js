@@ -18,6 +18,7 @@ GroupRouter.get(
 			groupIds = [];
 
 		// if there's a user logged in, this will get all the currently joined groups
+		// clean up the querying and updating used GroupIds and AdminName into a single func later
 		if (userId) {
 			publicGroups = await Group.findAll({
 				include: [
@@ -33,11 +34,7 @@ GroupRouter.get(
 
 			for (group of publicGroups) {
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
-				console.log(group.dataValues.adminId, "GROUP DATAVALUES--------------------");
-				let owner = await User.findOne({
-					where: { id: group.dataValues.adminId },
-					attributes: ["firstName"],
-				});
+				let owner = await User.findOne({ where: { id: group.dataValues.adminId }, attributes: ["firstName"] });
 				group.dataValues["adminName"] = owner.firstName;
 				groupIds.push(group.dataValues.id);
 			}
@@ -55,6 +52,8 @@ GroupRouter.get(
 			});
 			for (group of privateGroups) {
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
+				let owner = await User.findOne({ where: { id: group.dataValues.adminId }, attributes: ["firstName"] });
+				group.dataValues["adminName"] = owner.firstName;
 				groupIds.push(group.dataValues.id);
 			}
 		}
@@ -68,6 +67,8 @@ GroupRouter.get(
 
 		for (group of newPublicGroups) {
 			group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
+			let owner = await User.findOne({ where: { id: group.dataValues.adminId }, attributes: ["firstName"] });
+			group.dataValues["adminName"] = owner.firstName;
 			groupIds.push(group.dataValues.id);
 		}
 
@@ -77,6 +78,8 @@ GroupRouter.get(
 		});
 		for (group of newPrivateGroups) {
 			group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
+			let owner = await User.findOne({ where: { id: group.dataValues.adminId }, attributes: ["firstName"] });
+			group.dataValues["adminName"] = owner.firstName;
 		}
 
 		return res.json({ publicGroups, privateGroups, newPublicGroups, newPrivateGroups });
@@ -99,4 +102,5 @@ GroupRouter.post(
 		return res.json({ newGroup });
 	})
 );
+
 module.exports = GroupRouter;
