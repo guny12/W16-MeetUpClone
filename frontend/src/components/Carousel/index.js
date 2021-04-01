@@ -11,8 +11,8 @@ function DeckCarousel({ groups, isPrivate }) {
 	const settings = {
 		dots: true,
 		infinite: true,
-		speed: 500,
-		slidesToScroll: 3,
+		speed: 1250,
+		slidesToScroll: 5,
 		slidesToShow: 5,
 		adaptiveHeight: true,
 	};

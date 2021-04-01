@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import * as sessionActions from "./store/session";
 import Groups from "../src/components/Groups";
+import FindNewGroups from "../src/components/FindNewGroups";
 import Home from "../src/components/Home";
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
 				<Switch>
 					<Route path="/groups" exact>
 						<Groups />
+					</Route>
+					<Route path="/NewGroups" exact>
+						<FindNewGroups />
 					</Route>
 					<Route path="/home" exact>
 						<Home />

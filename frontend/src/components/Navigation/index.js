@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import LoginFormModal from "../LoginFormModal";
 import SignUpModal from "../SignUpModal";
+import FindNewGroups from "../FindNewGroups";
 import "./Navigation.css";
 import { Nav, Navbar } from "react-bootstrap";
 
@@ -19,6 +20,7 @@ function Navigation({ isLoaded }) {
 			<>
 				<LoginFormModal />
 				<SignUpModal />
+				<Nav.Link exact="true" href="/NewGroups" />
 			</>
 		);
 	}
@@ -29,8 +31,13 @@ function Navigation({ isLoaded }) {
 				<Nav.Link exact="true" href="/home">
 					Home
 				</Nav.Link>
-				<Nav.Link exact="true" href="/groups">
-					Groups
+				{sessionUser && (
+					<Nav.Link exact="true" href="/groups">
+						Joined Groups
+					</Nav.Link>
+				)}
+				<Nav.Link exact="true" href="/NewGroups">
+					Find New Groups
 				</Nav.Link>
 				{isLoaded && sessionLinks}
 			</Nav>

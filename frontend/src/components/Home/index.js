@@ -10,13 +10,14 @@ import Groups from "../Groups";
 const Home = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const signedIn = useSelector((state) => state.session.user?.id);
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 	const groups = useSelector((state) => state.groups);
 
 	return (
 		<div>
-			<h1>Welcome back! Your Upcoming Events Here</h1>
-			<Groups></Groups>{" "}
+			{signedIn && <h1>Welcome back! Your Upcoming and other Nearby Events Here</h1>}
+			<Groups></Groups>
 		</div>
 	);
 };
