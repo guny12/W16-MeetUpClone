@@ -18,7 +18,7 @@ const CreateGroupForm = () => {
 		e.preventDefault();
 		setErrors([]);
 		return dispatch(groupActions.createGroup({ name, description, isPublic, imgURL }))
-			.then((response) => (response.ok ? history.push("/:groupId") : response))
+			.then((response) => history.push(`/${response.newGroup.id}`))
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data.errors.includes("name must be unique"))

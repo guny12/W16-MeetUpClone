@@ -81,13 +81,15 @@ GroupRouter.post(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
-		// send the userId in req, to pull out the groups that they are a part of.
 		const adminId = req.user.id;
-		console.log(req.body, "THAT REQ BODY THO==================");
-		const { name, description, isPublic, imgURL } = req.body;
 
+		const { name, description, isPublic, imgURL } = req.body;
 		const newGroup = await Group.create({ adminId, name, description, isPublic, imgURL });
-		return res.redirect(`${req.baseUrl}/${newGroup.id}`);
+		// console.log(
+		// 	`${req.headers["x-forwarded-proto"]}//${req.headers["x-forwarded-host"]}/${newGroup.id}`,
+		// 	"HEADERS HERE MAN------------"
+		// );
+		return res.json({ newGroup });
 	})
 );
 module.exports = GroupRouter;

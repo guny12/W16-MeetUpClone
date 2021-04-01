@@ -39,7 +39,8 @@ export const createGroup = (groupData) => async (dispatch) => {
 	});
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(setGroups(data));
+		dispatch(getGroups());
+		return data;
 	}
 };
 
