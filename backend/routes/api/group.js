@@ -2,7 +2,7 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { check, validationResult } = require("express-validator");
 const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
-const { restoreUser } = require("../../utils/auth");
+const { restoreUser, requireAuth } = require("../../utils/auth");
 const { Op } = require("sequelize");
 const GroupRouter = express.Router();
 
@@ -19,7 +19,6 @@ GroupRouter.get(
 
 		// if there's a user logged in, this will get all the currently joined groups
 		if (userId) {
-			console.log("START -------PUBLIC GROUPS-----------------");
 			publicGroups = await Group.findAll({
 				include: [
 					{
@@ -36,7 +35,7 @@ GroupRouter.get(
 				group.dataValues["count"] = await UserGroupJoin.count({ where: { groupId: group.dataValues.id } });
 				groupIds.push(group.dataValues.id);
 			}
-			console.log(publicGroups, "PUBLIC GROUPS-----------------");
+
 			privateGroups = await Group.findAll({
 				include: [
 					{
@@ -78,4 +77,17 @@ GroupRouter.get(
 	})
 );
 
+GroupRouter.post(
+	"/",
+	requireAuth,
+	asyncHandler(async (req, res) => {
+		// send the userId in req, to pull out the groups that they are a part of.
+		let adminId = req.user.id;
+		console.log(req.body, "THAT REQ BODY THO==================");
+		const { name, description, isPublic, imgURL } = req.body;
+
+		let newGroup = await Group.create({ adminId, name, description, isPublic, imgURL });
+		return res.redirect(`${req.baseUrl}/${id}`);
+	})
+);
 module.exports = GroupRouter;

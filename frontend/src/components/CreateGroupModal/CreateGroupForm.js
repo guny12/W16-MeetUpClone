@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import * as sessionActions from "../../store/session";
 import * as groupActions from "../../store/group";
 import { useDispatch } from "react-redux";
 import "./CreateGroupForm.css";
@@ -10,7 +9,7 @@ const CreateGroupForm = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [errors, setErrors] = useState([]);
-	const [groupName, setGroupName] = useState("");
+	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [isPublic, setIsPublic] = useState(false);
 	const [imgURL, setimgURL] = useState("");
@@ -18,12 +17,12 @@ const CreateGroupForm = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
-		// return dispatch(sessionActions.login({ credential, password }))
-		// 	.then((response) => (response.ok ? history.push("/home") : response))
-		// 	.catch(async (res) => {
-		// 		const data = await res.json();
-		// 		if (data && data.errors) setErrors(data.errors);
-		// 	});
+		return dispatch(groupActions.createGroup({ name, description, isPublic, imgURL }))
+			.then((response) => (response.ok ? history.push("/:groupId") : response))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(data.errors);
+			});
 	};
 
 	return (
@@ -37,10 +36,10 @@ const CreateGroupForm = () => {
 				<Form.Label>Enter Group Name Here</Form.Label>
 				<Form.Control
 					type="text"
-					value={groupName}
-					onChange={(e) => setGroupName(e.target.value)}
+					value={name}
+					onChange={(e) => setName(e.target.value)}
 					required
-					placeholder="Group Name..."
+					placeholder="Awesome Group Name Here..."
 				/>
 			</Form.Group>
 			<Form.Group controlId="Form.ControlTextarea">
@@ -50,7 +49,8 @@ const CreateGroupForm = () => {
 					rows={10}
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
-					placeholder="Description..."
+					placeholder="Enter Good Group Description Here...                                                                                                For Example:                                                                                            What will the Group do? What kind of people are you hoping will join? "
+					required
 				/>
 			</Form.Group>
 			<Form>
