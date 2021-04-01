@@ -9,6 +9,7 @@ import Home from "../src/components/Home";
 function App() {
 	const dispatch = useDispatch();
 	const [isLoaded, setIsLoaded] = useState(false);
+
 	useEffect(() => {
 		dispatch(sessionActions.restoreUser()).then((response) => (response.ok ? setIsLoaded(true) : null));
 	}, [dispatch]);

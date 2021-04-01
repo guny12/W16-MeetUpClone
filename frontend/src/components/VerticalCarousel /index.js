@@ -16,12 +16,6 @@ function VerticalCarousel({ groups, isPrivate }) {
 		vertical: true,
 		verticalSwiping: true,
 		swipeToSlide: true,
-		beforeChange: function (currentSlide, nextSlide) {
-			console.log("before change", currentSlide, nextSlide);
-		},
-		afterChange: function (currentSlide) {
-			console.log("after change", currentSlide);
-		},
 	};
 
 	let cards = Object.values(targetGroups).map((group) => (
@@ -30,9 +24,27 @@ function VerticalCarousel({ groups, isPrivate }) {
 				<a href={`/${group.id}`}>
 					<Card.Img src={`${group.imgURL}`} alt="Card image" />
 					<Card.ImgOverlay>
-						<Card.Title style={{ color: "white", fontSize: "larger" }}>{group.name}</Card.Title>
+						<Card.Title
+							style={{
+								color: "white",
+								fontSize: "larger",
+								backgroundColor: "rgba(7, 7, 7, 0.4)",
+								borderRadius: "5px",
+							}}
+						>
+							{group.name}
+						</Card.Title>
 						<Card.Text>
-							<span style={{ color: "white", fontSize: "larger" }}>{group.description}</span>
+							<span
+								style={{
+									borderRadius: "5px",
+									color: "white",
+									fontSize: "larger",
+									backgroundColor: "rgba(7, 7, 7, 0.4)",
+								}}
+							>
+								{`${group.count} Members`}
+							</span>
 						</Card.Text>
 					</Card.ImgOverlay>
 				</a>

@@ -13,25 +13,6 @@ const Home = () => {
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 	const groups = useSelector((state) => state.groups);
 
-	let privateGroups = null;
-	if (Object.values(groups.privateGroups).length > 0) {
-		privateGroups = (
-			<>
-				<div className="home__shelf-header">
-					<div>
-						<h1>Private Groups</h1>
-					</div>
-					<Button variant="dark" onClick={() => history.push("/events")}>
-						see all
-					</Button>
-				</div>
-				<div>
-					<DeckCarousel groups={groups} isPrivate={"yes"} />
-				</div>
-			</>
-		);
-	}
-
 	return <Groups></Groups>;
 };
 
