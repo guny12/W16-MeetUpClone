@@ -12,10 +12,10 @@ const setGroups = (groups) => ({
 	payload: groups,
 });
 
-const updateGroup = (group) => ({
-	type: UPDATE_GROUP,
-	payload: group,
-});
+// const updateGroup = (group) => ({
+// 	type: UPDATE_GROUP,
+// 	payload: group,
+// });
 
 // const removeGroup = (group) => ({
 // 	type: REMOVE_GROUP,
@@ -88,10 +88,10 @@ const groupReducer = (groupState = initialState, action) => {
 				newPublicGroups: NewPublicGroups,
 				newPrivateGroups: NewPrivateGroups,
 			};
-		case UPDATE_GROUP:
-			return groupState;
-		case REMOVE_GROUP:
-			return groupState;
+		// case UPDATE_GROUP:
+		// 	return groupState;
+		// case REMOVE_GROUP:
+		// 	return groupState;
 		default:
 			return groupState;
 	}

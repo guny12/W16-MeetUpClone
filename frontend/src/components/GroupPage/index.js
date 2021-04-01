@@ -39,12 +39,15 @@ const GroupPage = ({ isLoaded }) => {
 			group = null;
 	}
 
-	let EditButton = null;
+	let JoinOrEditButton = null;
 
 	function groupRender(group) {
 		if (group?.adminName === user.firstName) {
-			EditButton = <EditGroupFormModal group={group} />;
+			JoinOrEditButton = <EditGroupFormModal group={group} />;
+		} else {
+			JoinOrEditButton = <Button> JOIN GROUP</Button>;
 		}
+
 		if (group) {
 			return (
 				<>
@@ -55,7 +58,7 @@ const GroupPage = ({ isLoaded }) => {
 						<p>{`${group?.count} ${group?.count > 1 || group?.count === 0 ? "Members" : "Member"} so far`}</p>
 						<p>{`${group?.isPublic ? "Public" : "Private"} Group`}</p>
 						<p>{`Organized By ${group?.adminName}`}</p>
-						{EditButton}
+						{JoinOrEditButton}
 					</h1>
 				</>
 			);

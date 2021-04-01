@@ -9,7 +9,7 @@ function EditGroupFormModal({ group }) {
 
 	return (
 		<>
-			<Button variant="dark" onClick={() => setShowModal(true)}>
+			<Button style={{ margin: "20px" }} variant="dark" onClick={() => setShowModal(true)}>
 				Edit Your Group
 			</Button>
 			{showModal && (
