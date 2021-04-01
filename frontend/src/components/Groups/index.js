@@ -14,9 +14,6 @@ const Groups = () => {
 	const signedIn = useSelector((state) => state.session.user?.id);
 	let isGroups = history.location.pathname === "/groups" ? true : false;
 
-	let canCreateGroup = false;
-	if (signedIn && isGroups) canCreateGroup = true;
-
 	let privateGroups = null;
 	if (Object.values(groups.privateGroups).length > 0) {
 		privateGroups = (

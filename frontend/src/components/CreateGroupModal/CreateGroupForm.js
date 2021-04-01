@@ -11,7 +11,7 @@ const CreateGroupForm = () => {
 	const [errors, setErrors] = useState([]);
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
-	const [isPublic, setIsPublic] = useState(false);
+	const [isPublic, setIsPublic] = useState(true);
 	const [imgURL, setimgURL] = useState("");
 
 	const handleSubmit = (e) => {
@@ -74,7 +74,7 @@ const CreateGroupForm = () => {
 				<Form.Check
 					type="checkbox"
 					label="Make Group Private"
-					checked={isPublic}
+					checked={!isPublic}
 					onChange={() => {
 						setIsPublic(!isPublic);
 						console.log(isPublic, "IS IT PUBLIC?????");

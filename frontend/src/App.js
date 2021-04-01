@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Groups from "../src/components/Groups";
 import FindNewGroups from "../src/components/FindNewGroups";
 import Home from "../src/components/Home";
+import GroupPage from "../src/components/GroupPage";
 
 function App() {
 	const dispatch = useDispatch();
@@ -28,6 +29,9 @@ function App() {
 					</Route>
 					<Route path="/home" exact>
 						<Home />
+					</Route>
+					<Route path="/:groupId">
+						<GroupPage />
 					</Route>
 					<Route path="/">
 						<Redirect to="/home" />

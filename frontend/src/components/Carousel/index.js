@@ -42,7 +42,9 @@ function DeckCarousel({ groups, whatGroup }) {
 						</Card.Text>
 					</Card.Body>
 					<Card.Footer>
-						<small className="text-muted">{`${group.count} Members`}</small>
+						<small className="text-muted">{`${group?.count} ${
+							group?.count > 1 || group?.count === 0 ? "Members" : "Member"
+						} so far`}</small>
 					</Card.Footer>
 				</a>
 			</Card>
