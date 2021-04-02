@@ -21,7 +21,6 @@ const EditGroupForm = ({ group }) => {
 		return dispatch(groupActions.deleteGroup({ id }))
 			.then((response) => {
 				history.push(`/home`);
-				close.click();
 				return response;
 			})
 			.catch(async (res) => {

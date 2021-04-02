@@ -89,7 +89,7 @@ const GroupPage = ({ isLoaded }) => {
 			<Image fluid src={"https://cdn.pixabay.com/photo/2014/04/02/16/29/scream-307414__340.png"}></Image>
 			<h1>
 				<NavLink exact to="/home">
-					Whoops! Can't find the group you tried to go to, CLICK HERE to go home
+					Whoops! Can't find the group you tried to go to. It may have been deleted by the admin. CLICK HERE to go home.
 				</NavLink>
 			</h1>
 		</>
