@@ -28,11 +28,14 @@ router.delete(
 	"/:groupid",
 	requireAuth,
 	asyncHandler(async (req, res) => {
-		const adminId = req.user.id;
+		const currentId = req.user.id;
 		const { id } = req.body;
 		const targetGroup = await Group.findByPk(id);
-		console.log(targetGroup, "TARGET GROUP HERE---------------------------------------------");
-		if (targetGroup.adminId === adminId) await targetGroup.destroy();
+		if (targetGroup.adminId === currentId) {
+			const targetUserJoinGroups = await UserGroupJoin.findAll({ where: { groupId: targetGroup.id } });
+			for (userGroupJoin of targetUserJoinGroups) await userGroupJoin.destroy();
+			await targetGroup.destroy();
+		}
 		return res.json({ id });
 	})
 );
