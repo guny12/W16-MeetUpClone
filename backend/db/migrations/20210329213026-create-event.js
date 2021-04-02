@@ -43,6 +43,7 @@ module.exports = {
 			},
 			imgURL: {
 				type: Sequelize.STRING,
+				defaultValue: "/static/media/CookOffPic.343f3730.png",
 			},
 			createdAt: {
 				allowNull: false,

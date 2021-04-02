@@ -18,6 +18,9 @@ const CreateGroupForm = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
+
+		if (!imgURL) setimgURL("/static/media/CookOffPic.343f3730.png");
+		console.log(imgURL, "AFTER SETTING URL------------------");
 		return dispatch(groupActions.createGroup({ name, description, isPublic, imgURL }))
 			.then((response) => {
 				history.push(`/${response.newGroup.id}`);

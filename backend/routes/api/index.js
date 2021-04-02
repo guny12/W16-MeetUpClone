@@ -29,14 +29,9 @@ router.post(
 	requireAuth,
 	asyncHandler(async (req, res) => {
 		const adminId = req.user.id;
-
 		const { name, description, isPublic, imgURL } = req.body;
 		const newGroup = await Group.create({ adminId, name, description, isPublic, imgURL });
 		await UserGroupJoin.create({ userId: adminId, groupId: newGroup.id });
-		// console.log(
-		// 	`${req.headers["x-forwarded-proto"]}//${req.headers["x-forwarded-host"]}/${newGroup.id}`,
-		// 	"HEADERS HERE MAN------------"
-		// );
 		return res.json({ newGroup });
 	})
 );

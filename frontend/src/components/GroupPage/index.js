@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./GroupPage.css";
 import DeckCarousel from "../Carousel";
+import * as url from "../../images/CookOffPic.png";
 import Image from "react-bootstrap/Image";
 import EditGroupFormModal from "../EditGroupModal";
 import { Button, Card, Jumbotron, Container } from "react-bootstrap";
@@ -19,6 +20,7 @@ const GroupPage = ({ isLoaded }) => {
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 
 	console.log(groups, "GROUPS----------------------------");
+
 	function joinGroup(group) {
 		return dispatch(groupActions.joinGroup({ group }))
 			.then((response) => {
