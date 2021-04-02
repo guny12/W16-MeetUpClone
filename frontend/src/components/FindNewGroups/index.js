@@ -12,85 +12,91 @@ const FindNewGroups = () => {
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 	const groups = useSelector((state) => state.groups);
 	const signedIn = useSelector((state) => state.session.user?.id);
-	let isNewGroups = history.location.pathname === "/NewGroups" ? true : false;
-
+	// let isNewGroups = history.location.pathname === "/NewGroups" ? true : false;
+	let isLoaded = groups.joinedGroupIds.length > 0 || Object.values(groups.newPublicGroups).length > 1;
 	let newPrivateGroups = null,
 		newPublicGroups = null;
 
-	if (Object.values(groups.newPrivateGroups).length > 0) {
-		newPrivateGroups = (
-			<>
-				<div className="home__shelf-header">
+	if (isLoaded) {
+		if (Object.values(groups.newPrivateGroups).length > 0) {
+			newPrivateGroups = (
+				<>
+					<div className="home__shelf-header">
+						<div>
+							<p style={{ marginTop: "50px" }} />
+							<h1>Check Out These Private Groups</h1>
+						</div>
+						<Button variant="dark" onClick={() => history.push("/groups")}>
+							see all
+							{/* YOU NEED TO CHANGE THE PATH TO ALL PRIVATE GROUPS LIST */}
+						</Button>
+					</div>
 					<div>
-						<p style={{ marginTop: "50px" }} />
-						<h1>Check Out These Private Groups</h1>
+						<DeckCarousel groups={groups} whatGroup={"newPrivateGroups"} />
 					</div>
-					<Button variant="dark" onClick={() => history.push("/groups")}>
-						see all
-						{/* YOU NEED TO CHANGE THE PATH TO ALL PRIVATE GROUPS LIST */}
-					</Button>
-				</div>
-				<div>
-					<DeckCarousel groups={groups} whatGroup={"newPrivateGroups"} />
-				</div>
-			</>
-		);
-	} else {
-		newPrivateGroups = (
-			<>
-				<div className="home__shelf-header">
-					<div style={{ marginTop: "50px" }}>
-						<h1>Check Out These Private Groups</h1>
-						<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
-							You've Already Joined Every Private Group!
-							<p style={{ margin: "50px" }} />
-							<p> Go Make Your Own!</p>
-						</h1>
+				</>
+			);
+		} else {
+			newPrivateGroups = (
+				<>
+					<div className="home__shelf-header">
+						<div style={{ marginTop: "50px" }}>
+							<h1>Check Out These Private Groups</h1>
+							<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
+								You've Already Joined Every Private Group!
+								<p style={{ margin: "50px" }} />
+								<p> Go Make Your Own!</p>
+							</h1>
+						</div>
 					</div>
-				</div>
-			</>
-		);
+				</>
+			);
+		}
 	}
 
-	if (Object.values(groups.newPublicGroups).length > 0) {
-		newPublicGroups = (
-			<>
-				<div className="home__shelf-header">
+	if (isLoaded) {
+		if (Object.values(groups.newPublicGroups).length > 0) {
+			newPublicGroups = (
+				<>
+					<div className="home__shelf-header">
+						<div>
+							<p style={{ marginTop: "50px" }} />
+							<h1>Check Out These Public Groups</h1>
+						</div>
+						<Button variant="dark" onClick={() => history.push("/groups")}>
+							see all
+							{/* YOU NEED TO CHANGE THE PATH TO ALL PRIVATE GROUPS LIST */}
+						</Button>
+					</div>
 					<div>
-						<p style={{ marginTop: "50px" }} />
-						<h1>Check Out These Public Groups</h1>
+						<DeckCarousel groups={groups} whatGroup={"newPublicGroups"} />
 					</div>
-					<Button variant="dark" onClick={() => history.push("/groups")}>
-						see all
-						{/* YOU NEED TO CHANGE THE PATH TO ALL PRIVATE GROUPS LIST */}
-					</Button>
-				</div>
-				<div>
-					<DeckCarousel groups={groups} whatGroup={"newPublicGroups"} />
-				</div>
-			</>
-		);
-	} else {
-		newPublicGroups = (
-			<>
-				<div className="home__shelf-header">
-					<div style={{ marginTop: "50px" }}>
-						<h1>Check Out These Public Groups</h1>
-						<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
-							You've Already Joined Every Public Group!
-							<p style={{ margin: "50px" }} />
-							<p> Go Make Your Own!</p>
-						</h1>
+				</>
+			);
+		} else {
+			newPublicGroups = (
+				<>
+					<div className="home__shelf-header">
+						<div style={{ marginTop: "50px" }}>
+							<h1>Check Out These Public Groups</h1>
+							{signedIn && (
+								<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
+									You've Already Joined Every Public Group!
+									<p style={{ margin: "50px" }} />
+									<p> Go Make Your Own!</p>
+								</h1>
+							)}
+						</div>
 					</div>
-				</div>
-			</>
-		);
+				</>
+			);
+		}
 	}
 
 	return (
 		<div className="home__container">
-			{newPublicGroups}
-			{newPrivateGroups}
+			{isLoaded && newPublicGroups}
+			{isLoaded && newPrivateGroups}
 		</div>
 	);
 };

@@ -115,10 +115,6 @@ const groupReducer = (groupState = initialState, action) => {
 				newPrivateGroups: NewPrivateGroups,
 				joinedGroupIds: joinedGroupIds,
 			};
-		// case UPDATE_GROUP:
-		// 	return groupState;
-		// case REMOVE_GROUP:
-		// 	return groupState;
 		default:
 			return groupState;
 	}

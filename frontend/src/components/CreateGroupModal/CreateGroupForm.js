@@ -21,8 +21,10 @@ const CreateGroupForm = () => {
 
 		return dispatch(groupActions.createGroup({ name, description, isPublic, imgURL }))
 			.then((response) => {
-				history.push(`/${response.newGroup.id}`);
-				close.click();
+				setTimeout(() => {
+					history.push(`/${response.newGroup.id}`);
+					close.click();
+				}, 500);
 			})
 			.catch(async (res) => {
 				const data = await res.json();

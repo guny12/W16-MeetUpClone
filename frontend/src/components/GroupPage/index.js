@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./GroupPage.css";
-import DeckCarousel from "../Carousel";
-import * as url from "../../images/CookOffPic.png";
 import Image from "react-bootstrap/Image";
 import EditGroupFormModal from "../EditGroupModal";
-import { Button, Card, Jumbotron, Container } from "react-bootstrap";
+import { Button, Jumbotron, Container } from "react-bootstrap";
 
-const GroupPage = ({ isLoaded }) => {
+const GroupPage = () => {
 	const history = useHistory();
 	const { groupId } = useParams();
 	const dispatch = useDispatch();
 	const groups = useSelector((state) => state.groups);
 	let { publicGroups, privateGroups, newPrivateGroups, newPublicGroups } = groups;
-	const signedIn = useSelector((state) => state.session.user?.id);
 	const user = useSelector((state) => state.session.user);
 	useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 
-	console.log(groups, "GROUPS----------------------------");
+	let isLoaded = groups.joinedGroupIds.length > 0 || Object.values(groups.newPublicGroups).length > 1;
 
 	function joinGroup(group) {
 		return dispatch(groupActions.joinGroup({ group }))
@@ -34,8 +31,9 @@ const GroupPage = ({ isLoaded }) => {
 
 	// if groupId isn't one of the keys in that group, !! will return false.
 	// if it is inside that group, !! will return true.
-	// console.log(!!publicGroups[`${groupId}`], "GROUP HERE------------------");
+
 	let group;
+
 	switch (true) {
 		case !!newPrivateGroups[`${groupId}`]:
 			group = newPrivateGroups[`${groupId}`];
@@ -94,6 +92,8 @@ const GroupPage = ({ isLoaded }) => {
 			</h1>
 		</>
 	);
+
+	if (!isLoaded) return null;
 
 	return (
 		<div className="groupPage__container">

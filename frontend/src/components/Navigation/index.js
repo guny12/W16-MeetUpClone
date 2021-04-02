@@ -28,7 +28,7 @@ function Navigation({ isLoaded }) {
 			</>
 		);
 	}
-
+	if (!isLoaded) return null;
 	return (
 		<Navbar bg="primary" variant="dark">
 			<Nav className="mr-auto">

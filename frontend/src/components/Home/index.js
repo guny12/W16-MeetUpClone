@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import * as groupActions from "../../store/group";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+// import * as groupActions from "../../store/group";
+import { useSelector } from "react-redux";
 // import { useHistory } from "react-router-dom";
 import "./Home.css";
 // import { Button, Carousel } from "react-bootstrap";
@@ -19,8 +19,8 @@ const Home = ({ isLoaded }) => {
 		<div>
 			{signedIn && <h1>Welcome back! Your Upcoming and other Nearby Events Here</h1>}
 			{!signedIn && <h1>Put a message here explaining app/login/signup</h1>}
-			{signedIn && <Groups isLoaded={isLoaded}></Groups>}
-			{!signedIn && <FindNewGroups isLoaded={isLoaded} />}
+			{signedIn && <Groups />}
+			{!signedIn && <FindNewGroups />}
 		</div>
 	);
 };
