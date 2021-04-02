@@ -9,43 +9,33 @@ const setEvents = (events) => ({
 	payload: events,
 });
 
-// const updateGroup = (group) => ({
-// 	type: UPDATE_GROUP,
-// 	payload: group,
-// });
-
-// const removeGroup = (group) => ({
-// 	type: REMOVE_GROUP,
-// 	payload: group,
-// });
-
 // thunk action creators
-export const getGroups = () => async (dispatch) => {
-	const response = await csrfFetch("/api/groups");
+export const getEvents = () => async (dispatch) => {
+	const response = await csrfFetch("/api/events");
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(setGroups(data));
+		dispatch(setEvents(data));
 	}
 };
 
-export const createGroup = (groupData) => async (dispatch) => {
-	const response = await csrfFetch("/api/:groupid", {
+export const createGroup = (eventData) => async (dispatch) => {
+	const response = await csrfFetch("/api/:groupid/:eventid", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(groupData),
+		body: JSON.stringify(eventData),
 	});
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(getGroups());
+		dispatch(getEvents());
 		return data;
 	}
 };
 
-export const joinGroup = (groupData) => async (dispatch) => {
-	const response = await csrfFetch("/api/groups", {
+export const joinGroup = (eventData) => async (dispatch) => {
+	const response = await csrfFetch("/api/events", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(groupData),
+		body: JSON.stringify(eventData),
 	});
 	if (response.ok) {
 		const data = await response.json();
@@ -53,68 +43,64 @@ export const joinGroup = (groupData) => async (dispatch) => {
 	}
 };
 
-export const updateGroupData = (groupData) => async (dispatch) => {
-	const response = await csrfFetch("/api/:groupid", {
+export const updateEventData = (eventData) => async (dispatch) => {
+	const response = await csrfFetch("/api/:groupid/:eventid", {
 		method: "PATCH",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(groupData),
+		body: JSON.stringify(eventData),
 	});
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(getGroups());
+		dispatch(getEvents());
 		return data;
 	}
 };
 
-export const deleteGroup = (groupId) => async (dispatch) => {
-	const response = await csrfFetch("/api/:groupid", {
+export const deleteEvent = (eventId) => async (dispatch) => {
+	const response = await csrfFetch("/api/:groupid/:eventid", {
 		method: "DELETE",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(groupId),
+		body: JSON.stringify(eventId),
 	});
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(getGroups());
+		dispatch(getEvents());
 		return data;
 	}
 };
 
 // reducer
 const initialState = {
-	publicGroups: {},
-	privateGroups: {},
-	newPublicGroups: {},
-	newPrivateGroups: {},
-	joinedGroupIds: [],
+	publicEvents: {},
+	privateEvents: {},
+	newPublicEvents: {},
+	// newPrivateEvents: {}, should not be able to see private events unless you are in that group
+	joinedEventIds: [],
 };
 
-const groupReducer = (groupState = initialState, action) => {
+const eventReducer = (eventState = initialState, action) => {
 	switch (action.type) {
-		case SET_GROUP:
-			let { publicGroups, privateGroups, newPublicGroups, newPrivateGroups, joinedGroupIds } = action.payload;
-			let PublicGroups = publicGroups.reduce((newgroups, group) => {
-				return { ...newgroups, [group.id]: group };
+		case SET_Event:
+			let { publicEvents, privateEvents, newPublicEvents, joinedEventIds } = action.payload;
+			let PublicEvents = publicEvents.reduce((newevents, event) => {
+				return { ...newevents, [event.id]: event };
 			}, {});
-			let PrivateGroups = privateGroups.reduce((newgroups, group) => {
-				return { ...newgroups, [group.id]: group };
+			let PrivateEvents = privateEvents.reduce((newevents, event) => {
+				return { ...newevents, [event.id]: event };
 			}, {});
-			let NewPublicGroups = newPublicGroups.reduce((newgroups, group) => {
-				return { ...newgroups, [group.id]: group };
-			}, {});
-			let NewPrivateGroups = newPrivateGroups.reduce((newgroups, group) => {
-				return { ...newgroups, [group.id]: group };
+			let NewPublicEvents = newPublicEvents.reduce((newevents, event) => {
+				return { ...newevents, [event.id]: event };
 			}, {});
 			return {
-				...groupState,
-				publicGroups: PublicGroups,
-				privateGroups: PrivateGroups,
-				newPublicGroups: NewPublicGroups,
-				newPrivateGroups: NewPrivateGroups,
-				joinedGroupIds: joinedGroupIds,
+				...eventState,
+				publicEvents: PublicEvents,
+				privateEvents: PrivateEvents,
+				newPublicEvents: NewPublicEvents,
+				joinedEventIds: joinedEventIds,
 			};
 		default:
-			return groupState;
+			return eventState;
 	}
 };
 
-export default groupReducer;
+export default eventReducer;

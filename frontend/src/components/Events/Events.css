@@ -1,4 +1,4 @@
-.EventTile__image {
+/* .groupTile__image {
 	box-sizing: border-box;
 	height: 150px;
 }
@@ -30,14 +30,14 @@
 }
 
 .card-text span {
-	/* border: 0px; */
+	border: 0px;
 	clip: auto;
-	/* clip-path: inset(1%); */
+	clip-path: inset(1%);
 	height: 1px;
-	/* margin: -5px; */
+	margin: -5px;
 	overflow: hidden;
-	/* padding: 0px; */
-	/* position: absolute; */
+	padding: 0px;
+	position: absolute;
 	width: 1px;
 	overflow-wrap: normal;
 }
@@ -62,4 +62,4 @@
 	justify-content: space-evenly;
 	border-radius: 20px;
 	border: 1px transparent;
-}
+} */
