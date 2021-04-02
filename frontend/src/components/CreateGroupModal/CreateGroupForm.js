@@ -12,20 +12,17 @@ const CreateGroupForm = () => {
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [isPublic, setIsPublic] = useState(true);
-	const [imgURL, setimgURL] = useState("");
+	const [imgURL, setimgURL] = useState();
 	const close = window.document.querySelector("#modal-background");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
 
-		if (!imgURL) setimgURL("/static/media/CookOffPic.343f3730.png");
-		console.log(imgURL, "AFTER SETTING URL------------------");
 		return dispatch(groupActions.createGroup({ name, description, isPublic, imgURL }))
 			.then((response) => {
 				history.push(`/${response.newGroup.id}`);
 				close.click();
-				return response;
 			})
 			.catch(async (res) => {
 				const data = await res.json();
@@ -64,11 +61,9 @@ const CreateGroupForm = () => {
 					required
 				/>
 			</Form.Group>
-			<Form>
-				<Form.Group>
-					<Form.File id="FormControlFile1" label="Optional Group Image CURRENTLY BROKEN! NEED TO ADD AWS" />
-				</Form.Group>
-			</Form>
+			<Form.Group>
+				<Form.File id="FormControlFile1" label="Optional Group Image CURRENTLY BROKEN! NEED TO ADD AWS" />
+			</Form.Group>
 			<Form.Group controlId="formBasicName">
 				<Form.Label>Optional Image URL </Form.Label>
 				<Form.Control

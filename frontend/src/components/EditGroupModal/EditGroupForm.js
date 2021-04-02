@@ -14,26 +14,49 @@ const EditGroupForm = ({ group }) => {
 	const [isPublic, setIsPublic] = useState(group.isPublic);
 	const [imgURL, setimgURL] = useState(group.imgURL);
 	const close = window.document.querySelector("#modal-background");
+	const [changedName, setChangedName] = useState(false);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setErrors([]);
-		let id = group.id;
-
-		return dispatch(groupActions.updateGroupData({ id, name, description, isPublic, imgURL }))
+	let id = group.id;
+	const deleteCurrentGroup = () => {
+		return dispatch(groupActions.deleteGroup({ id }))
 			.then((response) => {
-				console.log(response, "RESPONSE====================");
-				history.push(`/${response.id}`);
+				history.push(`/home`);
 				close.click();
 				return response;
 			})
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data.errors.includes("name must be unique"))
-					data.errors[data.errors.indexOf("name must be unique")] =
-						"Cool Name! But someone already used that name. Please pick another one.";
 				if (data && data.errors) setErrors(data.errors);
 			});
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setErrors([]);
+
+		if (changedName) {
+			return dispatch(groupActions.updateGroupData({ id, name, description, isPublic, imgURL }))
+				.then((response) => {
+					history.push(`/${response.id}`);
+					close.click();
+				})
+				.catch(async (res) => {
+					const data = await res.json();
+					if (data.errors.includes("name must be unique"))
+						data.errors[data.errors.indexOf("name must be unique")] =
+							"Cool Name! But someone already used that name. Please pick another one.";
+					if (data && data.errors) setErrors(data.errors);
+				});
+		} else
+			return dispatch(groupActions.updateGroupData({ id, description, isPublic, imgURL }))
+				.then((response) => {
+					history.push(`/${response.id}`);
+					close.click();
+				})
+				.catch(async (res) => {
+					const data = await res.json();
+					if (data && data.errors) setErrors(data.errors);
+				});
 	};
 
 	return (
@@ -48,7 +71,10 @@ const EditGroupForm = ({ group }) => {
 				<Form.Control
 					type="text"
 					value={name}
-					onChange={(e) => setName(e.target.value)}
+					onChange={(e) => {
+						setChangedName(true);
+						setName(e.target.value);
+					}}
 					required
 					placeholder="Group Name Here..."
 				/>
@@ -64,11 +90,9 @@ const EditGroupForm = ({ group }) => {
 					required
 				/>
 			</Form.Group>
-			<Form>
-				<Form.Group>
-					<Form.File id="FormControlFile1" label="Optional Group Image CURRENTLY BROKEN! NEED TO ADD AWS" />
-				</Form.Group>
-			</Form>
+			<Form.Group>
+				<Form.File id="FormControlFile1" label="Optional Group Image CURRENTLY BROKEN! NEED TO ADD AWS" />
+			</Form.Group>
 			<Form.Group controlId="formBasicName">
 				<Form.Label>Optional Image URL </Form.Label>
 				<Form.Control
@@ -90,6 +114,9 @@ const EditGroupForm = ({ group }) => {
 			</Form.Group>
 			<Button variant="dark" type="submit">
 				Update Your Group!
+			</Button>
+			<Button variant="danger" style={{ marginLeft: "120px" }} onClick={() => deleteCurrentGroup(id)}>
+				Delete Your Group!
 			</Button>
 		</Form>
 	);

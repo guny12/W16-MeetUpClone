@@ -69,6 +69,19 @@ export const updateGroupData = (groupData) => async (dispatch) => {
 	}
 };
 
+export const deleteGroup = (groupId) => async (dispatch) => {
+	const response = await csrfFetch("/api/:groupid", {
+		method: "DELETE",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(groupId),
+	});
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(getGroups());
+		return data;
+	}
+};
+
 // reducer
 const initialState = {
 	publicGroups: {},
