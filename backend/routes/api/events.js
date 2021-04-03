@@ -1,13 +1,13 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { check, validationResult } = require("express-validator");
-const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
+const { Group, Event, EventComment, User, EventAttendee } = require("../../db/models");
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const { Op } = require("sequelize");
-const GroupRouter = express.Router();
+const eventRouter = express.Router();
 
 // route to get groups
-GroupRouter.get(
+eventRouter.get(
 	"/",
 	restoreUser,
 	asyncHandler(async (req, res) => {
@@ -87,7 +87,7 @@ GroupRouter.get(
 );
 
 // route to set UserGroup Joins
-GroupRouter.post(
+eventRouter.post(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
@@ -100,7 +100,7 @@ GroupRouter.post(
 	})
 );
 
-module.exports = GroupRouter;
+module.exports = eventRouter;
 // publicGroups = await Group.findAll({
 // 	include: [
 // 		{

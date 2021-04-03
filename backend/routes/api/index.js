@@ -1,88 +1,12 @@
 const router = require("express").Router();
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
-const groupRouter = require("./group.js");
+const groupRouter = require("./groups.js");
+const groupIdRouter = require("./groupid.js");
 
-const asyncHandler = require("express-async-handler");
-const { check, validationResult } = require("express-validator");
-const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
-const { restoreUser, requireAuth } = require("../../utils/auth");
-const { Op, UUID } = require("sequelize");
-
+router.use("/users", usersRouter);
 router.use("/session", sessionRouter);
 router.use("/groups", groupRouter);
-router.use("/users", usersRouter);
+router.use("/:groupid", groupIdRouter);
 
-router.patch(
-	"/:groupid",
-	requireAuth,
-	asyncHandler(async (req, res) => {
-		const adminId = req.user.id;
-		const { id, name, description, isPublic, imgURL } = req.body;
-		await Group.update({ name, description, isPublic, imgURL }, { where: { id, adminId } });
-		return res.json({ id });
-	})
-);
-
-router.delete(
-	"/:groupid",
-	requireAuth,
-	asyncHandler(async (req, res) => {
-		const currentId = req.user.id;
-		const { id } = req.body;
-		const targetGroup = await Group.findByPk(id);
-		if (targetGroup.adminId === currentId) {
-			const targetUserJoinGroups = await UserGroupJoin.findAll({ where: { groupId: targetGroup.id } });
-			for (userGroupJoin of targetUserJoinGroups) await userGroupJoin.destroy();
-			await targetGroup.destroy();
-		}
-		return res.json({ id });
-	})
-);
-
-router.post(
-	"/:groupid",
-	requireAuth,
-	asyncHandler(async (req, res) => {
-		const adminId = req.user.id;
-		const { name, description, isPublic, imgURL } = req.body;
-		const newGroup = await Group.create({ adminId, name, description, isPublic, imgURL });
-		await UserGroupJoin.create({ userId: adminId, groupId: newGroup.id });
-		return res.json({ newGroup });
-	})
-);
 module.exports = router;
-
-// const { restoreUser } = require("../../utils/auth.js");
-// const asyncHandler = require("express-async-handler");
-// const { setTokenCookie } = require("../../utils/auth.js");
-// const { User } = require("../../db/models");
-
-// router.get(
-// 	"/set-token-cookie",
-// 	asyncHandler(async (req, res) => {
-// 		const user = await User.findOne({
-// 			where: {
-// 				username: "Demo-lition",
-// 			},
-// 		});
-// 		setTokenCookie(res, user);
-// 		return res.json({ user });
-// 	})
-// );
-
-// GET /api/restore-user
-// router.get("/restore-user", restoreUser, (req, res) => {
-// 	return res.json(req.user);
-// });
-
-// GET /api/require-auth
-// const { requireAuth } = require("../../utils/auth.js");
-// router.get("/require-auth", requireAuth, (req, res) => {
-// 	return res.json(req.user);
-// });
-
-// testing route
-// router.post("/test", function (req, res) {
-// 	res.json({ requestBody: req.body });
-// });

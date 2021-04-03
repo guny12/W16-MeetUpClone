@@ -82,14 +82,14 @@ const eventReducer = (eventState = initialState, action) => {
 	switch (action.type) {
 		case SET_Event:
 			let { publicEvents, privateEvents, newPublicEvents, joinedEventIds } = action.payload;
-			let PublicEvents = publicEvents.reduce((newevents, event) => {
-				return { ...newevents, [event.id]: event };
+			let PublicEvents = publicEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
 			}, {});
-			let PrivateEvents = privateEvents.reduce((newevents, event) => {
-				return { ...newevents, [event.id]: event };
+			let PrivateEvents = privateEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
 			}, {});
-			let NewPublicEvents = newPublicEvents.reduce((newevents, event) => {
-				return { ...newevents, [event.id]: event };
+			let NewPublicEvents = newPublicEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
 			}, {});
 			return {
 				...eventState,
