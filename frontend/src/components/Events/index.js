@@ -13,7 +13,7 @@ const Events = () => {
 	const groups = useSelector((state) => state.groups);
 	const signedIn = useSelector((state) => state.session.user?.id);
 
-	let isLoaded = groups.joinedGroupIds.length > 0 || Object.values(groups.newPublicGroups).length > 1;
+	let isLoaded = groups.joinedEventIds.length > 0 || Object.values(groups.somePublicEvents).length > 1;
 	let privateGroups = null;
 
 	if (isLoaded) {

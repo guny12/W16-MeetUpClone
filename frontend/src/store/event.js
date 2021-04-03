@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 // need these so you can update event slice of state when you modify groups (aka cascade deletes)
 import { REMOVE_GROUP, UPDATE_GROUP, SET_GROUP } from "./group";
+export const SET_Events = "events/SET_Events";
 
 // action creators
 const setEvents = (events) => ({
@@ -18,7 +19,7 @@ export const getEvents = () => async (dispatch) => {
 	}
 };
 
-export const createGroup = (eventData) => async (dispatch) => {
+export const createEvent = (eventData) => async (dispatch) => {
 	const response = await csrfFetch("/api/:groupid/:eventid", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -31,7 +32,7 @@ export const createGroup = (eventData) => async (dispatch) => {
 	}
 };
 
-export const joinGroup = (eventData) => async (dispatch) => {
+export const joinEvent = (eventData) => async (dispatch) => {
 	const response = await csrfFetch("/api/events", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -71,23 +72,25 @@ export const deleteEvent = (eventId) => async (dispatch) => {
 
 // reducer
 const initialState = {
-	joinedPublicEvents: {},
-	notJoinedEvents: {},
-	somePublicEvents: {},
+	JoinedPublicEvents: {},
+	// notJoinedEvents: {},
+	// somePublicEvents: {},
 	// newPrivateEvents: {}, should not be able to see private events unless you are in that group
 	joinedEventIds: [],
 };
 
 const eventReducer = (eventState = initialState, action) => {
 	switch (action.type) {
-		case SET_Event:
-			let { publicEvents, privateEvents, newPublicEvents, joinedEventIds } = action.payload;
-			let PublicEvents = publicEvents.reduce((newEvents, event) => {
+		case SET_Events:
+			let { joinedPublicEvents, joinedEventIds } = action.payload;
+			// let { publicEvents, privateEvents, newPublicEvents, joinedEventIds } = action.payload;
+			let PublicEvents = joinedPublicEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
 			return {
 				...eventState,
-				publicEvents: PublicEvents,
+				JoinedPublicEvents: PublicEvents,
+				JoinedEventIds: joinedEventIds,
 			};
 		default:
 			return eventState;

@@ -41,7 +41,7 @@ const EditGroupForm = ({ group }) => {
 				})
 				.catch(async (res) => {
 					const data = await res.json();
-					if (data.message && data.message == "value too long for type character varying(255)") {
+					if (data.message && data.message === "value too long for type character varying(255)") {
 						data.errors = ["Please keep description under 255 characters"];
 					}
 					if (data.errors && data.errors.includes("name must be unique"))
