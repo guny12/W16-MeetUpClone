@@ -1,14 +1,34 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-// const { check, validationResult } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
+const { handleValidationErrors } = require("../../utils/validation");
 // const { Op, UUID } = require("sequelize");
 const groupIdRouter = express.Router();
+
+// const validateUpdateGroup = [
+// 	check("description")
+// 		.exists({ checkFalsy: true })
+// 		.isLength({ min: 1 })
+// 		.withMessage("Please provide a description with at least 1 character.")
+// 		.isLength({ max: 255 })
+// 		.withMessage("Please provide a description with less than 255 characters."),
+// 	check("name")
+// 		.exists({ checkFalsy: true })
+// 		.isLength({ min: 1 })
+// 		.withMessage("Please provide a Name with at least 1 character.")
+// 		.isLength({ max: 50 })
+// 		.withMessage("Please provide a Name with less than 50 characters."),
+
+// 	handleValidationErrors,
+// ];
 
 groupIdRouter.patch(
 	"/",
 	requireAuth,
+	// validateUpdateGroup,
+	// validationResult,
 	asyncHandler(async (req, res) => {
 		const adminId = req.user.id;
 		const { id, name, description, isPublic, imgURL } = req.body;

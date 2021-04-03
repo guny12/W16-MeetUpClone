@@ -49,10 +49,12 @@ const EditGroupForm = ({ group }) => {
 		} else
 			return dispatch(groupActions.updateGroupData({ id, description, isPublic, imgURL }))
 				.then((response) => {
+					console.log(response, "RESPONSE HERE --------------------------");
 					history.push(`/${response.id}`);
 					close.click();
 				})
 				.catch(async (res) => {
+					console.log(res, "RES++++++++++++++++++++++++++++ HERE --------------------------");
 					const data = await res.json();
 					if (data && data.errors) setErrors(data.errors);
 				});
