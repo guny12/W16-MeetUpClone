@@ -4,6 +4,7 @@ import * as groupActions from "../../store/group";
 import { useDispatch } from "react-redux";
 import "./CreateGroupForm.css";
 import { Button, Form } from "react-bootstrap";
+import img from "../../images/CookOffPic.png";
 
 const CreateGroupForm = () => {
 	const history = useHistory();
@@ -12,10 +13,10 @@ const CreateGroupForm = () => {
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [isPublic, setIsPublic] = useState(true);
-	const [imgURL, setimgURL] = useState();
+	const [imgURL, setimgURL] = useState(img);
 	const close = window.document.querySelector("#modal-background");
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setErrors([]);
 
