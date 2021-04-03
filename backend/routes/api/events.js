@@ -4,23 +4,24 @@ const { check, validationResult } = require("express-validator");
 const { Group, Event, EventComment, User, EventAttendee } = require("../../db/models");
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const { Op } = require("sequelize");
-const eventRouter = express.Router();
+const eventsRouter = express.Router();
 
 // route to get events
-eventRouter.get(
+eventsRouter.get(
 	"/",
 	restoreUser,
 	asyncHandler(async (req, res) => {
 		// send the userId in req, to pull out the groups that they are a part of.
 		if (req.user) var attendeeId = req.user.id;
 
-		let publicEvents = [],
+		console.log(attendeeId, "ATTENDEEID--------------------------------------------");
+		let joinedPublicEvents = [],
 			joinedEventIds = [];
 
 		// if there's a user logged in, this will get all the currently joined Events
 
 		if (attendeeId) {
-			publicEvents = await Event.findAll({
+			joinedPublicEvents = await Event.findAll({
 				include: [
 					{
 						model: User,
@@ -31,7 +32,7 @@ eventRouter.get(
 				order: [["id", "ASC"]],
 			});
 
-			for (currEvent of publicEvents) {
+			for (currEvent of joinedPublicEvents) {
 				currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
 				let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 				currEvent.dataValues["hostName"] = owner.firstName;
@@ -41,34 +42,34 @@ eventRouter.get(
 		// after this, it grabs all the unjoined events.
 		// this grabs any unjoined events, for logged in/out users.
 
-		let newPublicGroups = await Event.findAll({
-			where: { id: { [Op.notIn]: joinedEventIds } },
-			order: [["id", "ASC"]],
-		});
+		// let newPublicGroups = await Event.findAll({
+		// 	where: { id: { [Op.notIn]: joinedEventIds } },
+		// 	order: [["id", "ASC"]],
+		// });
 
-		for (currEvent of newPublicGroups) {
-			currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
-			let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
-			currEvent.dataValues["hostName"] = owner.firstName;
-		}
+		// for (currEvent of newPublicGroups) {
+		// 	currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
+		// 	let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
+		// 	currEvent.dataValues["hostName"] = owner.firstName;
+		// }
 
-		let newPrivateGroups = await Event.findAll({
-			where: { id: { [Op.notIn]: joinedEventIds } },
-			order: [["id", "ASC"]],
-		});
+		// let newPrivateGroups = await Event.findAll({
+		// 	where: { id: { [Op.notIn]: joinedEventIds } },
+		// 	order: [["id", "ASC"]],
+		// });
 
-		for (currEvent of newPrivateGroups) {
-			currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
-			let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
-			currEvent.dataValues["hostName"] = owner.firstName;
-		}
-
-		return res.json({});
+		// for (currEvent of newPrivateGroups) {
+		// 	currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
+		// 	let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
+		// 	currEvent.dataValues["hostName"] = owner.firstName;
+		// }
+		console.log(joinedPublicEvents, "PUBLIC EVENTS------------------");
+		return res.json({ joinedPublicEvents });
 	})
 );
 
 // route to set EventAttendee Join table so user joins Event
-eventRouter.post(
+eventsRouter.post(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
@@ -81,4 +82,4 @@ eventRouter.post(
 	})
 );
 
-module.exports = eventRouter;
+module.exports = eventsRouter;

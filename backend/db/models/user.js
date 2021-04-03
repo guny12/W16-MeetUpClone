@@ -136,7 +136,7 @@ module.exports = (sequelize, DataTypes) => {
 		User.belongsToMany(models.User, userMapping);
 		User.belongsToMany(models.User, followerMapping);
 		User.hasMany(models.Group, { foreignKey: "adminId", as: "AdminId" });
-		User.hasMany(models.Event, { foreignKey: "hostId" });
+		User.hasMany(models.Event, { foreignKey: "hostId", as: "HostId" });
 		User.hasMany(models.EventComment, { foreignKey: "userId" });
 		User.hasMany(models.GroupComment, { foreignKey: "userId" });
 		User.belongsToMany(models.Group, groupMapping);
