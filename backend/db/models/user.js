@@ -111,7 +111,7 @@ module.exports = (sequelize, DataTypes) => {
 			through: "UserJoin",
 			foreignKey: "userId",
 			otherKey: "followerId",
-			as: "followers",
+			as: "follower",
 		};
 
 		const followerMapping = {

@@ -53,7 +53,7 @@ export const updateEventData = (eventData) => async (dispatch) => {
 		const data = await response.json();
 		dispatch(getEvents());
 		return data;
-	}
+	} else return response;
 };
 
 export const deleteEvent = (eventId) => async (dispatch) => {

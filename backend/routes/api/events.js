@@ -14,12 +14,10 @@ eventsRouter.get(
 		// send the userId in req, to pull out the groups that they are a part of.
 		if (req.user) var attendeeId = req.user.id;
 
-		console.log(attendeeId, "ATTENDEEID--------------------------------------------");
 		let joinedPublicEvents = [],
 			joinedEventIds = [];
 
-		// if there's a user logged in, this will get all the currently joined Events
-
+		// if there's a user logged in, this will get all the currently joined Eventsm adds the hostname and number of people currently in that event.
 		if (attendeeId) {
 			joinedPublicEvents = await Event.findAll({
 				include: [
@@ -38,8 +36,9 @@ eventsRouter.get(
 				currEvent.dataValues["hostName"] = owner.firstName;
 				joinedEventIds.push(currEvent.dataValues.id);
 			}
+			// after this, it grabs all the unjoined events of groups that user is currently a part of.
 		}
-		// after this, it grabs all the unjoined events.
+
 		// this grabs any unjoined events, for logged in/out users.
 
 		// let newPublicGroups = await Event.findAll({
@@ -63,8 +62,8 @@ eventsRouter.get(
 		// 	let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 		// 	currEvent.dataValues["hostName"] = owner.firstName;
 		// }
-		console.log(joinedPublicEvents, "PUBLIC EVENTS------------------");
-		return res.json({ joinedPublicEvents });
+
+		return res.json({ joinedPublicEvents, joinedEventIds });
 	})
 );
 

@@ -37,4 +37,5 @@
 .container p {
 	font-size: large;
 	padding: 5px;
+	overflow-wrap: anywhere;
 }
