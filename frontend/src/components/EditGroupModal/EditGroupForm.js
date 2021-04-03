@@ -41,7 +41,10 @@ const EditGroupForm = ({ group }) => {
 				})
 				.catch(async (res) => {
 					const data = await res.json();
-					if (data.errors.includes("name must be unique"))
+					if (data.message && data.message == "value too long for type character varying(255)") {
+						data.errors = ["Please keep description under 255 characters"];
+					}
+					if (data.errors && data.errors.includes("name must be unique"))
 						data.errors[data.errors.indexOf("name must be unique")] =
 							"Cool Name! But someone already used that name. Please pick another one.";
 					if (data && data.errors) setErrors(data.errors);
@@ -49,12 +52,10 @@ const EditGroupForm = ({ group }) => {
 		} else
 			return dispatch(groupActions.updateGroupData({ id, description, isPublic, imgURL }))
 				.then((response) => {
-					console.log(response, "RESPONSE HERE --------------------------");
 					history.push(`/${response.id}`);
 					close.click();
 				})
 				.catch(async (res) => {
-					console.log(res, "RES++++++++++++++++++++++++++++ HERE --------------------------");
 					const data = await res.json();
 					if (data && data.errors) setErrors(data.errors);
 				});
