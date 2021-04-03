@@ -53,7 +53,7 @@ eventRouter.get(
 		}
 
 		let newPrivateGroups = await Event.findAll({
-			where: { isPublic: false, id: { [Op.notIn]: joinedEventIds } },
+			where: { id: { [Op.notIn]: joinedEventIds } },
 			order: [["id", "ASC"]],
 		});
 
@@ -67,7 +67,7 @@ eventRouter.get(
 	})
 );
 
-// route to set UserGroup Joins
+// route to set EventAttendee Join table so user joins Event
 eventRouter.post(
 	"/",
 	requireAuth,
