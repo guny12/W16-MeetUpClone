@@ -1,5 +1,5 @@
 import React from "react";
-// import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
@@ -32,17 +32,17 @@ function Navigation({ isLoaded }) {
 	return (
 		<Navbar bg="primary" variant="dark">
 			<Nav className="mr-auto">
-				<Nav.Link exact="true" href="/home">
+				<NavLink className="nav-link" exact="true" to={`/home`}>
 					Home
-				</Nav.Link>
+				</NavLink>
 				{sessionUser && (
-					<Nav.Link exact="true" href="/groups">
+					<NavLink className="nav-link" exact="true" to="/groups">
 						Joined Groups
-					</Nav.Link>
+					</NavLink>
 				)}
-				<Nav.Link exact="true" href="/NewGroups">
+				<NavLink className="nav-link" exact="true" to="/NewGroups">
 					Find New Groups
-				</Nav.Link>
+				</NavLink>
 				{isLoaded && sessionLinks}
 			</Nav>
 		</Navbar>

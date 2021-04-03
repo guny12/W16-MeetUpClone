@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 // need these so you can update event slice of state when you modify groups (aka cascade deletes)
-import { REMOVE_GROUP, UPDATE_GROUP, SET_GROUP } from "./group";
+// import { REMOVE_GROUP, UPDATE_GROUP, SET_GROUP } from "./group";
 export const SET_Events = "events/SET_Events";
 
 // action creators
@@ -83,7 +83,6 @@ const eventReducer = (eventState = initialState, action) => {
 	switch (action.type) {
 		case SET_Events:
 			let { joinedPublicEvents, joinedEventIds } = action.payload;
-			// let { publicEvents, privateEvents, newPublicEvents, joinedEventIds } = action.payload;
 			let PublicEvents = joinedPublicEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
