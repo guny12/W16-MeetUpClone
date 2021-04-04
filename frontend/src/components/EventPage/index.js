@@ -6,6 +6,7 @@ import "./EventPage.css";
 import Image from "react-bootstrap/Image";
 import EditGroupFormModal from "../EditGroupModal";
 import { Button, Jumbotron, Container } from "react-bootstrap";
+import { parseISO } from "date-fns";
 
 const EventPage = () => {
 	const history = useHistory();
@@ -13,7 +14,7 @@ const EventPage = () => {
 	const dispatch = useDispatch();
 	const events = useSelector((state) => state.events);
 	console.log(events, "EVENTS ------------------------------------------------");
-	let { JoinedEvents, joinedEventIds, notJoinedUpcomingEvents, somePublicEvents } = events;
+	let { JoinedEvents, joinedEventIds, notJoinedEvents, somePublicEvents } = events;
 	const user = useSelector((state) => state.session.user);
 	useEffect(() => dispatch(eventActions.getEvents()), [dispatch]);
 
@@ -39,8 +40,8 @@ const EventPage = () => {
 		case !!JoinedEvents[`${eventId}`]:
 			event = JoinedEvents[`${eventId}`];
 			break;
-		case !!notJoinedUpcomingEvents[`${eventId}`]:
-			event = notJoinedUpcomingEvents[`${eventId}`];
+		case !!notJoinedEvents[`${eventId}`]:
+			event = notJoinedEvents[`${eventId}`];
 			break;
 		case !!somePublicEvents[`${eventId}`]:
 			event = somePublicEvents[`${eventId}`];
@@ -56,11 +57,11 @@ const EventPage = () => {
 		} else if (!events.joinedEventIds.includes(event.id)) {
 			JoinOrEditButton = (
 				<Button variant="dark" onClick={() => joinEvent(event)}>
-					JOIN Event
+					Join Event
 				</Button>
 			);
 		} else {
-			JoinOrEditButton = <p>You are a member of this event!</p>;
+			JoinOrEditButton = <p>You've joined this event!</p>;
 		}
 
 		if (event) {
@@ -70,8 +71,10 @@ const EventPage = () => {
 					<h1>
 						{event?.name}
 						<p>{event?.description}</p>
-						<p>{`${event?.count} ${event?.count > 1 || event?.count === 0 ? "Members" : "Member"} so far`}</p>
-						<p>{`Organized By ${event?.hostName}`}</p>
+						<p>{`Hosted by: ${event?.hostName}`}</p>
+						<p>{`Location: ${event?.location}`}</p>
+						<p>{`When: ${parseISO(event?.eventDate).toString().slice(0, 24)}`}</p>
+						<p>{`${event?.availableSpots} available spots left`}</p>
 						{JoinOrEditButton}
 					</h1>
 				</>
