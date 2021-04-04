@@ -1,24 +1,28 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import * as groupActions from "../../store/group";
+import * as eventActions from "../../store/event";
 import { useDispatch } from "react-redux";
 import "./EditGroupForm.css";
 import { Button, Form } from "react-bootstrap";
 
-const EditGroupForm = ({ group }) => {
+const EditGroupForm = ({ event }) => {
+	console.log(event, "EVENT HERE -------------------------------");
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [errors, setErrors] = useState([]);
-	const [name, setName] = useState(group.name);
-	const [description, setDescription] = useState(group.description);
-	const [isPublic, setIsPublic] = useState(group.isPublic);
-	const [imgURL, setimgURL] = useState(group.imgURL);
+	const [name, setName] = useState(event.name);
+	const [description, setDescription] = useState(event.description);
+	const [location, setLocation] = useState(event.location);
+	const [eventType, setEventType] = useState(event.eventType);
+	const [eventDate, setEventDate] = useState(event.eventDate);
+	const [availableSpots, setAvailableSpots] = useState(event.availableSpots);
+	const [imgURL, setimgURL] = useState(event.imgURL);
 	const close = window.document.querySelector("#modal-background");
 	const [changedName, setChangedName] = useState(false);
 
-	let id = group.id;
-	const deleteCurrentGroup = () => {
-		return dispatch(groupActions.deleteGroup({ id }))
+	let id = event.id;
+	const deleteCurrentEvent = () => {
+		return dispatch(eventActions.deleteEvent({ id }))
 			.then((response) => {
 				history.push(`/home`);
 				return response;
@@ -34,23 +38,24 @@ const EditGroupForm = ({ group }) => {
 		setErrors([]);
 
 		if (changedName) {
-			return dispatch(groupActions.updateGroupData({ id, name, description, isPublic, imgURL }))
+			return dispatch(
+				eventActions.updateEventData({ name, id, description, imgURL, location, eventDate, eventType, availableSpots })
+			)
 				.then((response) => {
 					history.push(`/${response.id}`);
 					close.click();
 				})
 				.catch(async (res) => {
 					const data = await res.json();
-					if (data.message && data.message === "value too long for type character varying(255)") {
-						data.errors = ["Please keep description under 255 characters"];
-					}
 					if (data.errors && data.errors.includes("name must be unique"))
 						data.errors[data.errors.indexOf("name must be unique")] =
 							"Cool Name! But someone already used that name. Please pick another one.";
 					if (data && data.errors) setErrors(data.errors);
 				});
 		} else
-			return dispatch(groupActions.updateGroupData({ id, description, isPublic, imgURL }))
+			return dispatch(
+				eventActions.updateEventData({ id, description, imgURL, location, eventDate, eventType, availableSpots })
+			)
 				.then((response) => {
 					history.push(`/${response.id}`);
 					close.click();
@@ -62,14 +67,14 @@ const EditGroupForm = ({ group }) => {
 	};
 
 	return (
-		<Form onSubmit={handleSubmit} className="EditGroupForm__Form">
+		<Form onSubmit={handleSubmit} className="EditEventForm__Form">
 			<ul>
 				{errors.map((error, idx) => (
 					<li key={idx}>{error}</li>
 				))}
 			</ul>
 			<Form.Group controlId="formBasicName">
-				<Form.Label>Enter Group Name Here</Form.Label>
+				<Form.Label>Enter Event Name Here</Form.Label>
 				<Form.Control
 					type="text"
 					value={name}
@@ -78,46 +83,83 @@ const EditGroupForm = ({ group }) => {
 						setName(e.target.value);
 					}}
 					required
-					placeholder="Group Name Here..."
+					placeholder="Event Name Here..."
+				/>
+			</Form.Group>
+			<Form.Group controlId="formBasicName">
+				<Form.Label>Enter Event Location Here</Form.Label>
+				<Form.Control
+					type="text"
+					value={location}
+					onChange={(e) => {
+						setLocation(e.target.value);
+					}}
+					placeholder="Event Location Here..."
 				/>
 			</Form.Group>
 			<Form.Group controlId="Form.ControlTextarea">
-				<Form.Label>Enter Group Description Here</Form.Label>
+				<Form.Label>Enter Event Description Here</Form.Label>
 				<Form.Control
 					as="textarea"
-					rows={10}
+					rows={2}
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
-					placeholder="Group Description Here...                                                                                                For Example:                                                                                            -What will the Group do?                                                             -What kind of people are you hoping will join? "
+					placeholder="Event Description Here...                                                                                                For Example:                                                                                            -What will people do at the event?                                                             -What kind of people are you hoping will join? "
+					required
+				/>
+			</Form.Group>
+			<Form.Group controlId="formBasicDate">
+				<Form.Label>Enter Event Date and Time Here</Form.Label>
+				<Form.Control
+					type="datetime-local"
+					value={eventDate}
+					onChange={(e) => {
+						setEventDate(e.target.value);
+					}}
+					placeholder="Event Date and Time Here..."
+					required
+				/>
+			</Form.Group>
+			<Form.Group controlId="formBasicType">
+				<Form.Label>Enter Event Type Here</Form.Label>
+				<Form.Control
+					type="text"
+					value={eventType}
+					onChange={(e) => {
+						setEventType(e.target.value);
+					}}
+					placeholder="Event Type Here..."
+					required
+				/>
+			</Form.Group>
+			<Form.Group controlId="formBasicType">
+				<Form.Label>Enter Total Number of Attendees Allowed Here</Form.Label>
+				<Form.Control
+					type="number"
+					value={availableSpots}
+					onChange={(e) => {
+						setAvailableSpots(e.target.value);
+					}}
+					placeholder="Total Number of Attendees Allowed Here..."
 					required
 				/>
 			</Form.Group>
 			<Form.Group>
-				<Form.File id="FormControlFile1" label="Optional Group Image CURRENTLY BROKEN! NEED TO ADD AWS" />
+				<Form.File id="FormControlFile1" label="Optional- Group Image CURRENTLY BROKEN! NEED TO ADD AWS" />
 			</Form.Group>
 			<Form.Group controlId="formBasicName">
-				<Form.Label>Optional Image URL </Form.Label>
+				<Form.Label>Optional- Image URL </Form.Label>
 				<Form.Control
-					type="text"
+					type="url"
 					value={imgURL}
 					onChange={(e) => setimgURL(e.target.value)}
 					placeholder="Image URL..."
 				/>
 			</Form.Group>
-			<Form.Group controlId="formBasicCheckbox">
-				<Form.Check
-					type="checkbox"
-					label="Make Group Private"
-					checked={!isPublic}
-					onChange={() => {
-						setIsPublic(!isPublic);
-					}}
-				/>
-			</Form.Group>
 			<Button variant="dark" type="submit">
-				Update Your Group!
+				Update Your Event!
 			</Button>
-			<Button variant="danger" style={{ marginLeft: "120px" }} onClick={() => deleteCurrentGroup(id)}>
+			<Button variant="danger" style={{ marginLeft: "120px" }} onClick={() => deleteCurrentEvent(id)}>
 				Delete Your Group!
 			</Button>
 		</Form>

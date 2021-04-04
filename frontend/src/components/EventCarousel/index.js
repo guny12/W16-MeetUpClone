@@ -19,6 +19,10 @@ function EventCarousel({ events, whatEvent }) {
 		case "previousEvents":
 			targetEvents = previousJoinedEvents;
 			break;
+		case "somePublicEvents":
+			targetEvents = somePublicEvents;
+			break;
+
 		default:
 			targetEvents = somePublicEvents;
 	}

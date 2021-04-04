@@ -4,17 +4,17 @@ import { Modal } from "../../context/Modal";
 import EditGroupForm from "./EditGroupForm";
 import { Button } from "react-bootstrap";
 
-function EditGroupFormModal({ group }) {
+function EditGroupFormModal({ event }) {
 	const [showModal, setShowModal] = useState(false);
 
 	return (
 		<>
 			<Button style={{ margin: "20px" }} variant="dark" onClick={() => setShowModal(true)}>
-				Edit Your Group
+				Edit Your Event
 			</Button>
 			{showModal && (
 				<Modal onClose={() => setShowModal(false)}>
-					<EditGroupForm group={group} />
+					<EditGroupForm event={event} />
 				</Modal>
 			)}
 		</>
