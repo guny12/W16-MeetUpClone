@@ -48,7 +48,7 @@ function EventCarousel({ events, whatEvent }) {
 						</Card.Text>
 					</Card.Body>
 					<Card.Footer>
-						<small className="text-muted">{`${Event?.count} People Joined so far`}</small>
+						<small className="text-muted">{`${Event?.count ? Event.count : "No One"} Joined`}</small>
 					</Card.Footer>
 				</NavLink>
 			</Card>
