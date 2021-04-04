@@ -30,7 +30,13 @@ const Home = ({ isLoaded }) => {
 			{!signedIn && (
 				<>
 					<h4
-						style={{ marginTop: "10px", padding: "10px", marginBottom: "-100px", fontFamily: `"Rock Salt", cursive` }}
+						style={{
+							marginLeft: "20%",
+							marginTop: "1%",
+							padding: "1%px",
+							marginBottom: "-1%px",
+							fontFamily: `"Rock Salt", cursive`,
+						}}
 					>
 						Welcome to Cook Off!
 						<p>Pick groups to join where you can meet other cooks. </p>
@@ -38,7 +44,7 @@ const Home = ({ isLoaded }) => {
 						<p>Groups have Events that you can join if you are a part of them. </p>
 						<p>Sign Up to get full access, or try the demo user.</p>
 					</h4>
-					<FindNewGroups />{" "}
+					<FindNewGroups />
 				</>
 			)}
 		</div>

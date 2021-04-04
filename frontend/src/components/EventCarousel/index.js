@@ -39,13 +39,13 @@ function EventCarousel({ events, whatEvent }) {
 					<Card.Img variant="top" src={`${Event.imgURL}`} />
 					<Card.Body>
 						<Card.Title>{Event.name}</Card.Title>
-						<Card.Text className="event-body">
+						<div className="event-body card-text">
 							<span>{Event.description}</span>
-							<p>{`Hosted: ${Event.hostName}`}</p>
+							<p>{`Hosted by: ${Event.hostName}`}</p>
 							<p>{`Location: ${Event.location}`}</p>
-							<p>{`When: ${parseISO(Event.eventDate).toString().slice(0, 24)}`}</p>
-							<p>{`${Event.availableSpots} available spots left`}</p>
-						</Card.Text>
+							<div>{`When: ${parseISO(Event.eventDate).toString().slice(0, 24)}`}</div>
+							<div>{`${Event.availableSpots} available spots left`}</div>
+						</div>
 					</Card.Body>
 					<Card.Footer>
 						<small className="text-muted">{`${Event?.count ? Event.count : "No One"} Joined`}</small>

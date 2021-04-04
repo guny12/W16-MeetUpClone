@@ -23,7 +23,7 @@ const FindNewGroups = () => {
 				<>
 					<div className="home__shelf-header">
 						<div>
-							<p style={{ marginTop: "50px" }} />
+							<p />
 							<h1>Check Out These Private Groups</h1>
 						</div>
 						<Button variant="dark" onClick={() => history.push("/groups")}>
@@ -40,7 +40,7 @@ const FindNewGroups = () => {
 			newPrivateGroups = (
 				<>
 					<div className="home__shelf-header">
-						<div style={{ marginTop: "50px" }}>
+						<div style={{ marginTop: "0px" }}>
 							<h1>Check Out These Private Groups</h1>
 							<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
 								You've Already Joined Every Private Group!
@@ -60,7 +60,7 @@ const FindNewGroups = () => {
 				<>
 					<div className="home__shelf-header">
 						<div>
-							<p style={{ marginTop: "50px" }} />
+							<p />
 							<h1>Check Out These Public Groups</h1>
 						</div>
 						<Button variant="dark" onClick={() => history.push("/groups")}>
@@ -77,7 +77,7 @@ const FindNewGroups = () => {
 			newPublicGroups = (
 				<>
 					<div className="home__shelf-header">
-						<div style={{ marginTop: "50px" }}>
+						<div>
 							<h1>Check Out These Public Groups</h1>
 							{signedIn && (
 								<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>

@@ -41,7 +41,24 @@ const Events = () => {
 					</div>
 				</>
 			)}
-			{/* {signedIn && privateGroups} */}
+			<div className="home__shelf-header">
+				<h1>Some events you may be interested in </h1>
+				<Button variant="dark" onClick={() => history.push("/events")}>
+					see all
+				</Button>
+			</div>
+			{Object.values(events.somePublicEvents).length < 1 && (
+				<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
+					You've joined every event!
+					<p style={{ margin: "50px" }} />
+					<p> Go make some more!</p>
+				</h1>
+			)}
+			{Object.values(events.somePublicEvents).length > 0 && (
+				<div>
+					<EventCarousel events={events} whatEvent={"somePublicEvents"} />
+				</div>
+			)}
 		</div>
 	);
 };

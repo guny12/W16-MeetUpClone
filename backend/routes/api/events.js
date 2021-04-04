@@ -69,20 +69,28 @@ eventsRouter.get(
 				},
 				order: [["id", "ASC"]],
 			});
+			for (currEvent of notJoinedUpcomingEvents) {
+				currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
+				let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
+				currEvent.dataValues["hostName"] = owner.firstName;
+				joinedEventIds.push(currEvent.dataValues.id);
+			}
 		}
 
-		// this grabs any unjoined events, for logged in/out users.
+		// this grabs some unjoined events, for logged in/out users.
 
-		// let newPublicGroups = await Event.findAll({
-		// 	where: { id: { [Op.notIn]: joinedEventIds } },
-		// 	order: [["id", "ASC"]],
-		// });
+		let somePublicEvents = await Event.findAll({
+			where: {
+				[Op.and]: [{ eventDate: { [Op.gte]: currentDate } }, { id: { [Op.notIn]: joinedEventIds } }],
+			},
+			order: [["id", "ASC"]],
+		});
 
-		// for (currEvent of newPublicGroups) {
-		// 	currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
-		// 	let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
-		// 	currEvent.dataValues["hostName"] = owner.firstName;
-		// }
+		for (currEvent of somePublicEvents) {
+			currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
+			let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
+			currEvent.dataValues["hostName"] = owner.firstName;
+		}
 
 		// let newPrivateGroups = await Event.findAll({
 		// 	where: { id: { [Op.notIn]: joinedEventIds } },
@@ -95,7 +103,7 @@ eventsRouter.get(
 		// 	currEvent.dataValues["hostName"] = owner.firstName;
 		// }
 
-		return res.json({ joinedUpcomingEvents, notJoinedUpcomingEvents, joinedEventIds });
+		return res.json({ joinedUpcomingEvents, notJoinedUpcomingEvents, somePublicEvents, joinedEventIds });
 	})
 );
 
