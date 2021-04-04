@@ -11,10 +11,17 @@ eventIdRouter.patch(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
-		const adminId = req.user.id;
-		const { id, name, description, isPublic, imgURL } = req.body;
-		await Group.update({ name, description, isPublic, imgURL }, { where: { id, adminId } });
-		return res.json({ id });
+		const hostId = req.user.id;
+		const { name, id, description, imgURL, location, eventDate, eventType, availableSpots } = req.body;
+		await Event.update(
+			{ name, id, description, imgURL, location, eventDate, eventType, availableSpots },
+			{ where: { id, hostId } }
+		);
+		let {
+			dataValues: { groupId },
+		} = await Event.findByPk(id);
+
+		return res.json({ id, groupId });
 	})
 );
 

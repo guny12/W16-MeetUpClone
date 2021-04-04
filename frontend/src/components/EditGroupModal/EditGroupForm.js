@@ -6,7 +6,6 @@ import "./EditGroupForm.css";
 import { Button, Form } from "react-bootstrap";
 
 const EditGroupForm = ({ event }) => {
-	console.log(event, "EVENT HERE -------------------------------");
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [errors, setErrors] = useState([]);
@@ -42,7 +41,8 @@ const EditGroupForm = ({ event }) => {
 				eventActions.updateEventData({ name, id, description, imgURL, location, eventDate, eventType, availableSpots })
 			)
 				.then((response) => {
-					history.push(`/${response.id}`);
+					console.log(response, "RESPONSE HERE--------------------------");
+					history.push(`/${response.groupId}/${response.id}`);
 					close.click();
 				})
 				.catch(async (res) => {
@@ -57,7 +57,8 @@ const EditGroupForm = ({ event }) => {
 				eventActions.updateEventData({ id, description, imgURL, location, eventDate, eventType, availableSpots })
 			)
 				.then((response) => {
-					history.push(`/${response.id}`);
+					console.log(response, "RESPONSE HERE--------------------------");
+					history.push(`/${response.groupId}/${response.id}`);
 					close.click();
 				})
 				.catch(async (res) => {
