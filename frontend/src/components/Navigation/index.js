@@ -36,9 +36,14 @@ function Navigation({ isLoaded }) {
 					Home
 				</NavLink>
 				{sessionUser && (
-					<NavLink className="nav-link" to="/groups">
-						Joined Groups
-					</NavLink>
+					<>
+						<NavLink className="nav-link" to="/groups">
+							Joined Groups
+						</NavLink>
+						<NavLink className="nav-link" to="/events">
+							Joined Events
+						</NavLink>
+					</>
 				)}
 				<NavLink className="nav-link" to="/NewGroups">
 					Find New Groups
