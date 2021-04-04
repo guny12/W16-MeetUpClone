@@ -53,12 +53,6 @@ const EventPage = () => {
 			event = null;
 	}
 
-	// let NotJoinedEvents = [];
-	// let notjoinedevents = Object.values(notJoinedEvents);
-	// for (event of Object.values(notjoinedevents)) {
-	// 	NotJoinedEvents.push(event.id);
-	// }
-	// console.log(NotJoinedEvents);
 	let JoinOrEditButton = null;
 	function eventRender(event) {
 		if (event?.hostName === user?.firstName) {

@@ -161,7 +161,7 @@ const EditGroupForm = ({ event }) => {
 				Update Your Event!
 			</Button>
 			<Button variant="danger" style={{ marginLeft: "120px" }} onClick={() => deleteCurrentEvent(id)}>
-				Delete Your Group!
+				Delete Your Event!
 			</Button>
 		</Form>
 	);
