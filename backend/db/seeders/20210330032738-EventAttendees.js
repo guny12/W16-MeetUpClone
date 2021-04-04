@@ -7,19 +7,19 @@ for (let i = 1; i < 12; i++) {
 		eventId: i,
 	});
 }
-for (let i = 1; i < 24; i++) {
+for (let i = 1; i < 25; i++) {
 	attendees.push({
 		attendeeId: 2,
 		eventId: i,
 	});
 }
-for (let i = 1; i < 24; i++) {
+for (let i = 1; i < 25; i++) {
 	attendees.push({
 		attendeeId: 3,
 		eventId: i,
 	});
 }
-for (let i = 1; i < 24; i++) {
+for (let i = 1; i < 25; i++) {
 	attendees.push({
 		attendeeId: 4,
 		eventId: i,

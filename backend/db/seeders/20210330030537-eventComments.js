@@ -4,14 +4,14 @@ const faker = require("faker");
 let eventcomments = [];
 for (let i = 1; i < 12; i++) {
 	eventcomments.push({
-		attendeeId: 1,
+		userId: 1,
 		eventId: i,
 		content: faker.lorem.sentence(),
 	});
 }
 for (let i = 1; i < 24; i++) {
 	eventcomments.push({
-		attendeeId: 2,
+		userId: 2,
 		eventId: i,
 		content: faker.lorem.sentence(),
 	});
@@ -25,7 +25,7 @@ for (let i = 1; i < 24; i++) {
 }
 for (let i = 1; i < 24; i++) {
 	eventcomments.push({
-		attendeeId: 4,
+		userId: 4,
 		eventId: i,
 		content: faker.lorem.sentence(),
 	});

@@ -5,14 +5,14 @@ let groupcomments = [];
 for (let i = 1; i < 12; i++) {
 	groupcomments.push({
 		userId: 1,
-		eventId: i,
+		groupId: i,
 		content: faker.lorem.sentence(),
 	});
 }
 for (let i = 1; i < 24; i++) {
 	groupcomments.push({
 		userId: 2,
-		eventId: i,
+		groupId: i,
 		content: faker.lorem.sentence(),
 	});
 }
@@ -26,7 +26,7 @@ for (let i = 1; i < 24; i++) {
 for (let i = 1; i < 24; i++) {
 	groupcomments.push({
 		userId: 4,
-		eventId: i,
+		groupId: i,
 		content: faker.lorem.sentence(),
 	});
 }

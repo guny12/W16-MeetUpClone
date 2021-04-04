@@ -31,18 +31,13 @@ eventIdRouter.delete(
 	asyncHandler(async (req, res) => {
 		const currentId = req.user.id;
 		const { id } = req.body;
-		// console.log(id, "ID----------------------------------------");
+
 		const targetEvent = await Event.findByPk(id);
-		console.log(targetEvent.id, "TARGET EVENT---------------------------------------");
+
 		if (targetEvent.hostId === currentId) {
 			const targetUserJoinEvents = await EventAttendee.findAll({ where: { eventId: targetEvent.id } });
-			for (userJoinEvent of targetUserJoinEvents) {
-				await userJoinEvent.destroy();
-			}
+			for (userJoinEvent of targetUserJoinEvents) await userJoinEvent.destroy();
 
-			const targetEventcomments = await EventComment.findAll();
-			console.log(targetEventcomments, "EVENT COMMENTs---------------------");
-			for (eventcomment of targetEventcomments) await eventcomment.destroy();
 			await targetEvent.destroy();
 		}
 		return res.json({ id });
