@@ -19,7 +19,7 @@ for (let i = 1; i < 24; i++) {
 		eventId: i,
 	});
 }
-for (let i = 1; i < 12; i++) {
+for (let i = 1; i < 24; i++) {
 	attendees.push({
 		attendeeId: 4,
 		eventId: i,
