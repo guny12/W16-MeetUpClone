@@ -7,20 +7,40 @@ import "./Home.css";
 // import DeckCarousel from "../Carousel";
 import Groups from "../Groups";
 import FindNewGroups from "../FindNewGroups";
+import Events from "../Events";
 
 const Home = ({ isLoaded }) => {
 	// const history = useHistory();
 	// const dispatch = useDispatch();
 	const signedIn = useSelector((state) => state.session.user?.id);
+	const userFirstName = useSelector((state) => state.session.user?.firstName);
 	// useEffect(() => dispatch(groupActions.getGroups()), [dispatch]);
 	// const groups = useSelector((state) => state.groups);
 
 	return (
 		<div>
-			{signedIn && <h1>Welcome back! Your Upcoming and other Nearby Events Here</h1>}
-			{!signedIn && <h1>Put a message here explaining app/login/signup</h1>}
-			{signedIn && <Groups />}
-			{!signedIn && <FindNewGroups />}
+			{signedIn && (
+				<>
+					<h1
+						style={{ margin: "5px", fontFamily: `"Rock Salt", cursive` }}
+					>{`Lets get cooking off, ${userFirstName}!`}</h1>{" "}
+					<Events /> <Groups />
+				</>
+			)}
+			{!signedIn && (
+				<>
+					<h4
+						style={{ marginTop: "10px", padding: "10px", marginBottom: "-100px", fontFamily: `"Rock Salt", cursive` }}
+					>
+						Welcome to Cook Off!
+						<p>Pick groups to join where you can meet other cooks. </p>
+						<p>Discuss, cook off against each other, cater events, experiment and learn things.</p>
+						<p>Groups have Events that you can join if you are a part of them. </p>
+						<p>Sign Up to get full access, or try the demo user.</p>
+					</h4>
+					<FindNewGroups />{" "}
+				</>
+			)}
 		</div>
 	);
 };
