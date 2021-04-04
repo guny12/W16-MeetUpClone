@@ -25,7 +25,7 @@ const EventPage = () => {
 		else {
 			return dispatch(eventActions.joinEvent({ event }))
 				.then((response) => {
-					history.go(0);
+					history.push(`/${event?.groupId}/${event?.id}`);
 					return response;
 				})
 				.catch(async (res) => {
@@ -53,17 +53,17 @@ const EventPage = () => {
 			event = null;
 	}
 
-	let NotJoinedEvents = [];
-	let notjoinedevents = Object.values(notJoinedEvents);
-	for (event of Object.values(notjoinedevents)) {
-		NotJoinedEvents.push(event.id);
-	}
-	console.log(NotJoinedEvents);
+	// let NotJoinedEvents = [];
+	// let notjoinedevents = Object.values(notJoinedEvents);
+	// for (event of Object.values(notjoinedevents)) {
+	// 	NotJoinedEvents.push(event.id);
+	// }
+	// console.log(NotJoinedEvents);
 	let JoinOrEditButton = null;
 	function eventRender(event) {
 		if (event?.hostName === user?.firstName) {
 			JoinOrEditButton = <EditGroupFormModal event={event} />;
-		} else if (NotJoinedEvents.includes(event.id)) {
+		} else if (!joinedEventIds.includes(event.id)) {
 			JoinOrEditButton = (
 				<Button variant="dark" onClick={() => joinEvent(event)}>
 					Join Event

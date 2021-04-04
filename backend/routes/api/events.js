@@ -73,7 +73,6 @@ eventsRouter.get(
 				currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
 				let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 				currEvent.dataValues["hostName"] = owner.firstName;
-				joinedEventIds.push(currEvent.dataValues.id);
 			}
 		}
 
