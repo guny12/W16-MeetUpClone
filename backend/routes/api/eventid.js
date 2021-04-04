@@ -5,15 +5,11 @@ const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/mo
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 // const { Op, UUID } = require("sequelize");
-const groupIdRouter = express.Router();
-const eventIdRouter = require("./eventid.js");
+const eventIdRouter = express.Router();
 
-groupIdRouter.use("/:eventid", eventIdRouter);
-groupIdRouter.patch(
+eventIdRouter.patch(
 	"/",
 	requireAuth,
-	// validateUpdateGroup,
-	// validationResult,
 	asyncHandler(async (req, res) => {
 		const adminId = req.user.id;
 		const { id, name, description, isPublic, imgURL } = req.body;
@@ -22,7 +18,7 @@ groupIdRouter.patch(
 	})
 );
 
-groupIdRouter.delete(
+eventIdRouter.delete(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
@@ -38,7 +34,7 @@ groupIdRouter.delete(
 	})
 );
 
-groupIdRouter.post(
+eventIdRouter.post(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
@@ -50,4 +46,4 @@ groupIdRouter.post(
 	})
 );
 
-module.exports = groupIdRouter;
+module.exports = eventIdRouter;

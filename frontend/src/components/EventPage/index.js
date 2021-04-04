@@ -1,0 +1,111 @@
+import React, { useEffect } from "react";
+import * as eventActions from "../../store/event";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams, NavLink, Redirect } from "react-router-dom";
+import "./EventPage.css";
+import Image from "react-bootstrap/Image";
+import EditGroupFormModal from "../EditGroupModal";
+import { Button, Jumbotron, Container } from "react-bootstrap";
+
+const EventPage = () => {
+	const history = useHistory();
+	const { eventId } = useParams();
+	const dispatch = useDispatch();
+	const events = useSelector((state) => state.events);
+	let { joinedUpcomingEvents, joinedEventIds, notJoinedUpcomingEvents, somePublicEvents } = events;
+	const user = useSelector((state) => state.session.user);
+	useEffect(() => dispatch(eventActions.getEvents()), [dispatch]);
+
+	let isLoaded = events.joinedEventIds.length > 0 || Object.values(events.somePublicEvents).length > 1;
+
+	function joinEvent(group) {
+		return dispatch(eventActions.joinEvent({ event }))
+			.then((response) => {
+				history.go(0);
+				return response;
+			})
+			.catch(async (res) => {
+				throw res;
+			});
+	}
+
+	// if eventId isn't one of the keys in that group, !! will return false.
+	// if it is inside that group, !! will return true.
+
+	let event;
+
+	switch (true) {
+		case !!newPrivateGroups[`${eventId}`]:
+			event = newPrivateGroups[`${eventId}`];
+			break;
+		case !!privateGroups[`${eventId}`]:
+			event = privateGroups[`${eventId}`];
+			break;
+		case !!newPublicGroups[`${eventId}`]:
+			event = newPublicGroups[`${eventId}`];
+			break;
+		case !!publicGroups[`${eventId}`]:
+			event = publicGroups[`${eventId}`];
+			break;
+		default:
+			event = null;
+	}
+
+	let JoinOrEditButton = null;
+	function groupRender(group) {
+		if (group?.adminName === user.firstName) {
+			JoinOrEditButton = <EditGroupFormModal group={group} />;
+		} else if (!groups.joinedGroupIds.includes(group.id)) {
+			JoinOrEditButton = (
+				<Button variant="dark" onClick={() => joinGroup(group)}>
+					JOIN GROUP
+				</Button>
+			);
+		} else {
+			JoinOrEditButton = <p>You are a member of this group!</p>;
+		}
+
+		if (group) {
+			return (
+				<>
+					<Image fluid src={`${group?.imgURL}`}></Image>
+					<h1>
+						{group?.name}
+						<p>{group?.description}</p>
+						<p>{`${group?.count} ${group?.count > 1 || group?.count === 0 ? "Members" : "Member"} so far`}</p>
+						<p>{`${group?.isPublic ? "Public" : "Private"} Group`}</p>
+						<p>{`Organized By ${group?.adminName}`}</p>
+						{JoinOrEditButton}
+					</h1>
+				</>
+			);
+		}
+	}
+
+	let noGroup = (
+		<>
+			<Image fluid src={"https://cdn.pixabay.com/photo/2014/04/02/16/29/scream-307414__340.png"}></Image>
+			<h1>
+				<NavLink to={"/home"}>
+					Whoops! Can't find the group you tried to go to.
+					<p /> It may have been deleted by the admin. <p /> CLICK HERE to go home.
+				</NavLink>
+			</h1>
+		</>
+	);
+
+	if (!isLoaded) return null;
+
+	return (
+		<div className="groupPage__container">
+			<div className="groupPage__header">
+				<Jumbotron fluid>
+					<Container>{isLoaded && event ? groupRender(event) : noGroup}</Container>
+				</Jumbotron>
+			</div>
+			<div className="groupPage__header-Nav"></div>
+		</div>
+	);
+};
+
+export default EventPage;
