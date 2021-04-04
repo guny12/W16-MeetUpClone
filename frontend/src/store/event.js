@@ -75,7 +75,6 @@ const initialState = {
 	JoinedEvents: {},
 	notJoinedEvents: {},
 	somePublicEvents: {},
-	previousJoinedEvents: {},
 	joinedEventIds: [],
 };
 

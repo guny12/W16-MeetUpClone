@@ -8,6 +8,7 @@ import FindNewGroups from "../src/components/FindNewGroups";
 import Home from "../src/components/Home";
 import GroupPage from "../src/components/GroupPage";
 import Events from "../src/components/Events";
+import EventPage from "../src/components/EventPage";
 
 function App() {
 	const dispatch = useDispatch();
@@ -36,6 +37,9 @@ function App() {
 					</Route>
 					<Route path="/:groupId" exact>
 						<GroupPage isLoaded={isLoaded} />
+					</Route>
+					<Route path="/:groupId/:eventId" exact>
+						<EventPage isLoaded={isLoaded} />
 					</Route>
 					<Route path="/">
 						<Redirect to="/home" />

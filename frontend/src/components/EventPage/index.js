@@ -12,13 +12,14 @@ const EventPage = () => {
 	const { eventId } = useParams();
 	const dispatch = useDispatch();
 	const events = useSelector((state) => state.events);
-	let { joinedUpcomingEvents, joinedEventIds, notJoinedUpcomingEvents, somePublicEvents } = events;
+	console.log(events, "EVENTS ------------------------------------------------");
+	let { JoinedEvents, joinedEventIds, notJoinedUpcomingEvents, somePublicEvents } = events;
 	const user = useSelector((state) => state.session.user);
 	useEffect(() => dispatch(eventActions.getEvents()), [dispatch]);
 
 	let isLoaded = events.joinedEventIds.length > 0 || Object.values(events.somePublicEvents).length > 1;
 
-	function joinEvent(group) {
+	function joinEvent(event) {
 		return dispatch(eventActions.joinEvent({ event }))
 			.then((response) => {
 				history.go(0);
@@ -29,52 +30,48 @@ const EventPage = () => {
 			});
 	}
 
-	// if eventId isn't one of the keys in that group, !! will return false.
-	// if it is inside that group, !! will return true.
+	// if eventId isn't one of the keys in that event, !! will return false.
+	// if it is inside that event, !! will return true.
 
 	let event;
 
 	switch (true) {
-		case !!newPrivateGroups[`${eventId}`]:
-			event = newPrivateGroups[`${eventId}`];
+		case !!JoinedEvents[`${eventId}`]:
+			event = JoinedEvents[`${eventId}`];
 			break;
-		case !!privateGroups[`${eventId}`]:
-			event = privateGroups[`${eventId}`];
+		case !!notJoinedUpcomingEvents[`${eventId}`]:
+			event = notJoinedUpcomingEvents[`${eventId}`];
 			break;
-		case !!newPublicGroups[`${eventId}`]:
-			event = newPublicGroups[`${eventId}`];
-			break;
-		case !!publicGroups[`${eventId}`]:
-			event = publicGroups[`${eventId}`];
+		case !!somePublicEvents[`${eventId}`]:
+			event = somePublicEvents[`${eventId}`];
 			break;
 		default:
 			event = null;
 	}
 
 	let JoinOrEditButton = null;
-	function groupRender(group) {
-		if (group?.adminName === user.firstName) {
-			JoinOrEditButton = <EditGroupFormModal group={group} />;
-		} else if (!groups.joinedGroupIds.includes(group.id)) {
+	function eventRender(event) {
+		if (event?.hostName === user.firstName) {
+			JoinOrEditButton = <EditGroupFormModal event={event} />;
+		} else if (!events.joinedEventIds.includes(event.id)) {
 			JoinOrEditButton = (
-				<Button variant="dark" onClick={() => joinGroup(group)}>
-					JOIN GROUP
+				<Button variant="dark" onClick={() => joinEvent(event)}>
+					JOIN Event
 				</Button>
 			);
 		} else {
-			JoinOrEditButton = <p>You are a member of this group!</p>;
+			JoinOrEditButton = <p>You are a member of this event!</p>;
 		}
 
-		if (group) {
+		if (event) {
 			return (
 				<>
-					<Image fluid src={`${group?.imgURL}`}></Image>
+					<Image fluid src={`${event?.imgURL}`}></Image>
 					<h1>
-						{group?.name}
-						<p>{group?.description}</p>
-						<p>{`${group?.count} ${group?.count > 1 || group?.count === 0 ? "Members" : "Member"} so far`}</p>
-						<p>{`${group?.isPublic ? "Public" : "Private"} Group`}</p>
-						<p>{`Organized By ${group?.adminName}`}</p>
+						{event?.name}
+						<p>{event?.description}</p>
+						<p>{`${event?.count} ${event?.count > 1 || event?.count === 0 ? "Members" : "Member"} so far`}</p>
+						<p>{`Organized By ${event?.hostName}`}</p>
 						{JoinOrEditButton}
 					</h1>
 				</>
@@ -82,12 +79,12 @@ const EventPage = () => {
 		}
 	}
 
-	let noGroup = (
+	let noEvent = (
 		<>
 			<Image fluid src={"https://cdn.pixabay.com/photo/2014/04/02/16/29/scream-307414__340.png"}></Image>
 			<h1>
 				<NavLink to={"/home"}>
-					Whoops! Can't find the group you tried to go to.
+					Whoops! Can't find the event you tried to go to.
 					<p /> It may have been deleted by the admin. <p /> CLICK HERE to go home.
 				</NavLink>
 			</h1>
@@ -97,13 +94,13 @@ const EventPage = () => {
 	if (!isLoaded) return null;
 
 	return (
-		<div className="groupPage__container">
-			<div className="groupPage__header">
+		<div className="eventPage__container">
+			<div className="eventPage__header">
 				<Jumbotron fluid>
-					<Container>{isLoaded && event ? groupRender(event) : noGroup}</Container>
+					<Container>{isLoaded && event ? eventRender(event) : noEvent}</Container>
 				</Jumbotron>
 			</div>
-			<div className="groupPage__header-Nav"></div>
+			<div className="eventPage__header-Nav"></div>
 		</div>
 	);
 };
