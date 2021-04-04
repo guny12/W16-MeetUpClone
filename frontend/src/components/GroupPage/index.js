@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams, NavLink } from "react-router-dom";
+import { useHistory, useParams, NavLink, Redirect } from "react-router-dom";
 import "./GroupPage.css";
 import Image from "react-bootstrap/Image";
 import EditGroupFormModal from "../EditGroupModal";
@@ -86,7 +86,7 @@ const GroupPage = () => {
 		<>
 			<Image fluid src={"https://cdn.pixabay.com/photo/2014/04/02/16/29/scream-307414__340.png"}></Image>
 			<h1>
-				<NavLink exact to="/home">
+				<NavLink to={"/home"}>
 					Whoops! Can't find the group you tried to go to.
 					<p /> It may have been deleted by the admin. <p /> CLICK HERE to go home.
 				</NavLink>

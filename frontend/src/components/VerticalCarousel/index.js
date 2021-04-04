@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import "./Carousel.css";
+import "./VerticalCarousel.css";
 import Slider from "react-slick";
-import { Card, CardDeck } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
-function VerticalCarousel({ groups, isPrivate }) {
-	let { publicGroups, privateGroups } = groups;
-	let targetGroups = isPrivate ? privateGroups : publicGroups;
+function VerticalCarousel({ events, whatGroup }) {
+	// let { publicGroups, privateGroups } = groups;
+	// let targetGroups = isPrivate ? privateGroups : publicGroups;
 
+	let { JoinedPublicEvents } = events;
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -17,11 +18,12 @@ function VerticalCarousel({ groups, isPrivate }) {
 		swipeToSlide: true,
 	};
 
-	let cards = Object.values(targetGroups).map((group) => (
+	console.log("THIS HAPPENEd---------------------------");
+	let cards = Object.values(JoinedPublicEvents).map((event) => (
 		<div>
-			<Card key={`card-${group.id}`} className="bg-dark text-white">
-				<a href={`/${group.id}`}>
-					<Card.Img src={`${group.imgURL}`} alt="Card image" />
+			<Card key={`card-${event.id}`} className="bg-dark text-white">
+				<a href={`/${event.id}`}>
+					<Card.Img src={`${event.imgURL}`} alt="Card image" />
 					<Card.ImgOverlay>
 						<Card.Title
 							style={{
@@ -31,7 +33,7 @@ function VerticalCarousel({ groups, isPrivate }) {
 								borderRadius: "5px",
 							}}
 						>
-							{group.name}
+							{event.name}
 						</Card.Title>
 						<Card.Text>
 							<span
@@ -42,7 +44,7 @@ function VerticalCarousel({ groups, isPrivate }) {
 									backgroundColor: "rgba(7, 7, 7, 0.4)",
 								}}
 							>
-								{`${group.count} Members`}
+								{`${event.count} Members`}
 							</span>
 						</Card.Text>
 					</Card.ImgOverlay>

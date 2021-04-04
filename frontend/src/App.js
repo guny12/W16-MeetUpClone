@@ -7,6 +7,7 @@ import Groups from "../src/components/Groups";
 import FindNewGroups from "../src/components/FindNewGroups";
 import Home from "../src/components/Home";
 import GroupPage from "../src/components/GroupPage";
+import Events from "../src/components/Events";
 
 function App() {
 	const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
 					</Route>
 					<Route path="/home" isLoaded={isLoaded} exact>
 						<Home />
+					</Route>
+					<Route path="/events" exact>
+						<Events />
 					</Route>
 					<Route path="/:groupId" exact>
 						<GroupPage isLoaded={isLoaded} />

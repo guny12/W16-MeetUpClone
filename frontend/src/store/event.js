@@ -72,10 +72,10 @@ export const deleteEvent = (eventId) => async (dispatch) => {
 
 // reducer
 const initialState = {
-	JoinedPublicEvents: {},
-	// notJoinedEvents: {},
-	// somePublicEvents: {},
-	// newPrivateEvents: {}, should not be able to see private events unless you are in that group
+	JoinedEvents: {},
+	notJoinedEvents: {},
+	somePublicEvents: {},
+	previousJoinedEvents: {},
 	joinedEventIds: [],
 };
 
@@ -88,8 +88,8 @@ const eventReducer = (eventState = initialState, action) => {
 			}, {});
 			return {
 				...eventState,
-				JoinedPublicEvents: PublicEvents,
-				JoinedEventIds: joinedEventIds,
+				JoinedEvents: PublicEvents,
+				joinedEventIds: joinedEventIds,
 			};
 		default:
 			return eventState;

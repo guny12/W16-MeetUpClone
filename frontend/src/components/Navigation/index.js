@@ -32,15 +32,15 @@ function Navigation({ isLoaded }) {
 	return (
 		<Navbar bg="primary" variant="dark">
 			<Nav className="mr-auto">
-				<NavLink className="nav-link" exact="true" to={`/home`}>
+				<NavLink className="nav-link" to={`/home`}>
 					Home
 				</NavLink>
 				{sessionUser && (
-					<NavLink className="nav-link" exact="true" to="/groups">
+					<NavLink className="nav-link" to="/groups">
 						Joined Groups
 					</NavLink>
 				)}
-				<NavLink className="nav-link" exact="true" to="/NewGroups">
+				<NavLink className="nav-link" to="/NewGroups">
 					Find New Groups
 				</NavLink>
 				{isLoaded && sessionLinks}
