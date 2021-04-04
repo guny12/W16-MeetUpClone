@@ -191,7 +191,7 @@ module.exports = {
 					eventDate: faker.date.soon(),
 					eventType: "cook off",
 					availableSpots: faker.random.number(),
-					imgURL: "https://cdn.pixabay.com/photo/3019/03/11/11/53/cat-3989479__340.jpg",
+					imgURL: "https://cdn.pixabay.com/photo/2019/02/11/11/53/cat-3989479__340.jpg",
 				},
 				{
 					name: "3 Casual Cooking",
