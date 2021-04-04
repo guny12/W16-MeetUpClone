@@ -82,14 +82,18 @@ const initialState = {
 const eventReducer = (eventState = initialState, action) => {
 	switch (action.type) {
 		case SET_Events:
-			let { joinedUpcomingEvents, joinedEventIds } = action.payload;
+			let { joinedUpcomingEvents, joinedEventIds, notJoinedUpcomingEvents } = action.payload;
 			let JoinedUpcomingEvents = joinedUpcomingEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
+			}, {});
+			let NotJoinedEvents = notJoinedUpcomingEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
 			return {
 				...eventState,
 				JoinedEvents: JoinedUpcomingEvents,
 				joinedEventIds: joinedEventIds,
+				notJoinedEvents: NotJoinedEvents,
 			};
 		default:
 			return eventState;
