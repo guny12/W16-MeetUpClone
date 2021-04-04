@@ -13,7 +13,7 @@ const EditGroupForm = ({ event }) => {
 	const [description, setDescription] = useState(event.description);
 	const [location, setLocation] = useState(event.location);
 	const [eventType, setEventType] = useState(event.eventType);
-	const [eventDate, setEventDate] = useState(event.eventDate);
+	const [eventDate, setEventDate] = useState(event.eventDate.slice(0, -1));
 	const [availableSpots, setAvailableSpots] = useState(event.availableSpots);
 	const [imgURL, setimgURL] = useState(event.imgURL);
 	const close = window.document.querySelector("#modal-background");
