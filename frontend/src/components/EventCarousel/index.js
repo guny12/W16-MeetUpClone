@@ -35,7 +35,7 @@ function EventCarousel({ events, whatEvent }) {
 	let cards = Object.values(targetEvents).map((Event) => (
 		<div key={`card-${whatEvent}${Event.id}`}>
 			<Card>
-				<NavLink to={`/${Event.id}`}>
+				<NavLink to={`/${Event.groupId}/${Event.id}`}>
 					<Card.Img variant="top" src={`${Event.imgURL}`} />
 					<Card.Body>
 						<Card.Title>{Event.name}</Card.Title>
@@ -44,14 +44,11 @@ function EventCarousel({ events, whatEvent }) {
 							<p>{`Hosted by: ${Event.hostName}`}</p>
 							<p>{`Event Location: ${Event.location}`}</p>
 							<p>{`Event Date: ${parseISO(Event.eventDate)}`}</p>
-							<p>{`Event Date: ${new Date(Event.eventDate).toISOString()}`}</p>
 							<p>{`${Event.availableSpots} available spots left`}</p>
 						</Card.Text>
 					</Card.Body>
 					<Card.Footer>
-						<small className="text-muted">{`${Event?.count} ${
-							Event?.count > 1 || Event?.count === 0 ? "Members" : "Member"
-						} so far`}</small>
+						<small className="text-muted">{`${Event?.count} People Joined so far`}</small>
 					</Card.Footer>
 				</NavLink>
 			</Card>
