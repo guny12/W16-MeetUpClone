@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./EventCarousel.css";
 import Slider from "react-slick";
 import { Card } from "react-bootstrap";
-import { format, compareAsc, parseISO } from "date-fns";
+import { parseISO } from "date-fns";
 
 function EventCarousel({ events, whatEvent }) {
 	let { JoinedEvents, notJoinedEvents, somePublicEvents, previousJoinedEvents, joinedEventIds } = events;
@@ -41,9 +41,9 @@ function EventCarousel({ events, whatEvent }) {
 						<Card.Title>{Event.name}</Card.Title>
 						<Card.Text className="event-body">
 							<span>{Event.description}</span>
-							<p>{`Hosted by: ${Event.hostName}`}</p>
-							<p>{`Event Location: ${Event.location}`}</p>
-							<p>{`Event Date: ${parseISO(Event.eventDate)}`}</p>
+							<p>{`Hosted: ${Event.hostName}`}</p>
+							<p>{`Location: ${Event.location}`}</p>
+							<p>{`When: ${parseISO(Event.eventDate)}`}</p>
 							<p>{`${Event.availableSpots} available spots left`}</p>
 						</Card.Text>
 					</Card.Body>

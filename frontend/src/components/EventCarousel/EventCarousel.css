@@ -1,6 +1,10 @@
-.event-body p,
-.event-body span {
+.event-body {
 	word-wrap: break-word;
-	white-space: normal;
+	white-space: nowrap;
+	margin: 0px;
+	padding: 0px;
 	/* white space is what lets you wrap the text around in card */
+}
+.event-body p {
+	white-space: normal;
 }
