@@ -25,7 +25,7 @@ const EventPage = () => {
 		else {
 			return dispatch(eventActions.joinEvent({ event }))
 				.then((response) => {
-					history.push(`/${event?.groupId}/${event?.id}`);
+					history.go();
 					return response;
 				})
 				.catch(async (res) => {
