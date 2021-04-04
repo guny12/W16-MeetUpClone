@@ -1,9 +1,9 @@
 .eventPage__header {
-	background-color: rgb(22, 22, 22);
+	background-color: rgb(114, 113, 160);
 	margin-top: 50px;
 }
 
-.jumbotron {
+/* .jumbotron {
 	box-sizing: border-box;
 	margin-left: auto;
 	margin-right: auto;
@@ -12,9 +12,9 @@
 	margin-top: -50px;
 	margin-bottom: -50px;
 	border-radius: 150px;
-}
+} */
 
-.container {
+/* .container {
 	align-items: flex;
 	box-sizing: border-box;
 	display: flex;
@@ -24,7 +24,7 @@
 	height: auto;
 	padding: 15px;
 	margin: auto;
-}
+} */
 
 .eventPage__header .img-fluid {
 	box-sizing: border-box;
@@ -33,9 +33,9 @@
 	width: 50%;
 	border-radius: 10px;
 }
-
+/*
 .container p {
 	font-size: large;
 	padding: 5px;
 	overflow-wrap: anywhere;
-}
+} */

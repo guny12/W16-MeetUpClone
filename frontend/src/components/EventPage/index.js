@@ -21,14 +21,17 @@ const EventPage = () => {
 	let isLoaded = events.joinedEventIds.length > 0 || Object.values(events.somePublicEvents).length > 1;
 
 	function joinEvent(event) {
-		return dispatch(eventActions.joinEvent({ event }))
-			.then((response) => {
-				history.go(0);
-				return response;
-			})
-			.catch(async (res) => {
-				throw res;
-			});
+		if (!user?.firstName) document.getElementById("loginButton").click();
+		else {
+			return dispatch(eventActions.joinEvent({ event }))
+				.then((response) => {
+					history.go(0);
+					return response;
+				})
+				.catch(async (res) => {
+					throw res;
+				});
+		}
 	}
 
 	// if eventId isn't one of the keys in that event, !! will return false.
@@ -52,7 +55,7 @@ const EventPage = () => {
 
 	let JoinOrEditButton = null;
 	function eventRender(event) {
-		if (event?.hostName === user.firstName) {
+		if (event?.hostName === user?.firstName) {
 			JoinOrEditButton = <EditGroupFormModal event={event} />;
 		} else if (!events.joinedEventIds.includes(event.id)) {
 			JoinOrEditButton = (

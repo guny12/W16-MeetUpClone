@@ -19,14 +19,17 @@ const GroupPage = () => {
 	let isLoaded = groups.joinedGroupIds.length > 0 || Object.values(groups.newPublicGroups).length > 1;
 
 	function joinGroup(group) {
-		return dispatch(groupActions.joinGroup({ group }))
-			.then((response) => {
-				history.go(0);
-				return response;
-			})
-			.catch(async (res) => {
-				throw res;
-			});
+		if (!user?.firstName) document.getElementById("loginButton").click();
+		else {
+			return dispatch(groupActions.joinGroup({ group }))
+				.then((response) => {
+					history.go(0);
+					return response;
+				})
+				.catch(async (res) => {
+					throw res;
+				});
+		}
 	}
 
 	// if groupId isn't one of the keys in that group, !! will return false.
@@ -53,7 +56,7 @@ const GroupPage = () => {
 
 	let JoinOrEditButton = null;
 	function groupRender(group) {
-		if (group?.adminName === user.firstName) {
+		if (group?.adminName === user?.firstName) {
 			JoinOrEditButton = <EditGroupFormModal group={group} />;
 		} else if (!groups.joinedGroupIds.includes(group.id)) {
 			JoinOrEditButton = (
