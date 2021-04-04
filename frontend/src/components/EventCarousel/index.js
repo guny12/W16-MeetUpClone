@@ -43,7 +43,7 @@ function EventCarousel({ events, whatEvent }) {
 							<span>{Event.description}</span>
 							<p>{`Hosted: ${Event.hostName}`}</p>
 							<p>{`Location: ${Event.location}`}</p>
-							<p>{`When: ${parseISO(Event.eventDate)}`}</p>
+							<p>{`When: ${parseISO(Event.eventDate).toString().slice(0, 24)}`}</p>
 							<p>{`${Event.availableSpots} available spots left`}</p>
 						</Card.Text>
 					</Card.Body>
