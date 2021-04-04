@@ -1,58 +1,38 @@
 "use strict";
 const faker = require("faker");
+
+let eventcomments = [];
+for (let i = 1; i < 12; i++) {
+	eventcomments.push({
+		attendeeId: 1,
+		eventId: i,
+		content: faker.lorem.sentence(),
+	});
+}
+for (let i = 1; i < 24; i++) {
+	eventcomments.push({
+		attendeeId: 2,
+		eventId: i,
+		content: faker.lorem.sentence(),
+	});
+}
+for (let i = 1; i < 24; i++) {
+	eventcomments.push({
+		userId: 3,
+		eventId: i,
+		content: faker.lorem.sentence(),
+	});
+}
+for (let i = 1; i < 24; i++) {
+	eventcomments.push({
+		attendeeId: 4,
+		eventId: i,
+		content: faker.lorem.sentence(),
+	});
+}
 module.exports = {
 	up: (queryInterface, Sequelize) => {
-		return queryInterface.bulkInsert(
-			"EventComments",
-			[
-				{
-					userId: 1,
-					eventId: 1,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 1,
-					eventId: 2,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 1,
-					eventId: 3,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 2,
-					eventId: 1,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 2,
-					eventId: 2,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 2,
-					eventId: 3,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 3,
-					eventId: 1,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 3,
-					eventId: 2,
-					content: faker.lorem.sentence(),
-				},
-				{
-					userId: 3,
-					eventId: 3,
-					content: faker.lorem.sentence(),
-				},
-			],
-			{}
-		);
+		return queryInterface.bulkInsert("EventComments", eventcomments, {});
 	},
 
 	down: (queryInterface, Sequelize) => {
