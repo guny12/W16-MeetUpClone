@@ -41,7 +41,6 @@ const EditEventForm = ({ event }) => {
 				eventActions.updateEventData({ name, id, description, imgURL, location, eventDate, eventType, availableSpots })
 			)
 				.then((response) => {
-					console.log(response, "RESPONSE HERE--------------------------");
 					history.push(`/${response.groupId}/${response.id}`);
 					close.click();
 				})
@@ -57,7 +56,6 @@ const EditEventForm = ({ event }) => {
 				eventActions.updateEventData({ id, description, imgURL, location, eventDate, eventType, availableSpots })
 			)
 				.then((response) => {
-					console.log(response, "RESPONSE HERE--------------------------");
 					history.push(`/${response.groupId}/${response.id}`);
 					close.click();
 				})
