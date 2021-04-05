@@ -101,7 +101,7 @@ const EditGroupForm = ({ group }) => {
 			<Form.Group controlId="formBasicName">
 				<Form.Label>Optional Image URL </Form.Label>
 				<Form.Control
-					type="url"
+					type="text"
 					value={imgURL}
 					onChange={(e) => setimgURL(e.target.value)}
 					placeholder="Image URL..."
