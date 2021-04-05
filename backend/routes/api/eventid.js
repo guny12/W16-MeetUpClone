@@ -49,11 +49,11 @@ eventIdRouter.post(
 	requireAuth,
 	asyncHandler(async (req, res) => {
 		const hostId = req.user.id;
-		const { name, id, description, imgURL, location, eventDate, eventType, availableSpots } = req.body;
+		const { name, groupId, description, imgURL, location, eventDate, eventType, availableSpots } = req.body;
 		const newEvent = await Event.create({
 			hostId,
 			name,
-			id,
+			groupId,
 			description,
 			imgURL,
 			location,
@@ -62,7 +62,7 @@ eventIdRouter.post(
 			availableSpots,
 		});
 		await EventAttendee.create({ attendeeId: hostId, eventId: newEvent.id });
-		return res.json({ newEvent });
+		return res.json({ newEvent, groupId });
 	})
 );
 

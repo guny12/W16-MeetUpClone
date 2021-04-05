@@ -5,6 +5,7 @@ import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./GroupPage.css";
 import Image from "react-bootstrap/Image";
 import EditGroupFormModal from "../EditGroupModal";
+import CreateEventFormModal from "../CreateEventModal";
 import { Button, Jumbotron, Container } from "react-bootstrap";
 
 const GroupPage = () => {
@@ -57,7 +58,11 @@ const GroupPage = () => {
 	let JoinOrEditButton = null;
 	function groupRender(group) {
 		if (group?.adminName === user?.firstName) {
-			JoinOrEditButton = <EditGroupFormModal group={group} />;
+			JoinOrEditButton = (
+				<>
+					<EditGroupFormModal group={group} /> <CreateEventFormModal group={group} />
+				</>
+			);
 		} else if (!groups.joinedGroupIds.includes(group.id)) {
 			JoinOrEditButton = (
 				<Button variant="dark" onClick={() => joinGroup(group)}>
@@ -65,7 +70,12 @@ const GroupPage = () => {
 				</Button>
 			);
 		} else {
-			JoinOrEditButton = <p>You are a member of this group!</p>;
+			JoinOrEditButton = (
+				<>
+					<p>You are a member of this group!</p>
+					<CreateEventFormModal group={group} />
+				</>
+			);
 		}
 
 		if (group) {
