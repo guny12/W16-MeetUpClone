@@ -44,6 +44,7 @@ const Home = ({ isLoaded }) => {
 						<p>Groups have Events that you can join if you are a part of them. </p>
 						<p>Sign Up to get full access, or try the demo user.</p>
 					</h4>
+					<Events />
 					<FindNewGroups />
 				</>
 			)}
