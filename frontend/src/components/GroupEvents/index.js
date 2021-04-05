@@ -62,11 +62,7 @@ const GroupEvents = ({ group }) => {
 				)}
 			</div>
 			{Object.values(events.PreviousEvents).length < 1 && (
-				<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
-					You've joined every event!
-					<p style={{ margin: "50px" }} />
-					<p> Go make some more!</p>
-				</h1>
+				<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>No Previous Events!</h1>
 			)}
 			{Object.values(events.PreviousEvents).length > 0 && (
 				<div>
