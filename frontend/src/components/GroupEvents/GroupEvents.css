@@ -1,65 +1,12 @@
-/* .groupTile__image {
-	box-sizing: border-box;
-	height: 150px;
-}
-
-.card-title {
-	margin: auto;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.card-img-top {
-	overflow: hidden;
-	height: 200px;
-}
-
-.card-text {
-	margin: auto;
-	width: 100%;
-	padding-left: 0px;
-	padding-bottom: 8px;
-	padding-top: 8px;
-	color: rgb(117, 117, 117);
-	font-size: 12px;
-	text-decoration: none;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.card-text span {
-	border: 0px;
-	clip: auto;
-	clip-path: inset(1%);
-	height: 1px;
-	margin: -5px;
-	overflow: hidden;
-	padding: 0px;
-	position: absolute;
-	width: 1px;
-	overflow-wrap: normal;
-}
-
-.card-body {
-	overflow: hidden;
-}
-
-.card {
-	padding: 0px;
-	background-clip: padding-box;
-	background-size: cover;
-	box-sizing: border-box;
-	position: relative;
-	height: auto;
+.groupEvent__shelf-header {
+	margin-top: 3%;
 	display: flex;
-	overflow-wrap: break-word;
-	background-color: rgb(255, 255, 255);
-	z-index: 0;
-	width: 250px;
-	flex-direction: column;
-	justify-content: space-evenly;
-	border-radius: 20px;
-	border: 1px transparent;
-} */
+	box-sizing: border-box;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.groupEvent__shelf-header h1 {
+	font-weight: 800;
+	font-size: 2.5rem;
+}

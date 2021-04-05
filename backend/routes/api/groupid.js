@@ -1,7 +1,7 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { check, validationResult } = require("express-validator");
-const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
+const { EventAttendee, Sequelize, Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 const { Op } = require("sequelize");
@@ -41,11 +41,11 @@ groupIdRouter.get(
 				order: [["id", "ASC"]],
 			});
 
-			for (currEvent of joinedUpcomingEvents) {
+			for (currEvent of joinedUpcomingGroupEvents) {
 				currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
 				let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 				currEvent.dataValues["hostName"] = owner.firstName;
-				joinedEventIds.push(currEvent.dataValues.id);
+				joinedGroupEventIds.push(currEvent.dataValues.id);
 			}
 
 			// after this, it grabs all the unjoined events of groups that user is currently a part of
@@ -55,12 +55,12 @@ groupIdRouter.get(
 					[Op.and]: [
 						{ eventDate: { [Op.gte]: currentDate } },
 						{ groupId: targetGroupId },
-						{ id: { [Op.notIn]: joinedEventIds } },
+						{ id: { [Op.notIn]: joinedGroupEventIds } },
 					],
 				},
 				order: [["id", "ASC"]],
 			});
-			for (currEvent of notJoinedUpcomingEvents) {
+			for (currEvent of notJoinedUpcomingGroupEvents) {
 				currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
 				let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 				currEvent.dataValues["hostName"] = owner.firstName;
@@ -74,7 +74,7 @@ groupIdRouter.get(
 				[Op.and]: [
 					{ eventDate: { [Op.lte]: currentDate } },
 					{ groupId: targetGroupId },
-					{ id: { [Op.notIn]: [...joinedEventIds, ...unjoinedEventIds] } },
+					{ id: { [Op.notIn]: [...joinedGroupEventIds, ...unjoinedEventIds] } },
 				],
 			},
 			order: [["id", "ASC"]],

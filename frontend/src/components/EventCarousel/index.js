@@ -6,7 +6,15 @@ import { Card } from "react-bootstrap";
 import { parseISO } from "date-fns";
 
 function EventCarousel({ events, whatEvent }) {
-	let { JoinedEvents, notJoinedEvents, somePublicEvents, previousJoinedEvents } = events;
+	let {
+		PreviousEvents,
+		NotJoinedUpcomingGroupEvents,
+		JoinedUpcomingGroupEvents,
+		JoinedEvents,
+		notJoinedEvents,
+		somePublicEvents,
+		previousJoinedEvents,
+	} = events;
 	let targetEvents;
 
 	switch (whatEvent) {
@@ -21,6 +29,15 @@ function EventCarousel({ events, whatEvent }) {
 			break;
 		case "somePublicEvents":
 			targetEvents = somePublicEvents;
+			break;
+		case "JoinedUpcomingGroupEvents":
+			targetEvents = JoinedUpcomingGroupEvents;
+			break;
+		case "NotJoinedUpcomingGroupEvents":
+			targetEvents = NotJoinedUpcomingGroupEvents;
+			break;
+		case "PreviousEvents":
+			targetEvents = PreviousEvents;
 			break;
 		default:
 			targetEvents = somePublicEvents;

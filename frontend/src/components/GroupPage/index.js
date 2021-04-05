@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 import EditGroupFormModal from "../EditGroupModal";
 import CreateEventFormModal from "../CreateEventModal";
 import { Button, Jumbotron, Container } from "react-bootstrap";
-import Events from "../Events";
+import GroupEvents from "../GroupEvents";
 
 const GroupPage = () => {
 	const history = useHistory();
@@ -119,7 +119,7 @@ const GroupPage = () => {
 			</div>
 			<div className="groupPage__header-Nav"></div>
 			<div className="groupPage__Events-header"></div>
-			<Events />
+			<GroupEvents group={group} />
 		</div>
 	);
 };

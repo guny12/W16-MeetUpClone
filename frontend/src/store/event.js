@@ -93,7 +93,7 @@ const initialState = {
 	JoinedUpcomingGroupEvents: {},
 	NotJoinedUpcomingGroupEvents: {},
 	PreviousEvents: {},
-	JoinedGroupEventIds: [],
+	joinedGroupEventIds: [],
 };
 
 const eventReducer = (eventState = initialState, action) => {
