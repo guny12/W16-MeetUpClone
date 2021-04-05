@@ -32,20 +32,33 @@ const Events = () => {
 					</div>
 					<div className="home__shelf-header">
 						<h1>Events In Your Groups, Not Joined</h1>
-						<Button variant="dark" onClick={() => history.push("/events")}>
-							see all
-						</Button>
+						{Object.values(events.notJoinedEvents).length > 0 && (
+							<Button variant="dark" onClick={() => history.push("/events")}>
+								see all
+							</Button>
+						)}
 					</div>
 					<div>
+						{Object.values(events.notJoinedEvents).length < 1 && (
+							<>
+								<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
+									You've joined every event!
+									<p style={{ margin: "50px" }} />
+									<p> Go make some more!</p>
+								</h1>
+							</>
+						)}
 						<EventCarousel events={events} whatEvent={"notJoinedUpcomingEvents"} />
 					</div>
 				</>
 			)}
 			<div className="home__shelf-header">
 				<h1>Some events you may be interested in </h1>
-				<Button variant="dark" onClick={() => history.push("/events")}>
-					see all
-				</Button>
+				{Object.values(events.somePublicEvents).length > 0 && (
+					<Button variant="dark" onClick={() => history.push("/events")}>
+						see all
+					</Button>
+				)}
 			</div>
 			{Object.values(events.somePublicEvents).length < 1 && (
 				<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>

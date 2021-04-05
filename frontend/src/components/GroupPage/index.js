@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as groupActions from "../../store/group";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams, NavLink, Redirect } from "react-router-dom";
+import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./GroupPage.css";
 import Image from "react-bootstrap/Image";
 import EditGroupFormModal from "../EditGroupModal";
