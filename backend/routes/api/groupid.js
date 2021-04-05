@@ -18,9 +18,10 @@ groupIdRouter.get(
 		if (req.user) var attendeeId = req.user.id;
 		let targetGroupId = req.params.groupid;
 
-		let joinedUpcomingEvents = [],
-			notJoinedUpcomingEvents = [],
-			joinedEventIds = [];
+		let joinedUpcomingGroupEvents = [],
+			notJoinedUpcomingGroupEvents = [],
+			joinedGroupEventIds = [],
+			unjoinedEventIds = [];
 
 		let currentDate = Sequelize.fn("now");
 
@@ -48,7 +49,7 @@ groupIdRouter.get(
 			}
 
 			// after this, it grabs all the unjoined events of groups that user is currently a part of
-			let unjoinedEventIds = [];
+
 			notJoinedUpcomingGroupEvents = await Event.findAll({
 				where: {
 					[Op.and]: [
@@ -67,36 +68,25 @@ groupIdRouter.get(
 			}
 		}
 
-		// this grabs some unjoined events, for logged in/out users.
-
-		let somePublicEvents = await Event.findAll({
+		// this grabs prev events, for logged in/out users.
+		let previousEvents = await Event.findAll({
 			where: {
 				[Op.and]: [
-					{ eventDate: { [Op.gte]: currentDate } },
-					{ id: { [Op.notIn]: [joinedEventIds, unjoinedEventIds] } },
+					{ eventDate: { [Op.lte]: currentDate } },
+					{ groupId: targetGroupId },
+					{ id: { [Op.notIn]: [...joinedEventIds, ...unjoinedEventIds] } },
 				],
 			},
 			order: [["id", "ASC"]],
 		});
 
-		for (currEvent of somePublicEvents) {
+		for (currEvent of previousEvents) {
 			currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
 			let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 			currEvent.dataValues["hostName"] = owner.firstName;
 		}
 
-		// let newPrivateGroups = await Event.findAll({
-		// 	where: { id: { [Op.notIn]: joinedEventIds } },
-		// 	order: [["id", "ASC"]],
-		// });
-
-		// for (currEvent of newPrivateGroups) {
-		// 	currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
-		// 	let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
-		// 	currEvent.dataValues["hostName"] = owner.firstName;
-		// }
-
-		return res.json({ joinedUpcomingGroupEvents, notJoinedUpcomingGroupEvents, somePublicEvents, joinedEventIds });
+		return res.json({ joinedUpcomingGroupEvents, notJoinedUpcomingGroupEvents, previousEvents, joinedGroupEventIds });
 	})
 );
 

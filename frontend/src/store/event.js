@@ -29,7 +29,7 @@ export const getGroupEvents = (groupid) => async (dispatch) => {
 	const response = await csrfFetch(`/api/:groupid/${groupid}`);
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(setEvents(data));
+		dispatch(setGroupEvents(data));
 	}
 };
 
@@ -90,6 +90,10 @@ const initialState = {
 	notJoinedEvents: {},
 	somePublicEvents: {},
 	joinedEventIds: [],
+	JoinedUpcomingGroupEvents: {},
+	NotJoinedUpcomingGroupEvents: {},
+	PreviousEvents: {},
+	JoinedGroupEventIds: [],
 };
 
 const eventReducer = (eventState = initialState, action) => {
@@ -113,7 +117,28 @@ const eventReducer = (eventState = initialState, action) => {
 				somePublicEvents: SomePublicEvents,
 			};
 		case SET_GroupEvents:
-			return eventState;
+			let {
+				joinedUpcomingGroupEvents,
+				notJoinedUpcomingGroupEvents,
+				previousEvents,
+				joinedGroupEventIds,
+			} = action.payload;
+			let newJoinedUpcomingGroupEvents = joinedUpcomingGroupEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
+			}, {});
+			let newNotJoinedUpcomingGroupEvents = notJoinedUpcomingGroupEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
+			}, {});
+			let newPreviousEvents = previousEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
+			}, {});
+			return {
+				...eventState,
+				JoinedUpcomingGroupEvents: newJoinedUpcomingGroupEvents,
+				NotJoinedUpcomingGroupEvents: newNotJoinedUpcomingGroupEvents,
+				PreviousEvents: newPreviousEvents,
+				joinedGroupEventIds,
+			};
 		default:
 			return eventState;
 	}
