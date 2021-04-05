@@ -8,7 +8,7 @@ const { handleValidationErrors } = require("../../utils/validation");
 const eventIdRouter = express.Router();
 
 eventIdRouter.patch(
-	"/",
+	`/`,
 	requireAuth,
 	asyncHandler(async (req, res) => {
 		const hostId = req.user.id;
@@ -26,7 +26,7 @@ eventIdRouter.patch(
 );
 
 eventIdRouter.delete(
-	"/",
+	`/`,
 	requireAuth,
 	asyncHandler(async (req, res) => {
 		const currentId = req.user.id;
@@ -48,11 +48,21 @@ eventIdRouter.post(
 	"/",
 	requireAuth,
 	asyncHandler(async (req, res) => {
-		const adminId = req.user.id;
-		const { name, description, isPublic, imgURL } = req.body;
-		const newGroup = await Event.create({ adminId, name, description, isPublic, imgURL });
-		await UserGroupJoin.create({ userId: adminId, groupId: newGroup.id });
-		return res.json({ newGroup });
+		const hostId = req.user.id;
+		const { name, id, description, imgURL, location, eventDate, eventType, availableSpots } = req.body;
+		const newEvent = await Event.create({
+			hostId,
+			name,
+			id,
+			description,
+			imgURL,
+			location,
+			eventDate,
+			eventType,
+			availableSpots,
+		});
+		await EventAttendee.create({ attendeeId: hostId, eventId: newEvent.id });
+		return res.json({ newEvent });
 	})
 );
 

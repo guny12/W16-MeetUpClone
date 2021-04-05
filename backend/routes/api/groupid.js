@@ -8,12 +8,10 @@ const { handleValidationErrors } = require("../../utils/validation");
 const groupIdRouter = express.Router();
 const eventIdRouter = require("./eventid.js");
 
-groupIdRouter.use("/:eventid", eventIdRouter);
+groupIdRouter.use(`/:eventid`, eventIdRouter);
 groupIdRouter.patch(
 	"/",
 	requireAuth,
-	// validateUpdateGroup,
-	// validationResult,
 	asyncHandler(async (req, res) => {
 		const adminId = req.user.id;
 		const { id, name, description, isPublic, imgURL } = req.body;
