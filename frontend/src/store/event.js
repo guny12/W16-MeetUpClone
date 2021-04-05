@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 // need these so you can update event slice of state when you modify groups (aka cascade deletes)
 // import { REMOVE_GROUP, UPDATE_GROUP, SET_GROUP } from "./group";
 export const SET_Events = "events/SET_Events";
+export const SET_Group_Events = "events/SET_Group_Events";
 
 // action creators
 const setEvents = (events) => ({
@@ -10,8 +11,21 @@ const setEvents = (events) => ({
 	payload: events,
 });
 
+const setGroupEvents = (events) => ({
+	type: SET_Group_Events,
+	payload: events,
+});
+
 // thunk action creators
 export const getEvents = () => async (dispatch) => {
+	const response = await csrfFetch("/api/:groupid");
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(setGroupEvents(data));
+	}
+};
+
+export const getGroupEvents = (group) => async (dispatch) => {
 	const response = await csrfFetch("/api/events");
 	if (response.ok) {
 		const data = await response.json();
@@ -97,6 +111,11 @@ const eventReducer = (eventState = initialState, action) => {
 				joinedEventIds: joinedEventIds,
 				notJoinedEvents: NotJoinedEvents,
 				somePublicEvents: SomePublicEvents,
+			};
+
+		case SET_Group_Events:
+			return {
+				...eventState,
 			};
 		default:
 			return eventState;
