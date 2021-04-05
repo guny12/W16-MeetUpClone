@@ -21,7 +21,7 @@ const GroupEvents = ({ group }) => {
 			{signedIn && (
 				<>
 					<div className="groupEvent__shelf-header">
-						<h1>{`Upcoming events you've joined`}</h1>
+						<h1>{`Upcoming ${group.name} events you've joined`}</h1>
 						{Object.values(events.JoinedUpcomingGroupEvents).length > 0 && (
 							<Button variant="dark" onClick={() => history.push("/events")}>
 								see all
@@ -32,7 +32,7 @@ const GroupEvents = ({ group }) => {
 						<EventCarousel events={events} whatEvent={"JoinedUpcomingGroupEvents"} />
 					</div>
 					<div className="groupEvent__shelf-header">
-						<h1>Upcoming events you haven't joined</h1>
+						<h1>{`Upcoming ${group.name} events you haven't joined`}</h1>
 						{Object.values(events.NotJoinedUpcomingGroupEvents).length > 0 && (
 							<Button variant="dark" onClick={() => history.push("/events")}>
 								see all
