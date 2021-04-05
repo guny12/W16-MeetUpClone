@@ -16,8 +16,8 @@ eventsRouter.get(
 
 		let joinedUpcomingEvents = [],
 			notJoinedUpcomingEvents = [],
-			joinedEventIds = [];
-
+			joinedEventIds = [],
+			notJoinedGroupsIds = [];
 		let currentDate = Sequelize.fn("now");
 
 		// if there's a user logged in, this will get all the currently joined Eventsm adds the hostname and number of people currently in that event.
@@ -69,10 +69,12 @@ eventsRouter.get(
 				},
 				order: [["id", "ASC"]],
 			});
+
 			for (currEvent of notJoinedUpcomingEvents) {
 				currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
 				let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 				currEvent.dataValues["hostName"] = owner.firstName;
+				notJoinedGroupsIds.push(currEvent.dataValues.id);
 			}
 		}
 
@@ -80,7 +82,10 @@ eventsRouter.get(
 
 		let somePublicEvents = await Event.findAll({
 			where: {
-				[Op.and]: [{ eventDate: { [Op.gte]: currentDate } }, { id: { [Op.notIn]: joinedEventIds } }],
+				[Op.and]: [
+					{ eventDate: { [Op.gte]: currentDate } },
+					{ id: { [Op.notIn]: [...joinedEventIds, ...notJoinedGroupsIds] } },
+				],
 			},
 			order: [["id", "ASC"]],
 		});

@@ -2,20 +2,21 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { check, validationResult } = require("express-validator");
 const { Group, Event, GroupComment, User, UserGroupJoin } = require("../../db/models");
-const { requireAuth } = require("../../utils/auth");
+const { restoreUser, requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 const { Op } = require("sequelize");
 const groupIdRouter = express.Router();
 const eventIdRouter = require("./eventid.js");
 
-groupIdRouter.use(`/:eventid`, eventIdRouter);
+groupIdRouter.use("/:eventid", eventIdRouter);
 
 groupIdRouter.get(
-	"/",
+	"/:groupid(\\d+)",
 	restoreUser,
 	asyncHandler(async (req, res) => {
 		// send the userId in req, to pull out the groups that they are a part of.
 		if (req.user) var attendeeId = req.user.id;
+		let targetGroupId = req.params.groupid;
 
 		let joinedUpcomingEvents = [],
 			notJoinedUpcomingEvents = [],
@@ -25,7 +26,7 @@ groupIdRouter.get(
 
 		// if there's a user logged in, this will get all the currently joined Eventsm adds the hostname and number of people currently in that event.
 		if (attendeeId) {
-			joinedUpcomingEvents = await Event.findAll({
+			joinedUpcomingGroupEvents = await Event.findAll({
 				include: [
 					{
 						model: User,
@@ -33,7 +34,9 @@ groupIdRouter.get(
 						attributes: [],
 					},
 				],
-				where: { eventDate: { [Op.gte]: currentDate } },
+				where: {
+					[Op.and]: [{ eventDate: { [Op.gte]: currentDate } }, { groupId: targetGroupId }],
+				},
 				order: [["id", "ASC"]],
 			});
 
@@ -44,29 +47,13 @@ groupIdRouter.get(
 				joinedEventIds.push(currEvent.dataValues.id);
 			}
 
-			// this grabs all groups that the user is part of. so we can check which events they haven't joined after.
-			let joinedGroups = await Group.findAll({
-				include: [
-					{
-						model: User,
-						where: { id: attendeeId },
-						attributes: [],
-					},
-				],
-				order: [["id", "ASC"]],
-			});
-
-			let joinedGroupsIds = [];
-			for (group of joinedGroups) {
-				joinedGroupsIds.push(group.dataValues.id);
-			}
-
 			// after this, it grabs all the unjoined events of groups that user is currently a part of
-			notJoinedUpcomingEvents = await Event.findAll({
+			let unjoinedEventIds = [];
+			notJoinedUpcomingGroupEvents = await Event.findAll({
 				where: {
 					[Op.and]: [
 						{ eventDate: { [Op.gte]: currentDate } },
-						{ groupId: { [Op.in]: joinedGroupsIds } },
+						{ groupId: targetGroupId },
 						{ id: { [Op.notIn]: joinedEventIds } },
 					],
 				},
@@ -76,6 +63,7 @@ groupIdRouter.get(
 				currEvent.dataValues["count"] = await EventAttendee.count({ where: { eventId: currEvent.dataValues.id } });
 				let owner = await User.findOne({ where: { id: currEvent.dataValues.hostId }, attributes: ["firstName"] });
 				currEvent.dataValues["hostName"] = owner.firstName;
+				unjoinedEventIds.push(currEvent.dataValues.id);
 			}
 		}
 
@@ -83,7 +71,10 @@ groupIdRouter.get(
 
 		let somePublicEvents = await Event.findAll({
 			where: {
-				[Op.and]: [{ eventDate: { [Op.gte]: currentDate } }, { id: { [Op.notIn]: joinedEventIds } }],
+				[Op.and]: [
+					{ eventDate: { [Op.gte]: currentDate } },
+					{ id: { [Op.notIn]: [joinedEventIds, unjoinedEventIds] } },
+				],
 			},
 			order: [["id", "ASC"]],
 		});
@@ -105,7 +96,7 @@ groupIdRouter.get(
 		// 	currEvent.dataValues["hostName"] = owner.firstName;
 		// }
 
-		return res.json({ joinedUpcomingEvents, notJoinedUpcomingEvents, somePublicEvents, joinedEventIds });
+		return res.json({ joinedUpcomingGroupEvents, notJoinedUpcomingGroupEvents, somePublicEvents, joinedEventIds });
 	})
 );
 

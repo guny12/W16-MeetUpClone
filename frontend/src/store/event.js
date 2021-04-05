@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 // need these so you can update event slice of state when you modify groups (aka cascade deletes)
 // import { REMOVE_GROUP, UPDATE_GROUP, SET_GROUP } from "./group";
 export const SET_Events = "events/SET_Events";
-export const SET_Group_Events = "events/SET_Group_Events";
+export const SET_GroupEvents = "events/SET_GroupEvents";
 
 // action creators
 const setEvents = (events) => ({
@@ -11,22 +11,22 @@ const setEvents = (events) => ({
 	payload: events,
 });
 
-const setGroupEvents = (events) => ({
-	type: SET_Group_Events,
-	payload: events,
+const setGroupEvents = (groupEvents) => ({
+	type: SET_GroupEvents,
+	payload: groupEvents,
 });
 
 // thunk action creators
 export const getEvents = () => async (dispatch) => {
-	const response = await csrfFetch("/api/:groupid");
+	const response = await csrfFetch("/api/events");
 	if (response.ok) {
 		const data = await response.json();
-		dispatch(setGroupEvents(data));
+		dispatch(setEvents(data));
 	}
 };
 
-export const getGroupEvents = (group) => async (dispatch) => {
-	const response = await csrfFetch("/api/events");
+export const getGroupEvents = (groupid) => async (dispatch) => {
+	const response = await csrfFetch(`/api/:groupid/${groupid}`);
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(setEvents(data));
@@ -112,11 +112,8 @@ const eventReducer = (eventState = initialState, action) => {
 				notJoinedEvents: NotJoinedEvents,
 				somePublicEvents: SomePublicEvents,
 			};
-
-		case SET_Group_Events:
-			return {
-				...eventState,
-			};
+		case SET_GroupEvents:
+			return eventState;
 		default:
 			return eventState;
 	}
