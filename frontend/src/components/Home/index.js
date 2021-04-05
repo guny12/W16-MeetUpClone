@@ -9,7 +9,7 @@ import Groups from "../Groups";
 import FindNewGroups from "../FindNewGroups";
 import Events from "../Events";
 
-const Home = ({ isLoaded }) => {
+const Home = () => {
 	// const history = useHistory();
 	// const dispatch = useDispatch();
 	const signedIn = useSelector((state) => state.session.user?.id);

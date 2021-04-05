@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as eventActions from "../../store/event";
 import { useDispatch } from "react-redux";
-import "./EditGroupForm.css";
+import "./EditEventForm.css";
 import { Button, Form } from "react-bootstrap";
 
-const EditGroupForm = ({ event }) => {
+const EditEventForm = ({ event }) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [errors, setErrors] = useState([]);
@@ -41,6 +41,7 @@ const EditGroupForm = ({ event }) => {
 				eventActions.updateEventData({ name, id, description, imgURL, location, eventDate, eventType, availableSpots })
 			)
 				.then((response) => {
+					console.log(response, "RESPONSE HERE--------------------------");
 					history.push(`/${response.groupId}/${response.id}`);
 					close.click();
 				})
@@ -56,6 +57,7 @@ const EditGroupForm = ({ event }) => {
 				eventActions.updateEventData({ id, description, imgURL, location, eventDate, eventType, availableSpots })
 			)
 				.then((response) => {
+					console.log(response, "RESPONSE HERE--------------------------");
 					history.push(`/${response.groupId}/${response.id}`);
 					close.click();
 				})
@@ -164,4 +166,4 @@ const EditGroupForm = ({ event }) => {
 		</Form>
 	);
 };
-export default EditGroupForm;
+export default EditEventForm;

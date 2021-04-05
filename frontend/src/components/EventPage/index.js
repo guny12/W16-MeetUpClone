@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./EventPage.css";
 import Image from "react-bootstrap/Image";
-import EditGroupFormModal from "../EditGroupModal";
+import EditEventFormModal from "../EditEventModal";
 import { Button, Jumbotron, Container } from "react-bootstrap";
 import { parseISO } from "date-fns";
 
@@ -56,7 +56,7 @@ const EventPage = () => {
 	let JoinOrEditButton = null;
 	function eventRender(event) {
 		if (event?.hostName === user?.firstName) {
-			JoinOrEditButton = <EditGroupFormModal event={event} />;
+			JoinOrEditButton = <EditEventFormModal event={event} />;
 		} else if (!joinedEventIds.includes(event.id)) {
 			JoinOrEditButton = (
 				<Button variant="dark" onClick={() => joinEvent(event)}>
