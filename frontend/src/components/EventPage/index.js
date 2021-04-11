@@ -13,7 +13,6 @@ const EventPage = () => {
 	const { eventId } = useParams();
 	const dispatch = useDispatch();
 	const events = useSelector((state) => state.events);
-	console.log(events, "EVENTS ------------------------------------------------");
 	let { JoinedEvents, joinedEventIds, notJoinedEvents, somePublicEvents, PreviousEvents } = events;
 	const user = useSelector((state) => state.session.user);
 	useEffect(() => dispatch(eventActions.getEvents()), [dispatch]);
@@ -58,7 +57,8 @@ const EventPage = () => {
 
 	let JoinOrEditButton = null;
 	function eventRender(event) {
-		if (event?.hostName === user?.firstName) {
+		if (PreviousEvents[`${eventId}`]) JoinOrEditButton = <p>This Event has passed already</p>;
+		else if (event?.hostName === user?.firstName) {
 			JoinOrEditButton = <EditEventFormModal event={event} />;
 		} else if (!joinedEventIds.includes(event.id)) {
 			JoinOrEditButton = (
@@ -102,7 +102,6 @@ const EventPage = () => {
 
 	if (!isLoaded) return null;
 
-	console.log(event, "EVENT HERE ------------------");
 	return (
 		<div className="eventPage__container">
 			<div className="eventPage__header">

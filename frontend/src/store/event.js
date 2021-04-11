@@ -127,19 +127,13 @@ const eventReducer = (eventState = initialState, action) => {
 				PreviousEvents: newPreviousEvents,
 			};
 		case SET_GroupEvents:
-			let {
-				joinedUpcomingGroupEvents,
-				notJoinedUpcomingGroupEvents,
-
-				joinedGroupEventIds,
-			} = action.payload;
+			let { joinedUpcomingGroupEvents, notJoinedUpcomingGroupEvents, joinedGroupEventIds } = action.payload;
 			let newJoinedUpcomingGroupEvents = joinedUpcomingGroupEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
 			let newNotJoinedUpcomingGroupEvents = notJoinedUpcomingGroupEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
-
 			return {
 				...eventState,
 				JoinedUpcomingGroupEvents: newJoinedUpcomingGroupEvents,
