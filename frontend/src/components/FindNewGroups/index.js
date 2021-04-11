@@ -45,7 +45,7 @@ const FindNewGroups = () => {
 							<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
 								You've Already Joined Every Private Group!
 								<p style={{ margin: "50px" }} />
-								<p> Go Make Your Own!</p>
+								<p> Go make one!</p>
 							</h1>
 						</div>
 					</div>
@@ -83,7 +83,7 @@ const FindNewGroups = () => {
 								<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
 									You've Already Joined Every Public Group!
 									<p style={{ margin: "50px" }} />
-									<p> Go Make Your Own!</p>
+									<p> Go make one!</p>
 								</h1>
 							)}
 						</div>

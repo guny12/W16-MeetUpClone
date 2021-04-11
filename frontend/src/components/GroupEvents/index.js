@@ -43,9 +43,9 @@ const GroupEvents = ({ group }) => {
 						{Object.values(events.NotJoinedUpcomingGroupEvents).length < 1 && (
 							<>
 								<h1 style={{ margin: "50px", fontFamily: `"Rock Salt", cursive` }}>
-									You've joined every event!
+									No events to join...
 									<p style={{ margin: "50px" }} />
-									<p> Go make some more!</p>
+									<p> Go make some!</p>
 								</h1>
 							</>
 						)}
