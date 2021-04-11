@@ -14,7 +14,7 @@ const EventPage = () => {
 	const dispatch = useDispatch();
 	const events = useSelector((state) => state.events);
 	console.log(events, "EVENTS ------------------------------------------------");
-	let { JoinedEvents, joinedEventIds, notJoinedEvents, somePublicEvents } = events;
+	let { JoinedEvents, joinedEventIds, notJoinedEvents, somePublicEvents, PreviousEvents } = events;
 	const user = useSelector((state) => state.session.user);
 	useEffect(() => dispatch(eventActions.getEvents()), [dispatch]);
 
@@ -48,6 +48,9 @@ const EventPage = () => {
 			break;
 		case !!somePublicEvents[`${eventId}`]:
 			event = somePublicEvents[`${eventId}`];
+			break;
+		case !!PreviousEvents[`${eventId}`]:
+			event = PreviousEvents[`${eventId}`];
 			break;
 		default:
 			event = null;
@@ -99,11 +102,12 @@ const EventPage = () => {
 
 	if (!isLoaded) return null;
 
+	console.log(event, "EVENT HERE ------------------");
 	return (
 		<div className="eventPage__container">
 			<div className="eventPage__header">
 				<Jumbotron fluid>
-					<Container>{isLoaded && event ? eventRender(event) : noEvent}</Container>
+					<Container>{event ? eventRender(event) : noEvent}</Container>
 				</Jumbotron>
 			</div>
 			<div className="eventPage__header-Nav"></div>

@@ -99,7 +99,13 @@ const initialState = {
 const eventReducer = (eventState = initialState, action) => {
 	switch (action.type) {
 		case SET_Events:
-			let { joinedUpcomingEvents, joinedEventIds, notJoinedUpcomingEvents, somePublicEvents } = action.payload;
+			let {
+				joinedUpcomingEvents,
+				joinedEventIds,
+				notJoinedUpcomingEvents,
+				somePublicEvents,
+				previousEvents,
+			} = action.payload;
 			let JoinedUpcomingEvents = joinedUpcomingEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
@@ -109,18 +115,22 @@ const eventReducer = (eventState = initialState, action) => {
 			let SomePublicEvents = somePublicEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
+			let newPreviousEvents = previousEvents.reduce((newEvents, event) => {
+				return { ...newEvents, [event.id]: event };
+			}, {});
 			return {
 				...eventState,
 				JoinedEvents: JoinedUpcomingEvents,
 				joinedEventIds: joinedEventIds,
 				notJoinedEvents: NotJoinedEvents,
 				somePublicEvents: SomePublicEvents,
+				PreviousEvents: newPreviousEvents,
 			};
 		case SET_GroupEvents:
 			let {
 				joinedUpcomingGroupEvents,
 				notJoinedUpcomingGroupEvents,
-				previousEvents,
+
 				joinedGroupEventIds,
 			} = action.payload;
 			let newJoinedUpcomingGroupEvents = joinedUpcomingGroupEvents.reduce((newEvents, event) => {
@@ -129,14 +139,11 @@ const eventReducer = (eventState = initialState, action) => {
 			let newNotJoinedUpcomingGroupEvents = notJoinedUpcomingGroupEvents.reduce((newEvents, event) => {
 				return { ...newEvents, [event.id]: event };
 			}, {});
-			let newPreviousEvents = previousEvents.reduce((newEvents, event) => {
-				return { ...newEvents, [event.id]: event };
-			}, {});
+
 			return {
 				...eventState,
 				JoinedUpcomingGroupEvents: newJoinedUpcomingGroupEvents,
 				NotJoinedUpcomingGroupEvents: newNotJoinedUpcomingGroupEvents,
-				PreviousEvents: newPreviousEvents,
 				joinedGroupEventIds,
 			};
 		default:
