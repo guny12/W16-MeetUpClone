@@ -15,8 +15,15 @@ function App() {
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
-		dispatch(sessionActions.restoreUser()).then((response) => (response.ok ? setIsLoaded(true) : null));
+		(async () => {
+			await dispatch(sessionActions.restoreUser());
+			setLoaded(true);
+		})();
 	}, [dispatch]);
+
+	if (!loaded) {
+		return null;
+	}
 
 	return (
 		<>

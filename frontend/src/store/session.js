@@ -7,7 +7,7 @@ const REMOVE_SESSION = "session/REMOVE_SESSION";
 // action creators
 const setSessionUser = (user) => ({
 	type: SET_SESSION,
-	user,
+	user: user,
 });
 
 const removeSessionUser = () => ({
