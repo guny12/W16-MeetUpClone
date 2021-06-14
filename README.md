@@ -28,3 +28,7 @@ I used an SQL database with [PostgreSQL](https://www.postgresql.org/) as the RDB
 - Event Getting info
 - Event Updating
 - Event Deletion
+
+## Closing notes
+
+It was interesting cloning Meet-up and creating Cook-off. Almost all the features were developed in a week. I chose to try and create a with a custom UI instead of an exact clone and that posed some challenges with a lot of iterations. This was my first solo project using React and Redux. I learned it 2 weeks prior to making Cook-Off, and definitely learned a lot with each iteration and architecture/design changes. I may continue to add features down the line.
